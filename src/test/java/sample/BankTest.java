@@ -2,10 +2,12 @@ package sample;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
+
+import static org.junit.Assert.assertEquals;
 
 public class BankTest {
     private SuperBank sb1;
@@ -42,7 +44,7 @@ public class BankTest {
 
 
     @Test
-    public void saveOK1() throws WrongQuestionTypeException {
+    public void saveOK1() throws WrongQuestionTypeException{
         when(sb1.find("100")).thenReturn("./target/Question/100.xml");
         when(sb1.find("200")).thenReturn("./target/Question/200.xml");
         when(sb1.find("300")).thenReturn("./target/Question/300.xml");

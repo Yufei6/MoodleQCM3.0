@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="MoodleQCM3" />
         <module name="MoodleQCM3.0" />
       </profile>
     </annotationProcessing>
