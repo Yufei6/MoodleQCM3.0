@@ -100,7 +100,7 @@ public class SuperBank {
     }
 
     public TreeItem<String> generateTree() throws IOException, SAXException {
-        TreeItem<String> root = new TreeItem<>();
+        TreeItem<String> root = new TreeItem<>("bank");
         root.setExpanded(true);
         for(File file : dirBank.listFiles()){
             if (file.isDirectory()){
@@ -108,7 +108,7 @@ public class SuperBank {
             }
             if (isXmlFile(file) && extractQuestion(file)!=null){
                 String[] strings = extractQuestion(file);
-                TreeItem<String> treeItem = new TreeItem<>(strings[1]);
+                TreeItem<String> treeItem = new TreeItem<>(file.getName());
                 root.getChildren().addAll(treeItem);
             }
         }
@@ -123,7 +123,7 @@ public class SuperBank {
             }
             if (isXmlFile(file1) && extractQuestion(file1)!=null){
                 String[] strings= extractQuestion(file1);
-                TreeItem<String> treeItem1 = new TreeItem<String>(strings[0]);
+                TreeItem<String> treeItem1 = new TreeItem<String>(file1.getName());
                 treeItem.getChildren().addAll(treeItem1);
             }
         }
