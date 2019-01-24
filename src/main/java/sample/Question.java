@@ -310,5 +310,7 @@ public class Question {
     public int getID() {
         return id;
     }
+
+    public String getName() { return name;}
 }
 
