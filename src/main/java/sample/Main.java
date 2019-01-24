@@ -10,15 +10,6 @@ import java.util.List;
 
 public class Main extends Application {
 
-    SuperBank superBank;
-    List<Bank> bankList;
-    List<Qcm> qcmList;
-
-    QuestionStorage current_quizz;
-    Question current_question;
-
-    Controller controller;
-
     @Override
     public void start(Stage primaryStage) throws Exception{
 
