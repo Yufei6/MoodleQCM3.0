@@ -31,6 +31,36 @@ public class Controller implements Initializable {
     }
 
 
+    private void initBanksAndQcms(SuperBank superBank){
+        ArrayList<Bank> bank_tab = new ArrayList<Bank>();
+        File banks = new File("./target/Bank");
+        TreeItem<String> root_bank = new TreeItem<>("Banque");
+        for(File b : banks.listFiles()){
+            Bank new_bank = new Bank("./target/Bank/"+b.getName(),superBank);
+            bank_tab.add(new_bank);
+            TreeItem<String> treeItem = new TreeItem<>(new_bank.getName());
+            treeItem = new_bank.createQuestionTree(treeItem);
+            root_bank.getChildren().addAll(treeItem);
+        }
+        bank.setRoot(root_bank);
+
+
+
+        ArrayList<Qcm> qcm_tab = new ArrayList<Qcm>();
+        File qcms = new File("./target/Qcm");
+        TreeItem<String> root_qcm = new TreeItem<>("Qcm");
+        for(File q : qcms.listFiles()){
+            Qcm new_qcm = new Qcm("./target/Qcm/"+q.getName(),superBank);
+            qcm_tab.add(new_qcm);
+            TreeItem<String> treeItem = new TreeItem<>(new_qcm.getName());
+            treeItem = new_qcm.createQuestionTree(treeItem);
+            root_qcm.getChildren().addAll(treeItem);
+        }
+        qcm.setRoot(root_qcm);
+
+    }
+
+
 
 
     @Override
@@ -59,36 +89,7 @@ public class Controller implements Initializable {
         tree.setRoot(root);
 
 
-
-
-
-        ArrayList<Bank> bank_tab = new ArrayList<Bank>();
-        File banks = new File("./target/Bank");
-        TreeItem<String> root_bank = new TreeItem<>("Banque");
-        for(File b : banks.listFiles()){
-            Bank new_bank = new Bank("./target/Bank/"+b.getName(),superBank);
-            bank_tab.add(new_bank);
-            TreeItem<String> treeItem = new TreeItem<>(new_bank.getName());
-            treeItem = new_bank.createQuestionTree(treeItem);
-            root_bank.getChildren().addAll(treeItem);
-        }
-        bank.setRoot(root_bank);
-
-
-
-        ArrayList<Qcm> qcm_tab = new ArrayList<Qcm>();
-        File qcms = new File("./target/Qcm");
-        TreeItem<String> root_qcm = new TreeItem<>("Qcm");
-        for(File q : qcms.listFiles()){
-            Qcm new_qcm = new Qcm("./target/Qcm/"+q.getName(),superBank);
-            qcm_tab.add(new_qcm);
-            TreeItem<String> treeItem = new TreeItem<>(new_qcm.getName());
-            treeItem = new_qcm.createQuestionTree(treeItem);
-            root_qcm.getChildren().addAll(treeItem);
-        }
-        qcm.setRoot(root_qcm);
-
-
+        initBanksAndQcms(superBank);
 
 
     }
