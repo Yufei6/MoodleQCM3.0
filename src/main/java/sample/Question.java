@@ -316,6 +316,76 @@ public class Question {
         return id;
     }
 
-    public String getName() { return name;}
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public boolean isSingle() {
+        return single;
+    }
+
+    public boolean isShuffleanswers() {
+        return shuffleanswers;
+    }
+
+    public int getHidden() {
+        return hidden;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getQuestiontext() {
+        return questiontext;
+    }
+
+    public String getGeneralfeedback() {
+        return generalfeedback;
+    }
+
+    public String getCorrectfeedback() {
+        return correctfeedback;
+    }
+
+    public String getPartiallycorrectfeedback() {
+        return partiallycorrectfeedback;
+    }
+
+    public String getIncorrectfeedback() {
+        return incorrectfeedback;
+    }
+
+    public String getQt_format() {
+        return qt_format;
+    }
+
+    public String getGf_format() {
+        return gf_format;
+    }
+
+    public String getCf_format() {
+        return cf_format;
+    }
+
+    public String getPcf_format() {
+        return pcf_format;
+    }
+
+    public String getIf_format() {
+        return if_format;
+    }
+
+    public String getAnswernumbering() {
+        return answernumbering;
+    }
+
+    public double getDefaultgrade() {
+        return defaultgrade;
+    }
+
+    public double getPenalty() {
+        return penalty;
+    }
 }
 

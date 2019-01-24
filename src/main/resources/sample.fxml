@@ -74,22 +74,22 @@
                                  <children>
                                     <ScrollPane layoutX="-19.0" layoutY="22.0" prefHeight="345.0" prefWidth="243.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1393.0" prefWidth="243.0">
+                                        <AnchorPane fx:id="question_pane" minHeight="0.0" minWidth="0.0" prefHeight="1393.0" prefWidth="243.0">
                                              <children>
-                                                <TextField alignment="CENTER" layoutX="14.0" layoutY="24.0" AnchorPane.topAnchor="24.0" />
+                                                <TextField fx:id="question_name_field" alignment="TOP_LEFT" layoutX="14.0" layoutY="24.0" AnchorPane.topAnchor="24.0" />
                                                 <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" wrappingWidth="32.232421875" />
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="81.0" prefHeight="200.0" prefWidth="506.0" />
+                                                <HTMLEditor fx:id="question_text_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="81.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text layoutX="14.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Énoncé :" wrappingWidth="44.390625" />
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="318.0" prefHeight="200.0" prefWidth="506.0" />
+                                                <HTMLEditor fx:id="general_feebdack_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="318.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text layoutX="14.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retour général :" />
                                                 <Text layoutX="14.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retour réponse correcte :" />
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="556.0" prefHeight="200.0" prefWidth="506.0" />
+                                                <HTMLEditor fx:id="correct_feedback_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="556.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text layoutX="14.0" layoutY="796.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retour réponse partiellement incorrecte :" />
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="799.0" prefHeight="200.0" prefWidth="506.0" />
+                                                <HTMLEditor fx:id="partially_correct_feedback_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="799.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text layoutX="14.0" layoutY="1034.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retour réponse incorrecte :" />
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="1037.0" prefHeight="200.0" prefWidth="506.0" />
+                                                <HTMLEditor fx:id="incorrect_feedback_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="1037.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text layoutX="23.0" layoutY="1290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type de choix :" />
-                                                <ChoiceBox layoutX="115.0" layoutY="1273.0" prefWidth="150.0" />
+                                                <ChoiceBox fx:id="question_choice_type" layoutX="115.0" layoutY="1273.0" prefWidth="150.0" />
                                                 <Text layoutX="14.0" layoutY="1328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note par défaut :" />
                                                 <TextField layoutX="115.0" layoutY="1311.0" />
                                                 <Text layoutX="60.0" layoutY="1359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pénalty :" />
