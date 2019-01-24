@@ -6,14 +6,28 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class Main extends Application {
+
+    SuperBank superBank;
+    List<Bank> bankList;
+    List<Qcm> qcmList;
+
+    QuestionStorage current_quizz;
+    Question current_question;
+
+    Controller controller;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         Parent root = FXMLLoader.load(getClass().getResource("/sample.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
+
+
     }
 
 
