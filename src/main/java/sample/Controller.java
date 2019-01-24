@@ -1,7 +1,9 @@
 package sample;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -35,7 +37,7 @@ public class Controller implements Initializable {
     private URL location;
 
     @FXML
-    private TreeView<String> tree;
+    private TreeView<String> tree, bank, qcm;
 
 
     /////////////// Question Fields ////////////////////
@@ -67,6 +69,7 @@ public class Controller implements Initializable {
 
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Question new_q = null;
@@ -87,8 +90,46 @@ public class Controller implements Initializable {
         } catch (SAXException e) {
             e.printStackTrace();
         }
+        try {
+            superBank.extractId_Path();
+        } catch (org.xml.sax.SAXException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
         tree.setRoot(root);
         questionFieldsInit(new_q);
+    
+
+        ArrayList<Bank> bank_tab = new ArrayList<Bank>();
+        File banks = new File("./target/Bank");
+        TreeItem<String> root_bank = new TreeItem<>("Banque");
+        for(File b : banks.listFiles()){
+            Bank new_bank = new Bank("./target/Bank/"+b.getName(),superBank);
+            bank_tab.add(new_bank);
+            TreeItem<String> treeItem = new TreeItem<>(new_bank.getName());
+            treeItem = new_bank.createQuestionTree(treeItem);
+            root_bank.getChildren().addAll(treeItem);
+        }
+        bank.setRoot(root_bank);
+
+
+
+        ArrayList<Qcm> qcm_tab = new ArrayList<Qcm>();
+        File qcms = new File("./target/Qcm");
+        TreeItem<String> root_qcm = new TreeItem<>("Qcm");
+        for(File q : qcms.listFiles()){
+            Qcm new_qcm = new Qcm("./target/Qcm/"+q.getName(),superBank);
+            qcm_tab.add(new_qcm);
+            TreeItem<String> treeItem = new TreeItem<>(new_qcm.getName());
+            treeItem = new_qcm.createQuestionTree(treeItem);
+            root_qcm.getChildren().addAll(treeItem);
+        }
+        qcm.setRoot(root_qcm);
+
+
+
+
     }
 
     private void questionFieldsInit(Question question) {
@@ -103,8 +144,10 @@ public class Controller implements Initializable {
         ObservableList<String> question_types = FXCollections.observableArrayList("a, b, c", "A, B, C", "1, 2, 3", "i, ii, iii", "I, II, III", "Sans Numérotation");
         question_choice_type.setItems(question_types);
        // question_choice_type.getSelectionModel().select(question.getAnswernumbering());
-    }
 
+    }
 }
+
+
 
 

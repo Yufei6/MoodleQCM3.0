@@ -38,7 +38,7 @@ public class BankTest {
         when(sb1.find("100")).thenReturn("./target/Question/100.xml");
         when(sb1.find("200")).thenReturn("./target/Question/200.xml");
         when(sb1.find("300")).thenReturn("./target/Question/200.xml");
-        Bank b1 = new Bank("./target/BankAndQcm/Bank_test_001.xml", sb1);
+        Bank b1 = new Bank("./target/Bank/Bank_test_001.xml", sb1);
         assertEquals(b1.getName(), "Bank_test_001");
     }
 
@@ -48,7 +48,7 @@ public class BankTest {
         when(sb1.find("100")).thenReturn("./target/Question/100.xml");
         when(sb1.find("200")).thenReturn("./target/Question/200.xml");
         when(sb1.find("300")).thenReturn("./target/Question/300.xml");
-        Bank b1 = new Bank("./target/BankAndQcm/Bank_test_001.xml", sb1);
+        Bank b1 = new Bank("./target/Bank/Bank_test_001.xml", sb1);
         Question q1 = new Question("./target/Question/300.xml");
         b1.addQuestion(q1);
         b1.save();
