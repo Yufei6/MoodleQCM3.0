@@ -9,81 +9,71 @@ import static org.mockito.Mockito.when;
 
 import static org.junit.Assert.assertEquals;
 
-public class BankTest {
+public class QcmTest {
     private SuperBank sb1;
 
     @Before
-    public void setUp() throws javax.xml.parsers.ParserConfigurationException{
+    public void setUp() throws javax.xml.parsers.ParserConfigurationException {
         sb1 = spy(new SuperBank());
     }
 
 
-
-
     @Test
-    public void InitWithoutParamaterOK1(){
-        Bank b1 = new Bank();
-        assertEquals(b1.getName(),"Bankdefaut0");
-        Bank b2 = new Bank();
-        assertEquals(b2.getName(), "Bankdefaut1");
-        Bank b3 = new Bank();
-        assertEquals(b3.getName(), "Bankdefaut2");
+    public void InitWithoutParamaterOK1() {
+        Qcm b1 = new Qcm();
+        assertEquals(b1.getName(), "Qcmdefaut0");
+        Qcm b2 = new Qcm();
+        assertEquals(b2.getName(), "Qcmdefaut1");
+        Qcm b3 = new Qcm();
+        assertEquals(b3.getName(), "Qcmdefaut2");
     }
 
 
-
-
     @Test
-    public void InitWithParameterOK1(){
+    public void InitWithParameterOK1() {
         when(sb1.find("100")).thenReturn("./target/Question/100.xml");
         when(sb1.find("200")).thenReturn("./target/Question/200.xml");
         when(sb1.find("300")).thenReturn("./target/Question/200.xml");
-        Bank b1 = new Bank("./target/Bank/Bank_test_001.xml", sb1);
-        assertEquals(b1.getName(), "Bank_test_001");
+        Qcm b1 = new Qcm("./target/Qcm/Qcm_test_001.xml", sb1);
+        assertEquals(b1.getName(), "Qcm_test_001");
     }
 
 
     @Test
-    public void saveOK1() throws WrongQuestionTypeException{
+    public void saveOK1() throws WrongQuestionTypeException {
         when(sb1.find("100")).thenReturn("./target/Question/100.xml");
         when(sb1.find("200")).thenReturn("./target/Question/200.xml");
         when(sb1.find("300")).thenReturn("./target/Question/300.xml");
-        Bank b1 = new Bank("./target/Bank/Bank_test_001.xml", sb1);
+        Qcm b1 = new Qcm("./target/Qcm/Qcm_test_001.xml", sb1);
         b1.save();
-        Bank b2 = new Bank("./target/Bank/Bank_test_001.xml", sb1);
-        assertEquals("Bank_test_001", b2.getName());
+        Qcm b2 = new Qcm("./target/Qcm/Qcm_test_001.xml", sb1);
+        assertEquals("Qcm_test_001", b2.getName());
     }
 
 
     @Test
-    public void addAndDeleteQuestionOK1() throws WrongQuestionTypeException{
+    public void addAndDeleteQuestionOK1() throws WrongQuestionTypeException {
         when(sb1.find("100")).thenReturn("./target/Question/100.xml");
         when(sb1.find("200")).thenReturn("./target/Question/200.xml");
         when(sb1.find("300")).thenReturn("./target/Question/300.xml");
-        Bank b1 = new Bank("./target/Bank/Bank_test_001.xml", sb1);
+        Qcm b1 = new Qcm("./target/Qcm/Qcm_test_001.xml", sb1);
         Question q1 = new Question("./target/Question/300.xml");
         b1.addQuestion(q1);
         b1.save();
-        assertEquals(3,b1.getQuestionQuantite());
+        assertEquals(3, b1.getQuestionQuantite());
         b1.deleteQuestion(q1);
         b1.save();
-        assertEquals(2,b1.getQuestionQuantite());
+        assertEquals(2, b1.getQuestionQuantite());
     }
 
 
     @Test
-    public void exportOK1(){
+    public void exportOK1() {
         when(sb1.find("100")).thenReturn("./target/Question/100.xml");
         when(sb1.find("200")).thenReturn("./target/Question/200.xml");
         when(sb1.find("300")).thenReturn("./target/Question/300.xml");
-        Bank b1 = new Bank("./target/Bank/Bank_test_001.xml", sb1);
+        Qcm b1 = new Qcm("./target/Qcm/Qcm_test_001.xml", sb1);
 
     }
-
-
-
-
-
-
 
 }

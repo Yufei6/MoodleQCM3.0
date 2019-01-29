@@ -2,16 +2,16 @@ package sample;
 
 
 public class Bank extends QuestionStorage{
-    // private static int name_default_nomber = 0;
-    private static int number_default = 0;
+    private static int name_default_nomber = 0;
+//    private static int number_default = 0;
 
 
 
     public Bank(){
         super();
         //path = "./Bank_default"+number_default+".xml";
-        // changeName("Qcm defaut" + name_default_nomber);
-        // name_default_nomber++;
+        changeName("Bankdefaut" + name_default_nomber);
+        name_default_nomber++;
     }
 
     public Bank(String path, SuperBank super_bank){

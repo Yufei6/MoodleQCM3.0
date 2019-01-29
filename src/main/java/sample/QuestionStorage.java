@@ -50,10 +50,7 @@ public abstract class QuestionStorage{
             final int nbIDsElements = list_Id.getLength();
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element Id = (Element) list_Id.item(i);
-                System.out.println("WORI::"+Id.getTextContent());
-                System.out.println("Find"+super_bank.find(Id.getTextContent()));
                 Question new_question = new Question(super_bank.find(Id.getTextContent()));
-//                  Question new_question = new Question("bank/maths/question1.xml");
                 list_question.add(new_question);
             }
         } catch (ParserConfigurationException e) {
@@ -107,7 +104,7 @@ public abstract class QuestionStorage{
             Calendar c = Calendar.getInstance();
             final Element date = document.createElement("date");
             racine.appendChild(date);
-            date.appendChild(document.createTextNode(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR)));
+            date.appendChild(document.createTextNode(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+1+"/"+c.get(Calendar.YEAR)));
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -197,7 +194,7 @@ public abstract class QuestionStorage{
             Calendar c = Calendar.getInstance();
             final Element date = document.createElement("date");
             racine.appendChild(date);
-            date.appendChild(document.createTextNode(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR)));
+            date.appendChild(document.createTextNode(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+1+"/"+c.get(Calendar.YEAR)));
 
         }
         catch (final ParserConfigurationException e) {
@@ -242,4 +239,7 @@ public abstract class QuestionStorage{
         return root;
     }
 
+    public int getQuestionQuantite(){
+        return list_question.size();
+    }
 }

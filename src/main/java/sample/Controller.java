@@ -17,8 +17,12 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import org.xml.sax.SAXException;
 
+import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class Controller implements Initializable {
@@ -61,10 +65,72 @@ public class Controller implements Initializable {
 
     @FXML
     private ChoiceBox<String> question_choice_type;
+    private Window stage;
+
 
     ////////////////////////////////////////////////////
+    @FXML void importBank(ActionEvent event){
+//        JFileChooser chooser = new JFileChooser();
+//        ExampleFileFilter filter = new ExampleFileFilter();
+//        filter.addExtension("xml");
+//        chooser.setFileFilter(filter);
+//        int returnVal = chooser.showOpenDialog(parent);
+//
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("XML", "*.xml")
+        );
+        File f = fileChooser.showOpenDialog(stage);
 
-    private void initBanksAndQcms(SuperBank superBank){
+
+        String fileAsString = null;
+        if (f != null) {
+            fileAsString = f.toString();
+        }
+        System.out.println(fileAsString);
+
+    }
+
+    @FXML void exportBank(ActionEvent event){
+        DirectoryChooser directoryChooser=new DirectoryChooser();
+        File file = directoryChooser.showDialog(stage);
+        String path = file.getPath();
+        System.out.println(path);
+    }
+
+    @FXML void importQcm(ActionEvent event){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("XML", "*.xml")
+        );
+        File f = fileChooser.showOpenDialog(stage);
+
+
+        String fileAsString = null;
+        if (f != null) {
+            fileAsString = f.toString();
+        }
+        System.out.println(fileAsString);
+    }
+
+    @FXML void exportQcm(ActionEvent event){
+        DirectoryChooser directoryChooser=new DirectoryChooser();
+        File file = directoryChooser.showDialog(stage);
+        String path = file.getPath();
+        System.out.println(path);
+    }
+
+
+
+
+
+
+
+
+
+        private void initBanksAndQcms(SuperBank superBank){
         ArrayList<Bank> bank_tab = new ArrayList<Bank>();
         File banks = new File("./target/Bank");
         TreeItem<String> root_bank = new TreeItem<>("Banque");
