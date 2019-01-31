@@ -17,8 +17,12 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import org.xml.sax.SAXException;
 
+import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class Controller implements Initializable {
@@ -61,6 +65,8 @@ public class Controller implements Initializable {
 
     @FXML
     private ChoiceBox<String> question_choice_type;
+    private Window stage;
+
 
     @FXML
     private TextField defaultgrade_field;
@@ -69,11 +75,137 @@ public class Controller implements Initializable {
     private TextField penalty_field;
 
     ////////////////////////////////////////////////////
+    @FXML void importBank(ActionEvent event){
+//        JFileChooser chooser = new JFileChooser();
+//        ExampleFileFilter filter = new ExampleFileFilter();
+//        filter.addExtension("xml");
+//        chooser.setFileFilter(filter);
+//        int returnVal = chooser.showOpenDialog(parent);
+//
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("XML", "*.xml")
+        );
+        File f = fileChooser.showOpenDialog(stage);
+
+
+        String fileAsString = null;
+        if (f != null) {
+            fileAsString = f.toString();
+        }
+        System.out.println(fileAsString);
+
+    }
+
+    @FXML void exportBank(ActionEvent event){
+        DirectoryChooser directoryChooser=new DirectoryChooser();
+        File file = directoryChooser.showDialog(stage);
+        String path = file.getPath();
+        System.out.println(path);
+    }
+
+    @FXML void importQcm(ActionEvent event){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("XML", "*.xml")
+        );
+        File f = fileChooser.showOpenDialog(stage);
+
+
+        String fileAsString = null;
+        if (f != null) {
+            fileAsString = f.toString();
+        }
+        System.out.println(fileAsString);
+    }
+
+    @FXML void exportQcm(ActionEvent event){
+        DirectoryChooser directoryChooser=new DirectoryChooser();
+        File file = directoryChooser.showDialog(stage);
+        String path = file.getPath();
+        System.out.println(path);
+    }
+
+
+
+
+
+
+
+
+
+        private void initBanksAndQcms(SuperBank superBank){
+        ArrayList<Bank> bank_tab = new ArrayList<Bank>();
+        File banks = new File("./target/Bank");
+        TreeItem<String> root_bank = new TreeItem<>("Banque");
+        for(File b : banks.listFiles()){
+            Bank new_bank = new Bank("./target/Bank/"+b.getName(),superBank);
+            bank_tab.add(new_bank);
+            TreeItem<String> treeItem = new TreeItem<>(new_bank.getName());
+            treeItem = new_bank.createQuestionTree(treeItem);
+            root_bank.getChildren().addAll(treeItem);
+        }
+        bank.setRoot(root_bank);
+
+
+
+        ArrayList<Qcm> qcm_tab = new ArrayList<Qcm>();
+        File qcms = new File("./target/Qcm");
+        TreeItem<String> root_qcm = new TreeItem<>("Qcm");
+        for(File q : qcms.listFiles()){
+            Qcm new_qcm = new Qcm("./target/Qcm/"+q.getName(),superBank);
+            qcm_tab.add(new_qcm);
+            TreeItem<String> treeItem = new TreeItem<>(new_qcm.getName());
+            treeItem = new_qcm.createQuestionTree(treeItem);
+            root_qcm.getChildren().addAll(treeItem);
+        }
+        qcm.setRoot(root_qcm);
+
+    }
+
+
+
+
+
+
+    private void questionFieldsInit(Question question) {
+
+        question_name_field.setText(question.getName());
+        question_text_field.setHtmlText(question.getQuestiontext());
+        general_feebdack_field.setHtmlText(question.getGeneralfeedback());
+        incorrect_feedback_field.setHtmlText(question.getIncorrectfeedback());
+        partially_correct_feedback_field.setHtmlText(question.getPartiallycorrectfeedback());
+        correct_feedback_field.setHtmlText(question.getCorrectfeedback());
+
+        ObservableList<String> question_types = FXCollections.observableArrayList(question.getAnswerNumberingChoices());
+        question_choice_type.setItems(question_types);
+        question_choice_type.getSelectionModel().select(question.getAnswerNumberingDisplay());
+        defaultgrade_field.setText(Double.toString(question.getDefaultgrade()));
+        penalty_field.setText(Double.toString(question.getPenalty()));
+    }
+
+
+
+
+
 
     @FXML
     void treeDrag(ActionEvent event) {
 
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
     @Override
@@ -104,55 +236,17 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
         tree.setRoot(root);
+
+
+        initBanksAndQcms(superBank);
         questionFieldsInit(new_q);
     
 
-        ArrayList<Bank> bank_tab = new ArrayList<Bank>();
-        File banks = new File("./target/Bank");
-        TreeItem<String> root_bank = new TreeItem<>("Banque");
-        for(File b : banks.listFiles()){
-            Bank new_bank = new Bank("./target/Bank/"+b.getName(),superBank);
-            bank_tab.add(new_bank);
-            TreeItem<String> treeItem = new TreeItem<>(new_bank.getName());
-            treeItem = new_bank.createQuestionTree(treeItem);
-            root_bank.getChildren().addAll(treeItem);
-        }
-        bank.setRoot(root_bank);
-
-
-
-        ArrayList<Qcm> qcm_tab = new ArrayList<Qcm>();
-        File qcms = new File("./target/Qcm");
-        TreeItem<String> root_qcm = new TreeItem<>("Qcm");
-        for(File q : qcms.listFiles()){
-            Qcm new_qcm = new Qcm("./target/Qcm/"+q.getName(),superBank);
-            qcm_tab.add(new_qcm);
-            TreeItem<String> treeItem = new TreeItem<>(new_qcm.getName());
-            treeItem = new_qcm.createQuestionTree(treeItem);
-            root_qcm.getChildren().addAll(treeItem);
-        }
-        qcm.setRoot(root_qcm);
-
-
 
 
     }
 
-    private void questionFieldsInit(Question question) {
 
-        question_name_field.setText(question.getName());
-        question_text_field.setHtmlText(question.getQuestiontext());
-        general_feebdack_field.setHtmlText(question.getGeneralfeedback());
-        incorrect_feedback_field.setHtmlText(question.getIncorrectfeedback());
-        partially_correct_feedback_field.setHtmlText(question.getPartiallycorrectfeedback());
-        correct_feedback_field.setHtmlText(question.getCorrectfeedback());
-
-        ObservableList<String> question_types = FXCollections.observableArrayList(question.getAnswerNumberingChoices());
-        question_choice_type.setItems(question_types);
-        question_choice_type.getSelectionModel().select(question.getAnswerNumberingDisplay());
-        defaultgrade_field.setText(Double.toString(question.getDefaultgrade()));
-        penalty_field.setText(Double.toString(question.getPenalty()));
-    }
 }
 
 

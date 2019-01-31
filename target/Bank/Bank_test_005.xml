@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Bank>
   <!--Question Bank-->
-  <name>Bank_test_001</name>
+  <name>Bank_test_002</name>
   <question_id_list>
     <question_id>200</question_id>
-    <question_id>100</question_id>
   </question_id_list>
-  <date>24/01/2019</date>
+  <date>23/1/2019</date>
 </Bank>

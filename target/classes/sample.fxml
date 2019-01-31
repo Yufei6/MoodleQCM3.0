@@ -16,7 +16,19 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <Menu mnemonicParsing="false" text="Import">
+                    <items>
+                      <MenuItem accelerator="Ctrl + a" mnemonicParsing="false" onAction="#importQcm" text="Import une qcm" />
+                      <MenuItem accelerator="Ctrl + b" mnemonicParsing="false" onAction="#importBank" text="Import une banque" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Export">
+                    <items>
+                      <MenuItem accelerator="Ctrl + c" mnemonicParsing="false" onAction="#exportQcm" text="Export une qcm" />
+                      <MenuItem accelerator="Ctrl + d" mnemonicParsing="false" onAction="#exportBank" text="Export une banque" />
+                    </items>
+                  </Menu>
+                <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">

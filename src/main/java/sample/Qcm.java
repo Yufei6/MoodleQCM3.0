@@ -3,12 +3,12 @@ package sample;
 
 public class Qcm extends QuestionStorage {
     private String path;
-    // private static int name_default_nomber = 0;
+     private static int name_default_nomber = 0;
 
     public Qcm(){
         super();
-        // changeName("Qcm defaut" + name_default_nomber);
-        // name_default_nomber++;
+         changeName("Qcmdefaut" + name_default_nomber);
+         name_default_nomber++;
     }
 
     public Qcm(String path, SuperBank super_bank){

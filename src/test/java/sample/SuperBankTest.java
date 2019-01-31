@@ -50,10 +50,12 @@ public class SuperBankTest {
         String[] strings = (String[]) arrayList.get(0);
         assertEquals(string, strings[0]);
     }
+
     @Test
     public void testExtractID_PathSize() throws IOException,SAXException{
         assertEquals(3,superBank.extractId_Path().size());
     }
+
     @Test
     public void testFindId() throws IOException, SAXException {
         superBank.extractId_Path();
@@ -74,8 +76,9 @@ public class SuperBankTest {
         treeItem.getChildren().addAll(maths,fich1);
 
         assertEquals(treeItem,superBank.generateTree());
-
     }
+
+
 
 
 
