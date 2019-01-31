@@ -62,6 +62,12 @@ public class Controller implements Initializable {
     @FXML
     private ChoiceBox<String> question_choice_type;
 
+    @FXML
+    private TextField defaultgrade_field;
+
+    @FXML
+    private TextField penalty_field;
+
     ////////////////////////////////////////////////////
 
     @FXML
@@ -141,10 +147,11 @@ public class Controller implements Initializable {
         partially_correct_feedback_field.setHtmlText(question.getPartiallycorrectfeedback());
         correct_feedback_field.setHtmlText(question.getCorrectfeedback());
 
-        ObservableList<String> question_types = FXCollections.observableArrayList("a, b, c", "A, B, C", "1, 2, 3", "i, ii, iii", "I, II, III", "Sans Numérotation");
+        ObservableList<String> question_types = FXCollections.observableArrayList(question.getAnswerNumberingChoices());
         question_choice_type.setItems(question_types);
-       // question_choice_type.getSelectionModel().select(question.getAnswernumbering());
-
+        question_choice_type.getSelectionModel().select(question.getAnswerNumberingDisplay());
+        defaultgrade_field.setText(Double.toString(question.getDefaultgrade()));
+        penalty_field.setText(Double.toString(question.getPenalty()));
     }
 }
 
