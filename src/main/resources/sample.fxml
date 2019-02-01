@@ -105,7 +105,7 @@
                                                 <Text layoutX="14.0" layoutY="1328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note par défaut :" />
                                                 <TextField fx:id="defaultgrade_field" layoutX="115.0" layoutY="1311.0" />
                                                 <Text layoutX="60.0" layoutY="1359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pénalty :" />
-                                                <TextField fx:id="penalty_fiel" layoutX="115.0" layoutY="1344.0" />
+                                                <TextField fx:id="penalty_field" layoutX="115.0" layoutY="1344.0" />
                                              </children>
                                           </AnchorPane>
                                        </content>
