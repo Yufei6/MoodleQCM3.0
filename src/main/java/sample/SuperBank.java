@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -19,6 +20,7 @@ public class SuperBank {
     private File dirBank;
     private ArrayList<String[]> questionList;
     private DocumentBuilder builder;
+    private int maxId=0;
 
     public SuperBank() throws ParserConfigurationException {
         dirBank =new File("bank");
@@ -44,7 +46,10 @@ public class SuperBank {
         return extractId_Path(dirBank);
 
     }
-
+    public int generateId(){
+        maxId++;
+        return maxId;
+    }
     private ArrayList extractId_Path(File dirBank) throws IOException, SAXException {
         if (!havefiles(dirBank)) return null;
         for (File dir : dirBank.listFiles()){
@@ -77,6 +82,7 @@ public class SuperBank {
         if (Objects.equals(nodeList.item(1).getNodeName(), "id_header")) {
             nodeId_Header = (Element) nodeList.item(1);
             strings[0]= nodeId_Header.getElementsByTagName("id").item(0).getTextContent();
+            if (maxId <= Integer.parseInt(strings[0])) maxId = Integer.parseInt(strings[0]);
             strings[1]=file.getCanonicalPath();
             return strings;
         }
@@ -117,6 +123,7 @@ public class SuperBank {
 
     private TreeItem<String> generateItem(File file) throws IOException, SAXException {
         TreeItem<String> treeItem = new TreeItem<>(file.getName());
+
         for (File file1 : file.listFiles()) {
             if (file1.isDirectory()){
                 treeItem.getChildren().addAll(generateItem(file1));
@@ -129,5 +136,56 @@ public class SuperBank {
         }
         return treeItem;
     }
+    public File addNewDirectory(String directory,String nameFile){
+        System.out.println("dirBank"+dirBank.getName());
+        if (directory.equals(dirBank.getName())){
+            File file = new File("bank/"+nameFile);
+            System.out.println(file.getPath());
+            System.out.println(file.mkdir());
+            return file;
+
+        }
+        FilenameFilter filter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                if (name.equals(directory)){
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        File[] paths;
+        paths = dirBank.listFiles(filter);
+        File[] files = dirBank.listFiles();
+        while(paths.length==0){
+            for (File file : files){
+                if (file.isDirectory()) paths = findChildren(file,filter);
+            }
+        }
+        File fileToAdd = paths[0];
+        System.out.println(paths[0].getName());
+        System.out.println(fileToAdd.getPath());
+        fileToAdd = new File(fileToAdd.getParentFile().getPath()+"/"+nameFile);
+        fileToAdd.mkdir();
+        return fileToAdd;
+    }
+
+    private File[] findChildren(File file,FilenameFilter filter) {
+        File[] files;
+        if(file.listFiles().length==0) return null;
+        files = file.listFiles(filter);
+        if (files.length!=0) return files;
+        for (File file1 : file.listFiles()){
+            String s = file1.getName();
+            files = file1.listFiles(filter);
+            if (files.length !=0) return files;
+            findChildren(file1,filter);
+        }
+        return null;
+    }
+
+
+
 
 }

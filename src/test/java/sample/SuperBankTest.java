@@ -61,20 +61,10 @@ public class SuperBankTest {
 
     }
     @Test
-    public void testGenerateTree() throws IOException, SAXException {
-        TreeItem<String> treeItem = new TreeItem<String>();
-        TreeItem<String> maths = new TreeItem<String>("Maths");
-        TreeItem<String> carre = new TreeItem<String>("Carre");
-        TreeItem<String> question2 = new TreeItem<String>("question2");
-        TreeItem<String> question1 = new TreeItem<String>("question1");
-        TreeItem<String> fich1 = new TreeItem<String>("fich1");
-        treeItem.setExpanded(true);
-        carre.getChildren().addAll(question2);
-        maths.getChildren().addAll(carre,question1);
-        treeItem.getChildren().addAll(maths,fich1);
-
-        assertEquals(treeItem,superBank.generateTree());
-
+    public void testAddNewDir() {
+        File file1 =superBank.addNewDirectory("question2.xml","test_1");
+        File file = new File("bank/maths/carre/test_1");
+        assertEquals(file1,file);
     }
 
 
