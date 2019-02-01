@@ -123,6 +123,14 @@ public class Controller implements Initializable {
     }
 
 
+    @FXML void createBank(ActionEvent event){
+//        Bank new_bank = new Bank("./target/Bank", );
+    }
+
+
+    @FXML void createQcm(ActionEvent event){
+
+    }
 
 
 
@@ -130,7 +138,9 @@ public class Controller implements Initializable {
 
 
 
-        private void initBanksAndQcms(SuperBank superBank){
+
+
+    private void initBanksAndQcms(SuperBank superBank){
         ArrayList<Bank> bank_tab = new ArrayList<Bank>();
         File banks = new File("./target/Bank");
         TreeItem<String> root_bank = new TreeItem<>("Banque");

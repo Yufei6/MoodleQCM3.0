@@ -16,6 +16,13 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
+                  <Menu mnemonicParsing="false" text="New">
+                    <items>
+                      <MenuItem accelerator="Ctrl + d" mnemonicParsing="false" text="Question" />
+                        <MenuItem accelerator="Ctrl + e" mnemonicParsing="false" text="Banque" />
+                        <MenuItem accelerator="Ctrl + f" mnemonicParsing="false" text="Qcm" />
+                    </items>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="Import">
                     <items>
                       <MenuItem accelerator="Ctrl + a" mnemonicParsing="false" onAction="#importQcm" text="Import une qcm" />

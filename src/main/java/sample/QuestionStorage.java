@@ -26,15 +26,19 @@ public abstract class QuestionStorage{
     private String name, path;
     public SuperBank super_bank;
 
-
     public QuestionStorage(){
         list_question = new HashSet<Question>();
-//        name = "QuestionStorage defaut";
-//        name should initialiser in Qcm and Bank
+        name = "Error QS";
+    }
+
+    public QuestionStorage(String xml_path, String name_0, SuperBank super_bank_0){
+        path = xml_path;
+        name = name_0;
+        super_bank = super_bank_0;
+        list_question = new HashSet<Question>();
     }
 
     public QuestionStorage(String xml_path, SuperBank super_bank_0){
-
         path = xml_path;
         super_bank = super_bank_0;
         list_question = new HashSet<Question>();
@@ -130,15 +134,14 @@ public abstract class QuestionStorage{
     }
 
 
- public void Import(String xml_path){
+// public static QuestionStorage Import(String xml_path, String new_name, boolean isBank, SuperBank super_bank0){
 //        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 //        try {
 //            DocumentBuilder builder = factory.newDocumentBuilder();
 //            Document document= builder.parse(new File(xml_path));
 //            Element racine = document.getDocumentElement();
-//            Element name_0 = (Element)racine.getElementsByTagName("name");
+//            SuperBank super_bank = super_bank0;
 //
-//            name = name_0.getTextContent();
 //            final NodeList list_Id = racine.getElementsByTagName("question_id_list");
 //            final int nbIDsElements = list_Id.getLength();
 //            for(int i =  0; i<nbIDsElements; i++) {
@@ -158,7 +161,7 @@ public abstract class QuestionStorage{
 //        } catch (WrongQuestionTypeException e) {
 //            e.printStackTrace();
 //        }
-    }
+//    }
 
 
 
@@ -187,9 +190,8 @@ public abstract class QuestionStorage{
             name_0.appendChild(document.createTextNode(name));
 
             for (Question q:list_question) {
-                final Element question = document.createElement("question");
+//                final Element question = document.createElement("question");
                 question_list.appendChild(q.getQuestionXml(document));
-//                question.appendChild(document.createTextNode(q.getQuestionXml()));           //Question getter pour Exporter
             }
             Calendar c = Calendar.getInstance();
             final Element date = document.createElement("date");

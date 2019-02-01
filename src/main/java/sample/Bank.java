@@ -2,7 +2,7 @@ package sample;
 
 
 public class Bank extends QuestionStorage{
-    private static int name_default_nomber = 0;
+//    private static int name_default_nomber = 0;
 //    private static int number_default = 0;
 
 
@@ -10,8 +10,12 @@ public class Bank extends QuestionStorage{
     public Bank(){
         super();
         //path = "./Bank_default"+number_default+".xml";
-        changeName("Bankdefaut" + name_default_nomber);
-        name_default_nomber++;
+//        changeName("Bankdefaut" + name_default_nomber);
+//        name_default_nomber++;
+    }
+
+    public Bank(String path, String new_name, SuperBank sb){
+        super(path,new_name,sb);
     }
 
     public Bank(String path, SuperBank super_bank){
