@@ -381,7 +381,6 @@ public class Controller implements Initializable {
         initBanksAndQcms(superBank);
         questionFieldsInit(new_q);
         setCurrent_question(new_q);
-    
 
 
 
@@ -405,6 +404,7 @@ public class Controller implements Initializable {
             reload = false;
         }
     }
+
 
 
 }
