@@ -15,7 +15,9 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Question {
 
@@ -34,9 +36,27 @@ public class Question {
 
     private List<Answer> answers;
 
+    Map<String, String> answer_numbering_map;
+
     public Question(String path) throws WrongQuestionTypeException {
         loaded = false;
         init(path);
+
+        answer_numbering_map = new HashMap<>();
+        answer_numbering_map.put("abc", "a, b, c");
+        answer_numbering_map.put("ABC", "A, B, C");
+        answer_numbering_map.put("123", "1, 2, 3");
+        answer_numbering_map.put("iii", "i, ii, iii");
+        answer_numbering_map.put("III", "I, II, III");
+        answer_numbering_map.put("none", "Sans Numérotation");
+    }
+
+    public ArrayList<String> getAnswerNumberingChoices() {
+        return new ArrayList<>(answer_numbering_map.values());
+    }
+
+    public String getAnswerNumberingDisplay() {
+        return answer_numbering_map.get(answernumbering);
     }
 
     public String toString() {
@@ -315,6 +335,8 @@ public class Question {
     public int getID() {
         return id;
     }
+
+
 
     public boolean isLoaded() {
         return loaded;
