@@ -136,7 +136,7 @@ public class SuperBank {
         }
         return treeItem;
     }
-    public File addNewDirectory(String directory,String nameFile){
+    public File addNewDirectory(final String directory, String nameFile){
         System.out.println("dirBank"+dirBank.getName());
         if (directory.equals(dirBank.getName())){
             File file = new File("bank/"+nameFile);

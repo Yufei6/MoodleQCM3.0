@@ -379,9 +379,28 @@ public class Controller implements Initializable {
 
 
         initBanksAndQcms(superBank);
-        questionFieldsInit(new_q);
-        setCurrent_question(new_q);
+        /*questionFieldsInit(new_q);
+        setCurrent_question(new_q);*/
 
+        try {
+            Question q1 = new Question("demo/1.xml");
+            q1.load("demo/1.xml");
+            Question q2 = new Question("demo/2.xml");
+            q2.load("demo/2.xml");
+            Question q3 = new Question("demo/3.xml");
+            q3.load("demo/3.xml");
+
+            Qcm qcm1 = new Qcm();
+            qcm1.addQuestion(q1);
+            qcm1.addQuestion(q2);
+            qcm1.addQuestion(q3);
+
+            qcm1.Export("demo/", "qcm1");
+
+        }
+        catch(WrongQuestionTypeException e) {
+            e.printStackTrace();
+        }
 
 
     }
