@@ -251,6 +251,7 @@ public class Question {
 
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
+            System.out.println(xml_path+"      Zxxxxxxxxxxxxxxxxxxxxxxxxx");
             Document document = builder.parse(new File(xml_path));
             Element root = document.getDocumentElement();
             Element id_header = (Element) root.getElementsByTagName("id_header").item(0);
@@ -302,6 +303,7 @@ public class Question {
         answernumbering = x_question.getElementsByTagName("answernumbering").item(0).getTextContent();
         shuffleanswers = Boolean.parseBoolean(x_question.getElementsByTagName("shuffleanswers").item(0).getTextContent());
 
+        answers = new ArrayList<>();
         NodeList x_answers = x_question.getElementsByTagName("answer");
         int answers_nb = x_answers.getLength();
         for (int ans = 0; ans < answers_nb; ans++) {
@@ -322,7 +324,6 @@ public class Question {
             return;
         }
 
-        answers = new ArrayList<>();
 
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 

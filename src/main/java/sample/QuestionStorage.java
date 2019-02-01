@@ -54,6 +54,7 @@ public abstract class QuestionStorage{
             final int nbIDsElements = list_Id.getLength();
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element Id = (Element) list_Id.item(i);
+                System.out.println("FINDDDDDDDDDDD"+Id.getTextContent());
                 Question new_question = new Question(super_bank.find(Id.getTextContent()));
                 list_question.add(new_question);
             }
@@ -78,6 +79,15 @@ public abstract class QuestionStorage{
 
 
     public void save(boolean isBank){
+        File file = new File(this.path+".xml");
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             final DocumentBuilder builder = factory.newDocumentBuilder();
@@ -103,6 +113,7 @@ public abstract class QuestionStorage{
             for (Question q:list_question) {
                 final Element question_id = document.createElement("question_id");
                 question_id_list.appendChild(question_id);
+                System.out.println(q.getID()+"     IDDDDDDDDD");
                 question_id.appendChild(document.createTextNode(q.getID()+""));
             }
             Calendar c = Calendar.getInstance();
@@ -113,7 +124,7 @@ public abstract class QuestionStorage{
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(document);
-            StreamResult sortie = new StreamResult(new File(path));
+            StreamResult sortie = new StreamResult(file);
             transformer.setOutputProperty(OutputKeys.VERSION,"1.0");
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
@@ -134,78 +145,58 @@ public abstract class QuestionStorage{
     }
 
 
-// public static QuestionStorage Import(String xml_path, String new_name, boolean isBank, SuperBank super_bank0){
-//        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-//        try {
-//            DocumentBuilder builder = factory.newDocumentBuilder();
-//            Document document= builder.parse(new File(xml_path));
-//            Element racine = document.getDocumentElement();
-//            SuperBank super_bank = super_bank0;
-//
-//            final NodeList list_Id = racine.getElementsByTagName("question_id_list");
-//            final int nbIDsElements = list_Id.getLength();
-//            for(int i =  0; i<nbIDsElements; i++) {
-//                final Element Id = (Element) list_Id.item(i);
-//                Question new_question = new Question(super_bank.find(Id.getTextContent()));
-//                list_question.add(new_question);
-//            }
-//        } catch (ParserConfigurationException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }catch (SAXException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        } catch (WrongQuestionTypeException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 
 
 
     public void Export(String xml_path, String name_for_xml, boolean isBank){
+        File file = new File(xml_path+name_for_xml+".xml");
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             final DocumentBuilder builder = factory.newDocumentBuilder();
-            final Document document = builder.parse(new File(xml_path));
+            final Document document = builder.newDocument();
             Element racine = null;
             Comment commentaire = null;
             if(isBank){
-                racine = document.createElement("Bank");
+                racine = document.createElement("quiz");
                 commentaire = document.createComment("Question Bank");
             }
             else{
-                racine = document.createElement("Qcm");
+                racine = document.createElement("quiz");
                 commentaire = document.createComment("Question Qcm");
             }
             document.appendChild(racine);
             racine.appendChild(commentaire);
-            final Element name_0 = document.createElement(name_for_xml);
-            final Element question_list = document.createElement("question_list");
-            racine.appendChild(name_0);
-            racine.appendChild(question_list);
-            name_0.appendChild(document.createTextNode(name));
 
             for (Question q:list_question) {
-//                final Element question = document.createElement("question");
-                question_list.appendChild(q.getQuestionXml(document));
+                q.load(super_bank.find(q.getID()+""));
+                Comment commentaire_question = null;
+                commentaire_question = document.createComment(" question: "+q.getID()+" ");
+                racine.appendChild(commentaire_question);
+                racine.appendChild(q.getQuestionXml(document));
             }
             Calendar c = Calendar.getInstance();
-            final Element date = document.createElement("date");
-            racine.appendChild(date);
-            date.appendChild(document.createTextNode(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+1+"/"+c.get(Calendar.YEAR)));
+            final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            final Transformer transformer = transformerFactory.newTransformer();
+            final DOMSource source = new DOMSource(document);
+            final StreamResult sortie = new StreamResult(file);
+            transformer.transform(source, sortie);
 
         }
         catch (final ParserConfigurationException e) {
             e.printStackTrace();
         }
-        catch(final SAXException e) {
+        catch (TransformerConfigurationException e) {
             e.printStackTrace();
         }
-        catch(final IOException e) {
+        catch (TransformerException e) {
             e.printStackTrace();
         }
 

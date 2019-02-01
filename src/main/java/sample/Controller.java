@@ -126,6 +126,8 @@ public class Controller implements Initializable {
         File file = directoryChooser.showDialog(stage);
         String path = file.getPath();
         System.out.println(path);
+
+
     }
 
 
@@ -149,7 +151,7 @@ public class Controller implements Initializable {
     private void initBanksAndQcms(SuperBank superBank){
         ArrayList<Bank> bank_tab = new ArrayList<Bank>();
         File banks = new File("./target/Bank");
-        TreeItem<String> root_bank = new TreeItem<>("Banque");
+        TreeItem<String> root_bank = new TreeItem<>();
         for(File b : banks.listFiles()){
             Bank new_bank = new Bank("./target/Bank/"+b.getName(),superBank);
             bank_tab.add(new_bank);
@@ -158,12 +160,15 @@ public class Controller implements Initializable {
             root_bank.getChildren().addAll(treeItem);
         }
         bank.setRoot(root_bank);
+        bank.setShowRoot(false);
 
 
 
         ArrayList<Qcm> qcm_tab = new ArrayList<Qcm>();
+//        qcm_tab.add(Qcm.Import("./target/Qcm_Import/import1.xml", "import1", superBank));
+//        qcm_tab.add(Qcm.Import("./target/Qcm_Import/import1.xml", "import1", superBank));
         File qcms = new File("./target/Qcm");
-        TreeItem<String> root_qcm = new TreeItem<>("Qcm");
+        TreeItem<String> root_qcm = new TreeItem<>();
         for(File q : qcms.listFiles()){
             Qcm new_qcm = new Qcm("./target/Qcm/"+q.getName(),superBank);
             qcm_tab.add(new_qcm);
@@ -172,7 +177,7 @@ public class Controller implements Initializable {
             root_qcm.getChildren().addAll(treeItem);
         }
         qcm.setRoot(root_qcm);
-
+        qcm.setShowRoot(false);
     }
 
 
