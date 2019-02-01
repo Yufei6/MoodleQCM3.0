@@ -324,7 +324,6 @@ public class Question {
             return;
         }
 
-
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         try {
@@ -359,6 +358,8 @@ public class Question {
     public boolean isLoaded() {
         return loaded;
     }
+
+    //////////////// [ Getters ] ////////////////
 
     public boolean isSingle() {
         return single;
@@ -426,6 +427,86 @@ public class Question {
 
     public double getPenalty() {
         return penalty;
+    }
+
+    //////////////// [ Setters ] ////////////////
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setSingle(boolean single) {
+        this.single = single;
+    }
+
+    public void setShuffleanswers(boolean shuffleanswers) {
+        this.shuffleanswers = shuffleanswers;
+    }
+
+    public void setHidden(int hidden) {
+        this.hidden = hidden;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQuestiontext(String questiontext) {
+        this.questiontext = questiontext;
+    }
+
+    public void setGeneralfeedback(String generalfeedback) {
+        this.generalfeedback = generalfeedback;
+    }
+
+    public void setCorrectfeedback(String correctfeedback) {
+        this.correctfeedback = correctfeedback;
+    }
+
+    public void setPartiallycorrectfeedback(String partiallycorrectfeedback) {
+        this.partiallycorrectfeedback = partiallycorrectfeedback;
+    }
+
+    public void setIncorrectfeedback(String incorrectfeedback) {
+        this.incorrectfeedback = incorrectfeedback;
+    }
+
+    public void setQt_format(String qt_format) {
+        this.qt_format = qt_format;
+    }
+
+    public void setGf_format(String gf_format) {
+        this.gf_format = gf_format;
+    }
+
+    public void setCf_format(String cf_format) {
+        this.cf_format = cf_format;
+    }
+
+    public void setPcf_format(String pcf_format) {
+        this.pcf_format = pcf_format;
+    }
+
+    public void setIf_format(String if_format) {
+        this.if_format = if_format;
+    }
+
+    public void setAnswernumbering(String answernumbering) {
+        for (Map.Entry<String, String> entry : answer_numbering_map.entrySet()) {
+            if (entry.getValue().equals(answernumbering)) {
+                this.answernumbering = entry.getKey();
+                return;
+            }
+        }
+        this.answernumbering = "abc";  //Défaut si problème
+    }
+
+    public void setDefaultgrade(double defaultgrade) {
+        this.defaultgrade = defaultgrade;
+    }
+
+    public void setPenalty(double penalty) {
+        this.penalty = penalty;
     }
 }
 
