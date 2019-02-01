@@ -30,12 +30,7 @@
                       <MenuItem accelerator="Ctrl + b" mnemonicParsing="false" onAction="#importBank" text="Import une banque" />
                     </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Export">
-                    <items>
-                      <MenuItem accelerator="Ctrl + c" mnemonicParsing="false" onAction="#exportQcm" text="Export une qcm" />
-                      <MenuItem accelerator="Ctrl + d" mnemonicParsing="false" onAction="#exportBank" text="Export une banque" />
-                    </items>
-                  </Menu>
+                <MenuItem accelerator="Ctrl + c" mnemonicParsing="false" onAction="#exportQcm" text="Export une qcm/bank" />
                 <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
@@ -66,7 +61,14 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TreeView fx:id="bank" layoutX="-16.0" onDragDetected="#treeDrag" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <TreeView fx:id="bank" layoutX="-16.0" onDragDetected="#treeDrag" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <contextMenu>
+                                          <ContextMenu>
+                                            <items>
+                                              <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                            </items>
+                                          </ContextMenu>
+                                       </contextMenu></TreeView>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -75,7 +77,14 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TreeView fx:id="qcm" layoutX="-46.0" layoutY="14.0" onDragDetected="#treeDrag" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <TreeView fx:id="qcm" layoutX="-46.0" layoutY="14.0" onDragDetected="#treeDrag" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <contextMenu>
+                                          <ContextMenu>
+                                            <items>
+                                              <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                            </items>
+                                          </ContextMenu>
+                                       </contextMenu></TreeView>
                                  </children>
                               </AnchorPane>
                         </content>
