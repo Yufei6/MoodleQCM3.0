@@ -11,10 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.DirectoryChooser;
@@ -67,12 +64,17 @@ public class Controller implements Initializable {
     private ChoiceBox<String> question_choice_type;
     private Window stage;
 
-
     @FXML
     private TextField defaultgrade_field;
 
     @FXML
     private TextField penalty_field;
+
+    @FXML
+    private RadioButton multiple_answers_choice;
+
+    @FXML
+    private RadioButton shuffle_answers_choice;
 
     ////////////////////////////////////////////////////
     @FXML void importBank(ActionEvent event){
@@ -171,7 +173,6 @@ public class Controller implements Initializable {
 
 
     private void questionFieldsInit(Question question) {
-
         question_name_field.setText(question.getName());
         question_text_field.setHtmlText(question.getQuestiontext());
         general_feebdack_field.setHtmlText(question.getGeneralfeedback());
@@ -184,12 +185,38 @@ public class Controller implements Initializable {
         question_choice_type.getSelectionModel().select(question.getAnswerNumberingDisplay());
         defaultgrade_field.setText(Double.toString(question.getDefaultgrade()));
         penalty_field.setText(Double.toString(question.getPenalty()));
+
+        shuffle_answers_choice.setSelected(question.isShuffleanswers());
+        multiple_answers_choice.setSelected(!question.isSingle());
     }
 
+    private void questionFieldsGet(Question question) {  // TODO : Collecter les erreurs et les champs incomplets
+        question.setName(question_name_field.getText());
+        question.setQuestiontext(question_text_field.getHtmlText());
+        question.setGeneralfeedback(general_feebdack_field.getHtmlText());
+        question.setIncorrectfeedback(incorrect_feedback_field.getHtmlText());
+        question.setPartiallycorrectfeedback(partially_correct_feedback_field.getHtmlText());
+        question.setCorrectfeedback(correct_feedback_field.getHtmlText());
+        question.setAnswernumbering(question_choice_type.getValue());
+        question.setDefaultgrade(Double.parseDouble(defaultgrade_field.getText()));
+        question.setPenalty(Double.parseDouble(penalty_field.getText()));
+        question.setSingle(!(multiple_answers_choice.isSelected()));
+        question.setShuffleanswers(shuffle_answers_choice.isSelected());
+    }
 
+    public Question getCurrent_question() {
+        return current_question;
+    }
 
+    public void setCurrent_question(Question current_question) {
+        this.current_question = current_question;
+    }
 
-
+    @FXML
+    void questionSaved(ActionEvent event) {
+        questionFieldsGet(current_question);
+        current_question.save("42.xml");
+    }
 
     @FXML
     void treeDrag(ActionEvent event) {
@@ -240,6 +267,7 @@ public class Controller implements Initializable {
 
         initBanksAndQcms(superBank);
         questionFieldsInit(new_q);
+        setCurrent_question(new_q);
     
 
 
