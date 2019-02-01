@@ -38,10 +38,24 @@ public class Question {
 
     Map<String, String> answer_numbering_map;
 
+    private Question() {
+        answer_numbering_map_init();
+    }
+
+    public Question(Element question, SuperBank s_bank) {
+        this();
+        //id = s_bank.generate_id();
+        load_from_element(question);
+        loaded = true;
+    }
+
     public Question(String path) throws WrongQuestionTypeException {
+        this();
         loaded = false;
         init(path);
+    }
 
+    private void answer_numbering_map_init() {
         answer_numbering_map = new HashMap<>();
         answer_numbering_map.put("abc", "a, b, c");
         answer_numbering_map.put("ABC", "A, B, C");
@@ -260,6 +274,48 @@ public class Question {
         }
     }
 
+    private void load_from_element(Element x_question) {
+        Element x_questiontext = (Element) x_question.getElementsByTagName("questiontext").item(0);
+        qt_format = x_questiontext.getAttribute("format");     // Init qt_format
+        questiontext = x_questiontext.getElementsByTagName("text").item(0).getTextContent();  // Init questiontext
+
+        Element x_generalfeeback = (Element) x_question.getElementsByTagName("generalfeedback").item(0);
+        gf_format = x_generalfeeback.getAttribute("format");     // Init gf_format
+        generalfeedback = x_generalfeeback.getElementsByTagName("text").item(0).getTextContent();  // Init generalfeedback
+
+        Element x_correctfeedback = (Element) x_question.getElementsByTagName("correctfeedback").item(0);
+        cf_format = x_correctfeedback.getAttribute("format");     // Init cf_format
+        correctfeedback = x_correctfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init correctfeedback
+
+        Element x_partiallycorrectfeedback = (Element) x_question.getElementsByTagName("partiallycorrectfeedback").item(0);
+        pcf_format = x_partiallycorrectfeedback.getAttribute("format");     // Init pcf_format
+        partiallycorrectfeedback = x_partiallycorrectfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init partiallycorrectfeedback
+
+        Element x_incorrectfeedback = (Element) x_question.getElementsByTagName("incorrectfeedback").item(0);
+        if_format = x_incorrectfeedback.getAttribute("format");     // Init if_format
+        incorrectfeedback = x_incorrectfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init incorrectfeedback
+
+        defaultgrade = Double.parseDouble(x_question.getElementsByTagName("defaultgrade").item(0).getTextContent());
+        penalty = Double.parseDouble(x_question.getElementsByTagName("penalty").item(0).getTextContent());
+        hidden = Integer.parseInt(x_question.getElementsByTagName("hidden").item(0).getTextContent());
+        single = Boolean.parseBoolean(x_question.getElementsByTagName("single").item(0).getTextContent());
+        answernumbering = x_question.getElementsByTagName("answernumbering").item(0).getTextContent();
+        shuffleanswers = Boolean.parseBoolean(x_question.getElementsByTagName("shuffleanswers").item(0).getTextContent());
+
+        NodeList x_answers = x_question.getElementsByTagName("answer");
+        int answers_nb = x_answers.getLength();
+        for (int ans = 0; ans < answers_nb; ans++) {
+            Element answer = (Element) x_answers.item(ans);
+            Double fraction = Double.parseDouble(answer.getAttribute("fraction"));
+            String text = answer.getElementsByTagName("text").item(0).getTextContent();
+            String t_format = answer.getAttribute("format");
+            Element feedback = (Element) answer.getElementsByTagName("feedback").item(0);
+            String f_format = feedback.getAttribute("format");
+            String q_feedback = feedback.getElementsByTagName("text").item(0).getTextContent();
+            answers.add(new Answer(fraction, text, t_format, q_feedback, f_format));
+        }
+    }
+
     public void load(String xml_path) {
 
         if (loaded) {
@@ -278,46 +334,7 @@ public class Question {
 
             Element x_question = (Element) document.getElementsByTagName("question").item(0);
 
-            Element x_questiontext = (Element) x_question.getElementsByTagName("questiontext").item(0);
-            qt_format = x_questiontext.getAttribute("format");     // Init qt_format
-            questiontext = x_questiontext.getElementsByTagName("text").item(0).getTextContent();  // Init questiontext
-
-            Element x_generalfeeback = (Element) x_question.getElementsByTagName("generalfeedback").item(0);
-            gf_format = x_generalfeeback.getAttribute("format");     // Init gf_format
-            generalfeedback = x_generalfeeback.getElementsByTagName("text").item(0).getTextContent();  // Init generalfeedback
-
-            Element x_correctfeedback = (Element) x_question.getElementsByTagName("correctfeedback").item(0);
-            cf_format = x_correctfeedback.getAttribute("format");     // Init cf_format
-            correctfeedback = x_correctfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init correctfeedback
-
-            Element x_partiallycorrectfeedback = (Element) x_question.getElementsByTagName("partiallycorrectfeedback").item(0);
-            pcf_format = x_partiallycorrectfeedback.getAttribute("format");     // Init pcf_format
-            partiallycorrectfeedback = x_partiallycorrectfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init partiallycorrectfeedback
-
-            Element x_incorrectfeedback = (Element) x_question.getElementsByTagName("incorrectfeedback").item(0);
-            if_format = x_incorrectfeedback.getAttribute("format");     // Init if_format
-            incorrectfeedback = x_incorrectfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init incorrectfeedback
-
-            defaultgrade = Double.parseDouble(x_question.getElementsByTagName("defaultgrade").item(0).getTextContent());
-            penalty = Double.parseDouble(x_question.getElementsByTagName("penalty").item(0).getTextContent());
-            hidden = Integer.parseInt(x_question.getElementsByTagName("hidden").item(0).getTextContent());
-            single = Boolean.parseBoolean(x_question.getElementsByTagName("single").item(0).getTextContent());
-            answernumbering = x_question.getElementsByTagName("answernumbering").item(0).getTextContent();
-            shuffleanswers = Boolean.parseBoolean(x_question.getElementsByTagName("shuffleanswers").item(0).getTextContent());
-
-            NodeList x_answers = x_question.getElementsByTagName("answer");
-            int answers_nb = x_answers.getLength();
-            for (int ans = 0; ans < answers_nb; ans++) {
-                Element answer = (Element) x_answers.item(ans);
-                Double fraction = Double.parseDouble(answer.getAttribute("fraction"));
-                String text = answer.getElementsByTagName("text").item(0).getTextContent();
-                String t_format = answer.getAttribute("format");
-                Element feedback = (Element) answer.getElementsByTagName("feedback").item(0);
-                String f_format = feedback.getAttribute("format");
-                String q_feedback = feedback.getElementsByTagName("text").item(0).getTextContent();
-                answers.add(new Answer(fraction, text, t_format, q_feedback, f_format));
-            }
-
+            load_from_element(x_question);
         }
         catch(final ParserConfigurationException e) {
             e.printStackTrace();
