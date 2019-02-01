@@ -15,7 +15,9 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Question {
 
@@ -24,7 +26,7 @@ public class Question {
     private int id;
 
     private boolean single;
-    private int shuffleanswers;
+    private boolean shuffleanswers;
     private int hidden;
     private String name, questiontext, generalfeedback, correctfeedback, partiallycorrectfeedback, incorrectfeedback;
     private String qt_format, gf_format, cf_format, pcf_format, if_format;
@@ -34,9 +36,41 @@ public class Question {
 
     private List<Answer> answers;
 
+    Map<String, String> answer_numbering_map;
+
+    private Question() {
+        answer_numbering_map_init();
+    }
+
+    public Question(Element question, SuperBank s_bank) {
+        this();
+        //id = s_bank.generate_id();
+        load_from_element(question);
+        loaded = true;
+    }
+
     public Question(String path) throws WrongQuestionTypeException {
+        this();
         loaded = false;
         init(path);
+    }
+
+    private void answer_numbering_map_init() {
+        answer_numbering_map = new HashMap<>();
+        answer_numbering_map.put("abc", "a, b, c");
+        answer_numbering_map.put("ABC", "A, B, C");
+        answer_numbering_map.put("123", "1, 2, 3");
+        answer_numbering_map.put("iii", "i, ii, iii");
+        answer_numbering_map.put("III", "I, II, III");
+        answer_numbering_map.put("none", "Sans Numérotation");
+    }
+
+    public ArrayList<String> getAnswerNumberingChoices() {
+        return new ArrayList<>(answer_numbering_map.values());
+    }
+
+    public String getAnswerNumberingDisplay() {
+        return answer_numbering_map.get(answernumbering);
     }
 
     public String toString() {
@@ -67,51 +101,52 @@ public class Question {
         return str;
     }
 
-    public Element getQuestionXml() {
-
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    public Element getQuestionXml(Document document) {
 
         Element root = null;
 
-        try {
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document= builder.newDocument();
-
             /////////////////////
             root = document.createElement("question");
+            root.setAttribute("type", "multichoice");
+
+             Element x_name = document.createElement("name");
+             root.appendChild(x_name);
+             Element x_name_text = document.createElement("text");
+             x_name.appendChild(x_name_text);
+             x_name_text.appendChild(document.createTextNode(name));
 
             Element x_questiontext = document.createElement("questiontext");
             x_questiontext.setAttribute("format", qt_format);
             Element questiontext_content = document.createElement("text");
-            questiontext_content.appendChild(document.createTextNode(questiontext));
+            questiontext_content.appendChild(document.createCDATASection(questiontext));
             x_questiontext.appendChild(questiontext_content);
             root.appendChild(x_questiontext);   //Write QuestionText
 
             Element x_generalfeeback = document.createElement("generalfeedback");
             x_generalfeeback.setAttribute("format", gf_format);
             Element generalfeedback_content = document.createElement("text");
-            generalfeedback_content.appendChild(document.createTextNode(generalfeedback));
+            generalfeedback_content.appendChild(document.createCDATASection(generalfeedback));
             x_generalfeeback.appendChild(generalfeedback_content);
             root.appendChild(x_generalfeeback);  //Write GeneralFeedback
 
             Element x_correctfeeback = document.createElement("correctfeedback");
             x_correctfeeback.setAttribute("format", cf_format);
             Element correctfeedback_content = document.createElement("text");
-            correctfeedback_content.appendChild(document.createTextNode(correctfeedback));
+            correctfeedback_content.appendChild(document.createCDATASection(correctfeedback));
             x_correctfeeback.appendChild(correctfeedback_content);
             root.appendChild(x_correctfeeback);  //Write CorrectFeedback
 
             Element x_partiallycorrectfeeback = document.createElement("partiallycorrectfeedback");
             x_partiallycorrectfeeback.setAttribute("format", pcf_format);
             Element partiallycorrectfeedback_content = document.createElement("text");
-            partiallycorrectfeedback_content.appendChild(document.createTextNode(partiallycorrectfeedback));
+            partiallycorrectfeedback_content.appendChild(document.createCDATASection(partiallycorrectfeedback));
             x_partiallycorrectfeeback.appendChild(partiallycorrectfeedback_content);
             root.appendChild(x_partiallycorrectfeeback);  //Write PartiallyCorrectFeedback
 
             Element x_incorrectfeeback = document.createElement("incorrectfeedback");
             x_incorrectfeeback.setAttribute("format", if_format);
             Element incorrectfeedback_content = document.createElement("text");
-            incorrectfeedback_content.appendChild(document.createTextNode(incorrectfeedback));
+            incorrectfeedback_content.appendChild(document.createCDATASection(incorrectfeedback));
             x_incorrectfeeback.appendChild(incorrectfeedback_content);
             root.appendChild(x_incorrectfeeback);  //Write InCorrectFeedback
 
@@ -136,27 +171,27 @@ public class Question {
             answernumbering_content.appendChild(document.createTextNode(answernumbering));
             root.appendChild(answernumbering_content);
 
+            Element shuffleanswers_content = document.createElement("shuffleanswers");
+            shuffleanswers_content.appendChild(document.createTextNode(Boolean.toString(shuffleanswers)));
+            root.appendChild(shuffleanswers_content);
+
             for (Answer ans : answers) {
                 Element answer = document.createElement("answer");
                 answer.setAttribute("fraction", Double.toString(ans.getFraction()));
                 answer.setAttribute("format", ans.getTextFormat());
                 Element text = document.createElement("text");
-                text.appendChild(document.createTextNode(ans.getText()));
+                text.appendChild(document.createCDATASection(ans.getText()));
                 answer.appendChild(text);
                 Element feedback = document.createElement("feedback");
                 feedback.setAttribute("format", ans.getFeedbackFormat());
                 Element f_text = document.createElement("text");
-                f_text.appendChild(document.createTextNode(ans.getFeedback()));
+                f_text.appendChild(document.createCDATASection(ans.getFeedback()));
                 feedback.appendChild(f_text);
                 answer.appendChild(feedback);
 
                 root.appendChild(answer);
             }
 
-        }
-        catch (final ParserConfigurationException e) {
-            e.printStackTrace();
-        }
 
         return root;
     }
@@ -170,6 +205,7 @@ public class Question {
             Document document = builder.newDocument();
 
             Element root = document.createElement("question_data");
+            document.appendChild(root);
             Element x_header = document.createElement("id_header");
             root.appendChild(x_header);
 
@@ -179,9 +215,11 @@ public class Question {
 
             Element x_name = document.createElement("name");
             x_header.appendChild(x_name);
-            x_name.appendChild(document.createTextNode(name));
+            Element x_name_text = document.createElement("text");
+            x_name.appendChild(x_name_text);
+            x_name_text.appendChild(document.createTextNode(name));
 
-            Element x_body = getQuestionXml();
+            Element x_body = getQuestionXml(document);
             root.appendChild(x_body);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -213,6 +251,7 @@ public class Question {
 
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
+            System.out.println(xml_path+"      Zxxxxxxxxxxxxxxxxxxxxxxxxx");
             Document document = builder.parse(new File(xml_path));
             Element root = document.getDocumentElement();
             Element id_header = (Element) root.getElementsByTagName("id_header").item(0);
@@ -236,13 +275,54 @@ public class Question {
         }
     }
 
+    private void load_from_element(Element x_question) {
+        Element x_questiontext = (Element) x_question.getElementsByTagName("questiontext").item(0);
+        qt_format = x_questiontext.getAttribute("format");     // Init qt_format
+        questiontext = x_questiontext.getElementsByTagName("text").item(0).getTextContent();  // Init questiontext
+
+        Element x_generalfeeback = (Element) x_question.getElementsByTagName("generalfeedback").item(0);
+        gf_format = x_generalfeeback.getAttribute("format");     // Init gf_format
+        generalfeedback = x_generalfeeback.getElementsByTagName("text").item(0).getTextContent();  // Init generalfeedback
+
+        Element x_correctfeedback = (Element) x_question.getElementsByTagName("correctfeedback").item(0);
+        cf_format = x_correctfeedback.getAttribute("format");     // Init cf_format
+        correctfeedback = x_correctfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init correctfeedback
+
+        Element x_partiallycorrectfeedback = (Element) x_question.getElementsByTagName("partiallycorrectfeedback").item(0);
+        pcf_format = x_partiallycorrectfeedback.getAttribute("format");     // Init pcf_format
+        partiallycorrectfeedback = x_partiallycorrectfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init partiallycorrectfeedback
+
+        Element x_incorrectfeedback = (Element) x_question.getElementsByTagName("incorrectfeedback").item(0);
+        if_format = x_incorrectfeedback.getAttribute("format");     // Init if_format
+        incorrectfeedback = x_incorrectfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init incorrectfeedback
+
+        defaultgrade = Double.parseDouble(x_question.getElementsByTagName("defaultgrade").item(0).getTextContent());
+        penalty = Double.parseDouble(x_question.getElementsByTagName("penalty").item(0).getTextContent());
+        hidden = Integer.parseInt(x_question.getElementsByTagName("hidden").item(0).getTextContent());
+        single = Boolean.parseBoolean(x_question.getElementsByTagName("single").item(0).getTextContent());
+        answernumbering = x_question.getElementsByTagName("answernumbering").item(0).getTextContent();
+        shuffleanswers = Boolean.parseBoolean(x_question.getElementsByTagName("shuffleanswers").item(0).getTextContent());
+
+        answers = new ArrayList<>();
+        NodeList x_answers = x_question.getElementsByTagName("answer");
+        int answers_nb = x_answers.getLength();
+        for (int ans = 0; ans < answers_nb; ans++) {
+            Element answer = (Element) x_answers.item(ans);
+            Double fraction = Double.parseDouble(answer.getAttribute("fraction"));
+            String text = answer.getElementsByTagName("text").item(0).getTextContent();
+            String t_format = answer.getAttribute("format");
+            Element feedback = (Element) answer.getElementsByTagName("feedback").item(0);
+            String f_format = feedback.getAttribute("format");
+            String q_feedback = feedback.getElementsByTagName("text").item(0).getTextContent();
+            answers.add(new Answer(fraction, text, t_format, q_feedback, f_format));
+        }
+    }
+
     public void load(String xml_path) {
 
         if (loaded) {
             return;
         }
-
-        answers = new ArrayList<>();
 
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -254,45 +334,7 @@ public class Question {
 
             Element x_question = (Element) document.getElementsByTagName("question").item(0);
 
-            Element x_questiontext = (Element) x_question.getElementsByTagName("questiontext").item(0);
-            qt_format = x_questiontext.getAttribute("format");     // Init qt_format
-            questiontext = x_questiontext.getElementsByTagName("text").item(0).getTextContent();  // Init questiontext
-
-            Element x_generalfeeback = (Element) x_question.getElementsByTagName("generalfeedback").item(0);
-            gf_format = x_generalfeeback.getAttribute("format");     // Init gf_format
-            generalfeedback = x_generalfeeback.getElementsByTagName("text").item(0).getTextContent();  // Init generalfeedback
-
-            Element x_correctfeedback = (Element) x_question.getElementsByTagName("correctfeedback").item(0);
-            cf_format = x_correctfeedback.getAttribute("format");     // Init cf_format
-            correctfeedback = x_correctfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init correctfeedback
-
-            Element x_partiallycorrectfeedback = (Element) x_question.getElementsByTagName("partiallycorrectfeedback").item(0);
-            pcf_format = x_partiallycorrectfeedback.getAttribute("format");     // Init pcf_format
-            partiallycorrectfeedback = x_partiallycorrectfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init partiallycorrectfeedback
-
-            Element x_incorrectfeedback = (Element) x_question.getElementsByTagName("incorrectfeedback").item(0);
-            if_format = x_incorrectfeedback.getAttribute("format");     // Init if_format
-            incorrectfeedback = x_incorrectfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init incorrectfeedback
-
-            defaultgrade = Double.parseDouble(x_question.getElementsByTagName("defaultgrade").item(0).getTextContent());
-            penalty = Double.parseDouble(x_question.getElementsByTagName("penalty").item(0).getTextContent());
-            hidden = Integer.parseInt(x_question.getElementsByTagName("hidden").item(0).getTextContent());
-            single = Boolean.parseBoolean(x_question.getElementsByTagName("single").item(0).getTextContent());
-            answernumbering = x_question.getElementsByTagName("answernumbering").item(0).getTextContent();
-
-            NodeList x_answers = x_question.getElementsByTagName("answer");
-            int answers_nb = x_answers.getLength();
-            for (int ans = 0; ans < answers_nb; ans++) {
-                Element answer = (Element) x_answers.item(ans);
-                Double fraction = Double.parseDouble(answer.getAttribute("fraction"));
-                String text = answer.getElementsByTagName("text").item(0).getTextContent();
-                String t_format = answer.getAttribute("format");
-                Element feedback = (Element) answer.getElementsByTagName("feedback").item(0);
-                String f_format = feedback.getAttribute("format");
-                String q_feedback = feedback.getElementsByTagName("text").item(0).getTextContent();
-                answers.add(new Answer(fraction, text, t_format, q_feedback, f_format));
-            }
-
+            load_from_element(x_question);
         }
         catch(final ParserConfigurationException e) {
             e.printStackTrace();
@@ -309,6 +351,162 @@ public class Question {
 
     public int getID() {
         return id;
+    }
+
+
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    //////////////// [ Getters ] ////////////////
+
+    public boolean isSingle() {
+        return single;
+    }
+
+    public boolean isShuffleanswers() {
+        return shuffleanswers;
+    }
+
+    public int getHidden() {
+        return hidden;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getQuestiontext() {
+        return questiontext;
+    }
+
+    public String getGeneralfeedback() {
+        return generalfeedback;
+    }
+
+    public String getCorrectfeedback() {
+        return correctfeedback;
+    }
+
+    public String getPartiallycorrectfeedback() {
+        return partiallycorrectfeedback;
+    }
+
+    public String getIncorrectfeedback() {
+        return incorrectfeedback;
+    }
+
+    public String getQt_format() {
+        return qt_format;
+    }
+
+    public String getGf_format() {
+        return gf_format;
+    }
+
+    public String getCf_format() {
+        return cf_format;
+    }
+
+    public String getPcf_format() {
+        return pcf_format;
+    }
+
+    public String getIf_format() {
+        return if_format;
+    }
+
+    public String getAnswernumbering() {
+        return answernumbering;
+    }
+
+    public double getDefaultgrade() {
+        return defaultgrade;
+    }
+
+    public double getPenalty() {
+        return penalty;
+    }
+
+    //////////////// [ Setters ] ////////////////
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setSingle(boolean single) {
+        this.single = single;
+    }
+
+    public void setShuffleanswers(boolean shuffleanswers) {
+        this.shuffleanswers = shuffleanswers;
+    }
+
+    public void setHidden(int hidden) {
+        this.hidden = hidden;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQuestiontext(String questiontext) {
+        this.questiontext = questiontext;
+    }
+
+    public void setGeneralfeedback(String generalfeedback) {
+        this.generalfeedback = generalfeedback;
+    }
+
+    public void setCorrectfeedback(String correctfeedback) {
+        this.correctfeedback = correctfeedback;
+    }
+
+    public void setPartiallycorrectfeedback(String partiallycorrectfeedback) {
+        this.partiallycorrectfeedback = partiallycorrectfeedback;
+    }
+
+    public void setIncorrectfeedback(String incorrectfeedback) {
+        this.incorrectfeedback = incorrectfeedback;
+    }
+
+    public void setQt_format(String qt_format) {
+        this.qt_format = qt_format;
+    }
+
+    public void setGf_format(String gf_format) {
+        this.gf_format = gf_format;
+    }
+
+    public void setCf_format(String cf_format) {
+        this.cf_format = cf_format;
+    }
+
+    public void setPcf_format(String pcf_format) {
+        this.pcf_format = pcf_format;
+    }
+
+    public void setIf_format(String if_format) {
+        this.if_format = if_format;
+    }
+
+    public void setAnswernumbering(String answernumbering) {
+        for (Map.Entry<String, String> entry : answer_numbering_map.entrySet()) {
+            if (entry.getValue().equals(answernumbering)) {
+                this.answernumbering = entry.getKey();
+                return;
+            }
+        }
+        this.answernumbering = "abc";  //Défaut si problème
+    }
+
+    public void setDefaultgrade(double defaultgrade) {
+        this.defaultgrade = defaultgrade;
+    }
+
+    public void setPenalty(double penalty) {
+        this.penalty = penalty;
     }
 }
 

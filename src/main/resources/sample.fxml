@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.web.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -16,7 +17,21 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <Menu mnemonicParsing="false" text="New">
+                    <items>
+                      <MenuItem accelerator="Ctrl + d" mnemonicParsing="false" text="Question" />
+                        <MenuItem accelerator="Ctrl + e" mnemonicParsing="false" text="Banque" />
+                        <MenuItem accelerator="Ctrl + f" mnemonicParsing="false" text="Qcm" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Import">
+                    <items>
+                      <MenuItem accelerator="Ctrl + a" mnemonicParsing="false" onAction="#importQcm" text="Import une qcm" />
+                      <MenuItem accelerator="Ctrl + b" mnemonicParsing="false" onAction="#importBank" text="Import une banque" />
+                    </items>
+                  </Menu>
+                <MenuItem accelerator="Ctrl + c" mnemonicParsing="false" onAction="#exportQcm" text="Export une qcm/bank" />
+                <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -53,7 +68,14 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView layoutX="-16.0" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <TreeView fx:id="bank" layoutX="-16.0" onDragDetected="#treeDrag" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <contextMenu>
+                                          <ContextMenu>
+                                            <items>
+                                              <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                            </items>
+                                          </ContextMenu>
+                                       </contextMenu></TreeView>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -62,7 +84,14 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView layoutX="-46.0" layoutY="14.0" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <TreeView fx:id="qcm" layoutX="-46.0" layoutY="14.0" onDragDetected="#treeDrag" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <contextMenu>
+                                          <ContextMenu>
+                                            <items>
+                                              <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                            </items>
+                                          </ContextMenu>
+                                       </contextMenu></TreeView>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -81,26 +110,29 @@
                                  <children>
                                     <ScrollPane layoutX="-19.0" layoutY="22.0" prefHeight="345.0" prefWidth="243.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1393.0" prefWidth="243.0">
+                                        <AnchorPane fx:id="question_pane" minHeight="0.0" minWidth="0.0" prefHeight="1500.0" prefWidth="243.0">
                                              <children>
-                                                <TextField alignment="CENTER" layoutX="14.0" layoutY="24.0" AnchorPane.topAnchor="24.0" />
+                                                <TextField fx:id="question_name_field" alignment="TOP_LEFT" layoutX="14.0" layoutY="24.0" AnchorPane.topAnchor="24.0" />
                                                 <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" wrappingWidth="32.232421875" />
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="81.0" prefHeight="200.0" prefWidth="506.0" />
+                                                <HTMLEditor fx:id="question_text_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="1.0" layoutY="81.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text layoutX="14.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Énoncé :" wrappingWidth="44.390625" />
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="318.0" prefHeight="200.0" prefWidth="506.0" />
+                                                <HTMLEditor fx:id="general_feebdack_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="318.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text layoutX="14.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retour général :" />
                                                 <Text layoutX="14.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retour réponse correcte :" />
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="556.0" prefHeight="200.0" prefWidth="506.0" />
+                                                <HTMLEditor fx:id="correct_feedback_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="556.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text layoutX="14.0" layoutY="796.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retour réponse partiellement incorrecte :" />
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="799.0" prefHeight="200.0" prefWidth="506.0" />
+                                                <HTMLEditor fx:id="partially_correct_feedback_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="799.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text layoutX="14.0" layoutY="1034.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Retour réponse incorrecte :" />
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="1037.0" prefHeight="200.0" prefWidth="506.0" />
+                                                <HTMLEditor fx:id="incorrect_feedback_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="14.0" layoutY="1037.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text layoutX="23.0" layoutY="1290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type de choix :" />
-                                                <ChoiceBox layoutX="115.0" layoutY="1273.0" prefWidth="150.0" />
+                                                <ChoiceBox fx:id="question_choice_type" layoutX="115.0" layoutY="1273.0" prefWidth="150.0" />
                                                 <Text layoutX="14.0" layoutY="1328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note par défaut :" />
-                                                <TextField layoutX="115.0" layoutY="1311.0" />
+                                                <TextField fx:id="defaultgrade_field" layoutX="115.0" layoutY="1311.0" />
                                                 <Text layoutX="60.0" layoutY="1359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pénalty :" />
-                                                <TextField layoutX="115.0" layoutY="1344.0" />
+                                                <TextField fx:id="penalty_field" layoutX="115.0" layoutY="1344.0" />
+                                                <RadioButton fx:id="multiple_answers_choice" layoutX="25.0" layoutY="1390.0" mnemonicParsing="false" text="Réponses multiples" />
+                                                <RadioButton fx:id="shuffle_answers_choice" layoutX="25.0" layoutY="1420.0" mnemonicParsing="false" text="Mélanger les réponses" />
+                                                <Button fx:id="save_question" layoutX="190.0" layoutY="1465.0" mnemonicParsing="false" onAction="#questionSaved" text="Sauvegarder" />
                                              </children>
                                           </AnchorPane>
                                        </content>
