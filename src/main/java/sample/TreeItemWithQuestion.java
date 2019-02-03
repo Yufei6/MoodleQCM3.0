@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 
 public class TreeItemWithQuestion<S> extends TreeItem {
-    Question question;
+    private Question question;
 
     public TreeItemWithQuestion(Question question) {
         this.question = question;

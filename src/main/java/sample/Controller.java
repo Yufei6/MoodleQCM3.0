@@ -1,11 +1,4 @@
 package sample;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,29 +6,25 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
-import org.xml.sax.SAXException;
-
-
-import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.xml.sax.SAXException;
 
-import javax.swing.*;
-
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 
 public class Controller implements Initializable {
@@ -309,18 +298,14 @@ public class Controller implements Initializable {
         TreeItem root = new TreeItem();
         try {
             root=superBank.generateTreeWithQuestion();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
+        } catch (IOException | SAXException e) {
             e.printStackTrace();
         } catch (WrongQuestionTypeException e) {
             e.printStackTrace();
         }
         try {
             superBank.extractId_Path();
-        } catch (org.xml.sax.SAXException e){
-            e.printStackTrace();
-        } catch (IOException e){
+        } catch (SAXException | IOException e){
             e.printStackTrace();
         }
         tree.setRoot(root);
@@ -328,8 +313,7 @@ public class Controller implements Initializable {
         SuperBank finalSuperBank = superBank;
         contextMenu.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                String string = tree.getSelectionModel().getSelectedItems().get(0).getValue();
-                nameFile = string;
+                nameFile = tree.getSelectionModel().getSelectedItems().get(0).getValue();
                 textTitle = new Text("Ajouter Dossier");
                 Parent root = null;
                 try {
@@ -393,22 +377,31 @@ public class Controller implements Initializable {
     }
 
 
-    public void clickRight(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
-        SuperBank superBank = new SuperBank();
-        if(mouseEvent.isPopupTrigger()){
-            reload = true;
-            String string = tree.getSelectionModel().getSelectedItems().get(0).getValue();
-
+    public void clickOnItem(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
+        TreeItemWithQuestion<String> treeItem = (TreeItemWithQuestion<String>) tree.getSelectionModel().getSelectedItems().get(0);
+        if (treeItem.getQuestion() != null){
+            System.out.println(treeItem.getQuestion().getName());
+            treeItem.getQuestion().load(superBank.find(String.valueOf(treeItem.getQuestion().getID())));
+            System.out.println(treeItem.getQuestion().getQuestiontext());
+            String stringHtml = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p>"+treeItem.getQuestion().getQuestiontext()+"</p></body></html>";
+            question_name_field.setText(treeItem.getQuestion().getName());
+            question_text_field.setHtmlText(stringHtml);
+            System.out.println(treeItem.getQuestion().getGeneralfeedback());
+            general_feebdack_field.setHtmlText(treeItem.getQuestion().getGeneralfeedback());
+            correct_feedback_field.setHtmlText(treeItem.getQuestion().getCorrectfeedback());
+            partially_correct_feedback_field.setHtmlText(treeItem.getQuestion().getPartiallycorrectfeedback());
+            incorrect_feedback_field.setHtmlText(treeItem.getQuestion().getIncorrectfeedback());
+            //TODO : question choice type ??
+            defaultgrade_field.setText(String.valueOf(treeItem.getQuestion().getDefaultgrade()));
+            penalty_field.setText(String.valueOf(treeItem.getQuestion().getPenalty()));
         }
+
+        //TODO : sauvegarder
+
     }
 
     public void reloadTree(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
-        SuperBank superBank = new SuperBank();
-        System.out.println(reload);
-        if (reload == true){
-            tree.setRoot(superBank.generateTreeWithQuestion());
-            reload = false;
-        }
+
     }
 
 
