@@ -15,10 +15,14 @@ import static org.junit.Assert.assertEquals;
 public class SuperBankTest {
     SuperBank superBank;
     @Before
-    public void setUp() throws ParserConfigurationException {
+    public void setUp() throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
         superBank=new SuperBank();
     }
-
+    @Test
+    public void testBank(){
+        System.out.println(superBank.getQuestions().get(1).getName());
+        assertEquals(3,superBank.getQuestions().size());
+    }
     @Test
     public void testBankAsDirectory(){
         assertEquals(true,superBank.getDirBank().isDirectory());

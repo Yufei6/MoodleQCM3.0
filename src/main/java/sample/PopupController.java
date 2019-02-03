@@ -7,12 +7,14 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TreeView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -48,6 +50,12 @@ public class PopupController implements Initializable {
         try {
             superBank = new SuperBank();
         } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (WrongQuestionTypeException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
             e.printStackTrace();
         }
         System.out.println(Controller.getText().getText());

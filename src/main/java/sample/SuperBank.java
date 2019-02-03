@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Objects;
 
 
@@ -21,17 +22,37 @@ public class SuperBank {
     private ArrayList<String[]> questionList;
     private DocumentBuilder builder;
     private int maxId=0;
+    private ArrayList<Question> questions;
 
-    public SuperBank() throws ParserConfigurationException {
+    public ArrayList<Question> getQuestions() {
+        return questions;
+    }
+
+    public SuperBank() throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
         dirBank =new File("bank");
         questionList = new ArrayList<>();
+        questions = new ArrayList<>();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         builder = factory.newDocumentBuilder();
+        extractId_Path();
+        loadPartQuestion();
+
+    }
+
+    private void loadPartQuestion() throws WrongQuestionTypeException {
+        ListIterator listIterator = questionList.listIterator();
+        for (int i = 0; i < questionList.size(); i++) {
+            questions.add(new Question(questionList.get(0)[1]));
+        }
 
     }
 
     public File getDirBank() {
         return dirBank;
+    }
+
+    String newQuestion(Question question){
+        return "bank/"+question.getID();
     }
 
 

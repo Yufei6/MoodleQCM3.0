@@ -301,6 +301,10 @@ public class Controller implements Initializable {
             e.printStackTrace();
         } catch (WrongQuestionTypeException e) {
             e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         TreeItem root = new TreeItem();
         try {
@@ -387,7 +391,7 @@ public class Controller implements Initializable {
     }
 
 
-    public void clickRight(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException {
+    public void clickRight(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
         SuperBank superBank = new SuperBank();
         if(mouseEvent.isPopupTrigger()){
             reload = true;
@@ -396,7 +400,7 @@ public class Controller implements Initializable {
         }
     }
 
-    public void reloadTree(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException {
+    public void reloadTree(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
         SuperBank superBank = new SuperBank();
         System.out.println(reload);
         if (reload == true){
