@@ -200,7 +200,7 @@ public class Controller implements Initializable {
         File banks = new File("./target/Bank");
         TreeItem<String> root_bank = new TreeItem<>();
         for(File b : banks.listFiles()){
-            Bank new_bank = new Bank("./target/Bank/"+b.getName(),superBank);
+             Bank new_bank = new Bank("./target/Bank/"+b.getName(),superBank);
             bank_tab.add(new_bank);
             TreeItem<String> treeItem = new TreeItem<>(new_bank.getName());
             treeItem = new_bank.createQuestionTree(treeItem);
@@ -308,10 +308,12 @@ public class Controller implements Initializable {
         }
         TreeItem root = new TreeItem();
         try {
-            root=superBank.generateTree();
+            root=superBank.generateTreeWithQuestion();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (WrongQuestionTypeException e) {
             e.printStackTrace();
         }
         try {
@@ -404,7 +406,7 @@ public class Controller implements Initializable {
         SuperBank superBank = new SuperBank();
         System.out.println(reload);
         if (reload == true){
-            tree.setRoot(superBank.generateTree());
+            tree.setRoot(superBank.generateTreeWithQuestion());
             reload = false;
         }
     }

@@ -54,9 +54,14 @@ public class SuperBankTest {
         String[] strings = (String[]) arrayList.get(0);
         assertEquals(string, strings[0]);
     }
+    @Test
+    public void testExtractName_path() {
+        assertEquals(3,superBank.extractPath_Name_Question().size());
+    }
 
     @Test
     public void testExtractID_PathSize() throws IOException,SAXException{
+
         assertEquals(3,superBank.extractId_Path().size());
     }
 
