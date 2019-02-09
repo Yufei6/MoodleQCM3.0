@@ -4,6 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -13,7 +17,7 @@ public class QcmTest {
     private SuperBank sb1;
 
     @Before
-    public void setUp() throws javax.xml.parsers.ParserConfigurationException {
+    public void setUp() throws javax.xml.parsers.ParserConfigurationException, SAXException, IOException, WrongQuestionTypeException {
         sb1 = spy(new SuperBank());
     }
 

@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Objects;
 
 
@@ -21,17 +22,37 @@ public class SuperBank {
     private ArrayList<String[]> questionList;
     private DocumentBuilder builder;
     private int maxId=0;
+    private ArrayList<Question> questions;
 
-    public SuperBank() throws ParserConfigurationException {
+    public ArrayList<Question> getQuestions() {
+        return questions;
+    }
+
+    public SuperBank() throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
         dirBank =new File("bank");
         questionList = new ArrayList<>();
+        questions = new ArrayList<>();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         builder = factory.newDocumentBuilder();
+        //extractId_Path();
+        //loadPartQuestion();
+
+    }
+
+    private void loadPartQuestion() throws WrongQuestionTypeException {
+        ListIterator listIterator = questionList.listIterator();
+        for (int i = 0; i < questionList.size(); i++) {
+            questions.add(new Question(questionList.get(0)[1]));
+        }
 
     }
 
     public File getDirBank() {
         return dirBank;
+    }
+
+    String newQuestion(Question question){
+        return "bank/"+question.getID();
     }
 
 
@@ -50,6 +71,39 @@ public class SuperBank {
         maxId++;
         return maxId;
     }
+
+    public ArrayList extractPath_Name_Question() {
+        return extractNamePath(dirBank);
+    }
+
+    private ArrayList extractNamePath(File file){
+        if (!havefiles(file)) return null;
+        for (File dir : file.listFiles()){
+            if (dir.isDirectory()) extractNamePath(dir);
+            if (isXmlFile(dir)){
+                String[] strings= extractNameQuestion(dir);
+                if (strings != null){
+                    questionList.add(strings);
+                }
+            }
+        }
+        return questionList;
+    }
+
+    private String[] extractNameQuestion(File file1) {
+        String[] strings = new String[2];
+        try {
+            Question question = new Question(file1.getPath());
+            strings[0]= String.valueOf(question.getID());
+            strings[1]=file1.getPath();
+        } catch (WrongQuestionTypeException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return strings;
+
+    }
+
     private ArrayList extractId_Path(File dirBank) throws IOException, SAXException {
         if (!havefiles(dirBank)) return null;
         for (File dir : dirBank.listFiles()){
@@ -105,7 +159,7 @@ public class SuperBank {
         return new Question(find(s));
     }
 
-    public TreeItem<String> generateTree() throws IOException, SAXException {
+    public TreeItem<String> generateTree() throws IOException, SAXException, WrongQuestionTypeException {
         TreeItem<String> root = new TreeItem<>("bank");
         root.setExpanded(true);
         for(File file : dirBank.listFiles()){
@@ -120,18 +174,38 @@ public class SuperBank {
         }
         return root;
     }
+    public TreeItemWithQuestion<String> generateTreeWithQuestion() throws IOException, SAXException, WrongQuestionTypeException {
+        TreeItemWithQuestion<String> root = new TreeItemWithQuestion<>("bank");
+        root.setExpanded(true);
+        for(File file : dirBank.listFiles()){
+            if (file.isDirectory()){
+                root.getChildren().addAll(generateItem(file));
+            } else{
 
-    private TreeItem<String> generateItem(File file) throws IOException, SAXException {
-        TreeItem<String> treeItem = new TreeItem<>(file.getName());
+                Question question = new Question(file.getPath());
+                if (question.getName() != null) {
+                    TreeItemWithQuestion<String> treeItem = new TreeItemWithQuestion<>(question.getName(), question);
+                    root.getChildren().addAll(treeItem);
+                }
+            }
+        }
+        System.out.println("taille arbre"+root.getChildren().size());
+        return root;
+    }
+
+    private TreeItem<String> generateItem(File file) throws IOException, SAXException, WrongQuestionTypeException {
+        TreeItemWithQuestion<String> treeItem = new TreeItemWithQuestion<>(file.getName());
 
         for (File file1 : file.listFiles()) {
             if (file1.isDirectory()){
                 treeItem.getChildren().addAll(generateItem(file1));
-            }
-            if (isXmlFile(file1) && extractQuestion(file1)!=null){
-                String[] strings= extractQuestion(file1);
-                TreeItem<String> treeItem1 = new TreeItem<String>(file1.getName());
-                treeItem.getChildren().addAll(treeItem1);
+            } else {
+
+                Question question = new Question(file1.getPath());
+                if (question != null) {
+                    TreeItemWithQuestion<String> treeItem1 = new TreeItemWithQuestion<>(question.getName(), question);
+                    treeItem.getChildren().addAll(treeItem1);
+                }
             }
         }
         return treeItem;
