@@ -51,7 +51,6 @@ public class Qcm extends QuestionStorage {
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element question = (Element) list_Id.item(i);
                 Question new_question = new Question(question ,super_bank0);
-                System.out.println(new_question.getID()+"      IIIIIIIIIIIID");
                 new_qcm.addQuestion(new_question);
             }
         } catch (ParserConfigurationException e) {
@@ -64,13 +63,21 @@ public class Qcm extends QuestionStorage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println("xxxxxxxxx");
         new_qcm.save();
         return new_qcm;
     }
 
     public void Export(String xml_path, String name_for_xml){
         super.Export(xml_path, name_for_xml, false);
+    }
+
+
+    public TreeItemWithQcm<String> createQuestionTree(TreeItemWithQcm<String> root){
+        for(Question q : super.list_question){
+            TreeItemWithQuestion<String> treeItem = new TreeItemWithQuestion<String>(q.getName(),q);
+            root.getChildren().addAll(treeItem);
+        }
+        return root;
     }
 
 

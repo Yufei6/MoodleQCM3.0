@@ -22,7 +22,7 @@ import java.util.Set;
 
 
 public abstract class QuestionStorage{
-    private Set<Question> list_question;
+    protected Set<Question> list_question;
     private String name, path;
     public SuperBank super_bank;
 
@@ -54,7 +54,6 @@ public abstract class QuestionStorage{
             final int nbIDsElements = list_Id.getLength();
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element Id = (Element) list_Id.item(i);
-                System.out.println("FINDDDDDDDDDDD"+Id.getTextContent());
                 Question new_question = new Question(super_bank.find(Id.getTextContent()));
                 list_question.add(new_question);
             }
@@ -113,7 +112,6 @@ public abstract class QuestionStorage{
             for (Question q:list_question) {
                 final Element question_id = document.createElement("question_id");
                 question_id_list.appendChild(question_id);
-                System.out.println(q.getID()+"     IDDDDDDDDD");
                 question_id.appendChild(document.createTextNode(q.getID()+""));
             }
             Calendar c = Calendar.getInstance();
@@ -224,13 +222,6 @@ public abstract class QuestionStorage{
         return path;
     }
 
-    public TreeItem<String> createQuestionTree(TreeItem<String> root){
-        for(Question q : list_question){
-            TreeItem<String> treeItem = new TreeItem<String>(q.getName());
-            root.getChildren().addAll(treeItem);
-        }
-        return root;
-    }
 
     public int getQuestionQuantite(){
         return list_question.size();
