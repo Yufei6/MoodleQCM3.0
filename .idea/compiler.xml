@@ -10,8 +10,5 @@
         <module name="MoodleQCM3.0" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="MoodleQCM3" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>

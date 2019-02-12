@@ -50,14 +50,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="151.0" prefWidth="79.0">
                <children>
-                  <TreeView fx:id="tree" onDragDetected="#treeDrag" onMouseClicked="#clickRight" onMouseMoved="#reloadTree" prefHeight="374.0" prefWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <contextMenu>
-                        <ContextMenu fx:id="contextMenu">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Unspecified Action" />
-                          </items>
-                        </ContextMenu>
-                     </contextMenu></TreeView>
+                  <TreeView fx:id="tree" layoutX="-27.0" onDragDetected="#treeDrag" prefHeight="374.0" prefWidth="173.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="107.0">
