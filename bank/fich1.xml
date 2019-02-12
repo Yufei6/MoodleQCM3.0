@@ -13,7 +13,7 @@
             <text><![CDATA[<p>8*5</p>]]></text>
         </questiontext>
         <generalfeedback format="html">
-            <text></text>
+            <text>test_general_feedback</text>
         </generalfeedback>
         <defaultgrade>1.0000000</defaultgrade>
         <penalty>0.3333333</penalty>
