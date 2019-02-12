@@ -44,7 +44,7 @@ public class Question {
 
     public Question(Element question, SuperBank s_bank) {
         this();
-        //id = s_bank.generate_id();
+        id = s_bank.generateId();
         load_from_element(question);
         loaded = true;
     }
