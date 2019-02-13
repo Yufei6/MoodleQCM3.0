@@ -251,7 +251,6 @@ public class Question {
 
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            System.out.println(xml_path+"      Zxxxxxxxxxxxxxxxxxxxxxxxxx");
             Document document = builder.parse(new File(xml_path));
             Element root = document.getDocumentElement();
             Element id_header = (Element) root.getElementsByTagName("id_header").item(0);

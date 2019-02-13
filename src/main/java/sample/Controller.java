@@ -19,9 +19,9 @@ import javafx.stage.Window;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,6 +31,8 @@ public class Controller implements Initializable {
     private static String nameFile;
     private static Text textTitle;
     private boolean reload;
+    private String sys_qcm_path = "./target/Qcm/";
+    private String sys_bank_path = "./target/Bank/";
 
     public static String getNameFile() {
         return nameFile;
@@ -55,7 +57,6 @@ public class Controller implements Initializable {
     }
 
     @FXML
-
     private ContextMenu contextMenu;
     SuperBank superBank;
     List<Bank> bankList;
@@ -112,26 +113,25 @@ public class Controller implements Initializable {
 
     ////////////////////////////////////////////////////
     @FXML void importBank(ActionEvent event){
-//        JFileChooser chooser = new JFileChooser();
-//        ExampleFileFilter filter = new ExampleFileFilter();
-//        filter.addExtension("xml");
-//        chooser.setFileFilter(filter);
-//        int returnVal = chooser.showOpenDialog(parent);
-//
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("XML", "*.xml")
         );
         File f = fileChooser.showOpenDialog(stage);
-
-
         String fileAsString = null;
         if (f != null) {
             fileAsString = f.toString();
         }
         System.out.println(fileAsString);
-
+        Bank new_bank = new Bank(fileAsString,superBank);
+        try {
+            copyFileByStream(new File(fileAsString), new File(sys_bank_path+ new_bank.getName()+".xml"));
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        bankList.add(new_bank);
+        displayBanks();
     }
 
     @FXML void exportBank(ActionEvent event){
@@ -139,6 +139,10 @@ public class Controller implements Initializable {
         File file = directoryChooser.showDialog(stage);
         String path = file.getPath();
         System.out.println(path);
+        TreeItemWithBank<String> treeItem = (TreeItemWithBank<String>) bank.getSelectionModel().getSelectedItems().get(0);
+        if (treeItem.getBank() != null){
+            treeItem.getBank().Export(path, treeItem.getBank().getName());
+        }
     }
 
     @FXML void importQcm(ActionEvent event){
@@ -155,6 +159,15 @@ public class Controller implements Initializable {
             fileAsString = f.toString();
         }
         System.out.println(fileAsString);
+        Qcm new_qcm = new Qcm(fileAsString,superBank);
+        try {
+            copyFileByStream(new File(fileAsString), new File(sys_qcm_path+ new_qcm.getName()+".xml"));
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        qcmList.add(new_qcm);
+        displayQcms();
+
     }
 
     @FXML void exportQcm(ActionEvent event){
@@ -162,8 +175,10 @@ public class Controller implements Initializable {
         File file = directoryChooser.showDialog(stage);
         String path = file.getPath();
         System.out.println(path);
-
-
+        TreeItemWithQcm<String> treeItem = (TreeItemWithQcm<String>) qcm.getSelectionModel().getSelectedItems().get(0);
+        if (treeItem.getQcm() != null){
+            treeItem.getQcm().Export(path, treeItem.getQcm().getName());
+        }
     }
 
 
@@ -177,43 +192,57 @@ public class Controller implements Initializable {
     }
 
 
-
-
-
-
-
-
-
     private void initBanksAndQcms(SuperBank superBank){
-        ArrayList<Bank> bank_tab = new ArrayList<Bank>();
-        File banks = new File("./target/Bank");
-        TreeItem<String> root_bank = new TreeItem<>();
+        bankList = new ArrayList<Bank>();
+        File banks = new File(sys_bank_path);
         for(File b : banks.listFiles()){
-             Bank new_bank = new Bank("./target/Bank/"+b.getName(),superBank);
-            bank_tab.add(new_bank);
-            TreeItem<String> treeItem = new TreeItem<>(new_bank.getName());
-            treeItem = new_bank.createQuestionTree(treeItem);
+             Bank new_bank = new Bank(sys_bank_path+b.getName(),superBank);
+            bankList.add(new_bank);
+        }
+        displayBanks();
+
+        qcmList = new ArrayList<Qcm>();
+        File qcms = new File(sys_qcm_path);
+        for(File q : qcms.listFiles()){
+            Qcm new_qcm = new Qcm(sys_qcm_path+q.getName(),superBank);
+            qcmList.add(new_qcm);
+        }
+        displayQcms();
+    }
+
+    private void displayBanks(){
+        TreeItem<String> root_bank = new TreeItem<>();
+        for(Bank b : bankList){
+            TreeItemWithBank<String> treeItem = new TreeItemWithBank<>(b.getName());
+            treeItem = b.createQuestionTree(treeItem);
             root_bank.getChildren().addAll(treeItem);
         }
         bank.setRoot(root_bank);
         bank.setShowRoot(false);
+    }
 
 
-
-        ArrayList<Qcm> qcm_tab = new ArrayList<Qcm>();
-//        qcm_tab.add(Qcm.Import("./target/Qcm_Import/import1.xml", "import1", superBank));
-//        qcm_tab.add(Qcm.Import("./target/Qcm_Import/import1.xml", "import1", superBank));
-        File qcms = new File("./target/Qcm");
+    private void displayQcms(){
         TreeItem<String> root_qcm = new TreeItem<>();
-        for(File q : qcms.listFiles()){
-            Qcm new_qcm = new Qcm("./target/Qcm/"+q.getName(),superBank);
-            qcm_tab.add(new_qcm);
-            TreeItem<String> treeItem = new TreeItem<>(new_qcm.getName());
-            treeItem = new_qcm.createQuestionTree(treeItem);
+        for(Qcm q: qcmList){
+            TreeItemWithQcm<String> treeItem = new TreeItemWithQcm<>(q.getName());
+            treeItem = q.createQuestionTree(treeItem);
             root_qcm.getChildren().addAll(treeItem);
         }
         qcm.setRoot(root_qcm);
         qcm.setShowRoot(false);
+    }
+
+
+    public static void copyFileByStream(File source, File dest) throws IOException {
+        try (InputStream is = new FileInputStream(source);
+             OutputStream os = new FileOutputStream(dest);){
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        }
     }
 
 
@@ -414,10 +443,50 @@ public class Controller implements Initializable {
             defaultgrade_field.setText(String.valueOf(treeItem.getQuestion().getDefaultgrade()));
             penalty_field.setText(String.valueOf(treeItem.getQuestion().getPenalty()));
         }
-
         //TODO : sauvegarder
 
     }
+
+
+    public void clickOnQcm(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
+        TreeItemWithQuestion<String> treeItem2 = (TreeItemWithQuestion<String>) qcm.getSelectionModel().getSelectedItems().get(0);
+        if (treeItem2.getQuestion() != null){
+            treeItem2.getQuestion().load(superBank.find(String.valueOf(treeItem2.getQuestion().getID())));
+            String stringHtml = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p>"+treeItem2.getQuestion().getQuestiontext()+"</p></body></html>";
+            question_name_field.setText(treeItem2.getQuestion().getName());
+            question_text_field.setHtmlText(stringHtml);
+            general_feebdack_field.setHtmlText(treeItem2.getQuestion().getGeneralfeedback());
+            correct_feedback_field.setHtmlText(treeItem2.getQuestion().getCorrectfeedback());
+            partially_correct_feedback_field.setHtmlText(treeItem2.getQuestion().getPartiallycorrectfeedback());
+            incorrect_feedback_field.setHtmlText(treeItem2.getQuestion().getIncorrectfeedback());
+            //TODO : question choice type ??
+            defaultgrade_field.setText(String.valueOf(treeItem2.getQuestion().getDefaultgrade()));
+            penalty_field.setText(String.valueOf(treeItem2.getQuestion().getPenalty()));
+        }
+        //TODO : sauvegarder
+
+    }
+
+
+
+    public void clickOnBank(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
+        TreeItemWithQuestion<String> treeItem3 = (TreeItemWithQuestion<String>) bank.getSelectionModel().getSelectedItems().get(0);
+        if (treeItem3.getQuestion() != null){
+            treeItem3.getQuestion().load(superBank.find(String.valueOf(treeItem3.getQuestion().getID())));
+            String stringHtml = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p>"+treeItem3.getQuestion().getQuestiontext()+"</p></body></html>";
+            question_name_field.setText(treeItem3.getQuestion().getName());
+            question_text_field.setHtmlText(stringHtml);
+            general_feebdack_field.setHtmlText(treeItem3.getQuestion().getGeneralfeedback());
+            correct_feedback_field.setHtmlText(treeItem3.getQuestion().getCorrectfeedback());
+            partially_correct_feedback_field.setHtmlText(treeItem3.getQuestion().getPartiallycorrectfeedback());
+            incorrect_feedback_field.setHtmlText(treeItem3.getQuestion().getIncorrectfeedback());
+            //TODO : question choice type ??
+            defaultgrade_field.setText(String.valueOf(treeItem3.getQuestion().getDefaultgrade()));
+            penalty_field.setText(String.valueOf(treeItem3.getQuestion().getPenalty()));
+        }
+
+    }
+
 
     public void reloadTree(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
 

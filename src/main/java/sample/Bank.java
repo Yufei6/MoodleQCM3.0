@@ -1,6 +1,7 @@
 package sample;
 
 
+import javafx.scene.control.TreeItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -69,6 +70,15 @@ public class Bank extends QuestionStorage{
 
     public void Export(String xml_path, String name_for_xml){
         super.Export(xml_path, name_for_xml, true);
+    }
+
+
+    public TreeItemWithBank<String> createQuestionTree(TreeItemWithBank<String> root){
+        for(Question q : super.list_question){
+            TreeItemWithQuestion<String> treeItem = new TreeItemWithQuestion<String>(q.getName(),q);
+            root.getChildren().addAll(treeItem);
+        }
+        return root;
     }
 
 
