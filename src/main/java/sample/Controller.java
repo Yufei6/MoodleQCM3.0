@@ -284,8 +284,8 @@ public class Controller implements Initializable {
         Question new_q = null;
         try {
             superBank = new SuperBank();
-            new_q = new Question("42.xml");
-            new_q.load("42.xml");
+            //new_q = new Question("42.xml");
+          //  new_q.load("42.xml");
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (WrongQuestionTypeException e) {
