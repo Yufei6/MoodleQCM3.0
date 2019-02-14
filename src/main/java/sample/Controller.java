@@ -420,7 +420,7 @@ public class Controller implements Initializable {
             qcm1.addQuestion(q2);
             qcm1.addQuestion(q3);
 
-            qcm1.Export("demo/", "qcm1");
+//            qcm1.Export("demo/", "qcm1");
 
         }
         catch(WrongQuestionTypeException e) {
@@ -448,7 +448,7 @@ public class Controller implements Initializable {
         if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
             TreeItemWithQuestion<String> treeItem2 = (TreeItemWithQuestion<String>) qcm.getSelectionModel().getSelectedItems().get(0);
             if (treeItem2.getQuestion() != null) {
-                selectQuestion(treeItem.getQuestion());
+                selectQuestion(treeItem2.getQuestion());
             }
         }
         //TODO : sauvegarder
@@ -461,7 +461,7 @@ public class Controller implements Initializable {
         if(bank.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
             TreeItemWithQuestion<String> treeItem3 = (TreeItemWithQuestion<String>) bank.getSelectionModel().getSelectedItems().get(0);
             if (treeItem3.getQuestion() != null) {
-                selectQuestion(treeItem.getQuestion());
+                selectQuestion(treeItem3.getQuestion());
             }
         }
 

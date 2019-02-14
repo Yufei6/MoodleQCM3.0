@@ -174,6 +174,9 @@ public abstract class QuestionStorage{
             racine.appendChild(commentaire);
 
             for (Question q:list_question) {
+                System.out.println("BUGG "+name+" "+path);
+                System.out.println("BUG "+q.getID());
+                q.load(super_bank.find(""+q.getID()));
                 Comment commentaire_question = null;
                 commentaire_question = document.createComment(" question: "+q.getID()+" ");
                 racine.appendChild(commentaire_question);
