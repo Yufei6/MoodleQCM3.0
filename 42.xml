@@ -29,7 +29,7 @@
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
     <single>true</single>
-    <answernumbering>III</answernumbering>
+    <answernumbering>abc</answernumbering>
     <shuffleanswers>true</shuffleanswers>
     <answer format="html" fraction="-100.0">
       <text><![CDATA[<p>-8</p>]]></text>

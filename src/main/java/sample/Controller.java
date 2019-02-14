@@ -286,14 +286,10 @@ public class Controller implements Initializable {
         return current_question;
     }
 
-    public void setCurrent_question(Question current_question) {
-        this.current_question = current_question;
-    }
-
     @FXML
     void questionSaved(ActionEvent event) {
         questionFieldsGet(current_question);
-        current_question.save("42.xml");
+        current_question.save(superBank.find(String.valueOf(current_question.getID())));
     }
 
     @FXML
@@ -310,7 +306,6 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Question new_q = null;
         try {
             superBank = new SuperBank();
             //new_q = new Question("42.xml");
@@ -401,6 +396,7 @@ public class Controller implements Initializable {
         /*questionFieldsInit(new_q);
         setCurrent_question(new_q);*/
 
+
         try {
             Question q1 = new Question("demo/1.xml");
             q1.load("demo/1.xml");
@@ -424,27 +420,17 @@ public class Controller implements Initializable {
 
     }
 
+    private void selectQuestion(Question question) {
+        current_question = question;
+        question.load(superBank.find(String.valueOf(question.getID())));
+        questionFieldsInit(question);
+    }
 
     public void clickOnItem(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
         TreeItemWithQuestion<String> treeItem = (TreeItemWithQuestion<String>) tree.getSelectionModel().getSelectedItems().get(0);
         if (treeItem.getQuestion() != null){
-            System.out.println(treeItem.getQuestion().getName());
-            treeItem.getQuestion().load(superBank.find(String.valueOf(treeItem.getQuestion().getID())));
-            System.out.println(treeItem.getQuestion().getQuestiontext());
-            String stringHtml = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p>"+treeItem.getQuestion().getQuestiontext()+"</p></body></html>";
-            question_name_field.setText(treeItem.getQuestion().getName());
-            question_text_field.setHtmlText(stringHtml);
-            System.out.println(treeItem.getQuestion().getGeneralfeedback());
-            general_feebdack_field.setHtmlText(treeItem.getQuestion().getGeneralfeedback());
-            correct_feedback_field.setHtmlText(treeItem.getQuestion().getCorrectfeedback());
-            partially_correct_feedback_field.setHtmlText(treeItem.getQuestion().getPartiallycorrectfeedback());
-            incorrect_feedback_field.setHtmlText(treeItem.getQuestion().getIncorrectfeedback());
-            //TODO : question choice type ??
-            defaultgrade_field.setText(String.valueOf(treeItem.getQuestion().getDefaultgrade()));
-            penalty_field.setText(String.valueOf(treeItem.getQuestion().getPenalty()));
+            selectQuestion(treeItem.getQuestion());
         }
-        //TODO : sauvegarder
-
     }
 
 
