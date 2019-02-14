@@ -296,14 +296,10 @@ public class Controller implements Initializable {
         return current_question;
     }
 
-    public void setCurrent_question(Question current_question) {
-        this.current_question = current_question;
-    }
-
     @FXML
     void questionSaved(ActionEvent event) {
         questionFieldsGet(current_question);
-        current_question.save("42.xml");
+        current_question.save(superBank.find(String.valueOf(current_question.getID())));
     }
 
     @FXML
@@ -320,11 +316,10 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Question new_q = null;
         try {
             superBank = new SuperBank();
-            new_q = new Question("42.xml");
-            new_q.load("42.xml");
+            //new_q = new Question("42.xml");
+          //  new_q.load("42.xml");
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (WrongQuestionTypeException e) {
@@ -411,6 +406,7 @@ public class Controller implements Initializable {
         /*questionFieldsInit(new_q);
         setCurrent_question(new_q);*/
 
+
         try {
             Question q1 = new Question("demo/1.xml");
             q1.load("demo/1.xml");
@@ -434,27 +430,17 @@ public class Controller implements Initializable {
 
     }
 
+    private void selectQuestion(Question question) {
+        current_question = question;
+        question.load(superBank.find(String.valueOf(question.getID())));
+        questionFieldsInit(question);
+    }
 
     public void clickOnItem(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
-            TreeItemWithQuestion<String> treeItem = (TreeItemWithQuestion<String>) tree.getSelectionModel().getSelectedItems().get(0);
-            if (treeItem.getQuestion() != null) {
-                System.out.println(treeItem.getQuestion().getName());
-                treeItem.getQuestion().load(superBank.find(String.valueOf(treeItem.getQuestion().getID())));
-                System.out.println(treeItem.getQuestion().getQuestiontext());
-                String stringHtml = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p>" + treeItem.getQuestion().getQuestiontext() + "</p></body></html>";
-                question_name_field.setText(treeItem.getQuestion().getName());
-                question_text_field.setHtmlText(stringHtml);
-                System.out.println(treeItem.getQuestion().getGeneralfeedback());
-                general_feebdack_field.setHtmlText(treeItem.getQuestion().getGeneralfeedback());
-                correct_feedback_field.setHtmlText(treeItem.getQuestion().getCorrectfeedback());
-                partially_correct_feedback_field.setHtmlText(treeItem.getQuestion().getPartiallycorrectfeedback());
-                incorrect_feedback_field.setHtmlText(treeItem.getQuestion().getIncorrectfeedback());
-                //TODO : question choice type ??
-                defaultgrade_field.setText(String.valueOf(treeItem.getQuestion().getDefaultgrade()));
-                penalty_field.setText(String.valueOf(treeItem.getQuestion().getPenalty()));
-            }
-        //TODO : sauvegarder
-
+        TreeItemWithQuestion<String> treeItem = (TreeItemWithQuestion<String>) tree.getSelectionModel().getSelectedItems().get(0);
+        if (treeItem.getQuestion() != null){
+            selectQuestion(treeItem.getQuestion());
+        }
     }
 
 
@@ -462,17 +448,7 @@ public class Controller implements Initializable {
         if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
             TreeItemWithQuestion<String> treeItem2 = (TreeItemWithQuestion<String>) qcm.getSelectionModel().getSelectedItems().get(0);
             if (treeItem2.getQuestion() != null) {
-                treeItem2.getQuestion().load(superBank.find(String.valueOf(treeItem2.getQuestion().getID())));
-                String stringHtml = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p>" + treeItem2.getQuestion().getQuestiontext() + "</p></body></html>";
-                question_name_field.setText(treeItem2.getQuestion().getName());
-                question_text_field.setHtmlText(stringHtml);
-                general_feebdack_field.setHtmlText(treeItem2.getQuestion().getGeneralfeedback());
-                correct_feedback_field.setHtmlText(treeItem2.getQuestion().getCorrectfeedback());
-                partially_correct_feedback_field.setHtmlText(treeItem2.getQuestion().getPartiallycorrectfeedback());
-                incorrect_feedback_field.setHtmlText(treeItem2.getQuestion().getIncorrectfeedback());
-                //TODO : question choice type ??
-                defaultgrade_field.setText(String.valueOf(treeItem2.getQuestion().getDefaultgrade()));
-                penalty_field.setText(String.valueOf(treeItem2.getQuestion().getPenalty()));
+                selectQuestion(treeItem.getQuestion());
             }
         }
         //TODO : sauvegarder
@@ -485,17 +461,7 @@ public class Controller implements Initializable {
         if(bank.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
             TreeItemWithQuestion<String> treeItem3 = (TreeItemWithQuestion<String>) bank.getSelectionModel().getSelectedItems().get(0);
             if (treeItem3.getQuestion() != null) {
-                treeItem3.getQuestion().load(superBank.find(String.valueOf(treeItem3.getQuestion().getID())));
-                String stringHtml = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p>" + treeItem3.getQuestion().getQuestiontext() + "</p></body></html>";
-                question_name_field.setText(treeItem3.getQuestion().getName());
-                question_text_field.setHtmlText(stringHtml);
-                general_feebdack_field.setHtmlText(treeItem3.getQuestion().getGeneralfeedback());
-                correct_feedback_field.setHtmlText(treeItem3.getQuestion().getCorrectfeedback());
-                partially_correct_feedback_field.setHtmlText(treeItem3.getQuestion().getPartiallycorrectfeedback());
-                incorrect_feedback_field.setHtmlText(treeItem3.getQuestion().getIncorrectfeedback());
-                //TODO : question choice type ??
-                defaultgrade_field.setText(String.valueOf(treeItem3.getQuestion().getDefaultgrade()));
-                penalty_field.setText(String.valueOf(treeItem3.getQuestion().getPenalty()));
+                selectQuestion(treeItem.getQuestion());
             }
         }
 

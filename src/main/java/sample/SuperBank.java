@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.Objects;
 
@@ -127,6 +128,13 @@ public class SuperBank {
         return questionList;
     }
 
+    public void addQuestion(Question question) {
+        int new_id = generateId();
+        question.setId(new_id);
+        String[] new_question_entry = {""+new_id, newQuestion(question)};
+        questionList.add(new_question_entry);
+    }
+
     public String[] extractQuestion(File file) throws IOException, SAXException {
         String[] strings=new String[2];
         Element nodeId_Header;
@@ -158,6 +166,7 @@ public class SuperBank {
     public Question findQuestion(String s) throws WrongQuestionTypeException {
         return new Question(find(s));
     }
+
 
     public TreeItem<String> generateTree() throws IOException, SAXException, WrongQuestionTypeException {
         TreeItem<String> root = new TreeItem<>("bank");

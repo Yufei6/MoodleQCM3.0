@@ -55,6 +55,11 @@ public class Question {
         init(path);
     }
 
+    public Question(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+
     private void answer_numbering_map_init() {
         answer_numbering_map = new HashMap<>();
         answer_numbering_map.put("abc", "a, b, c");
