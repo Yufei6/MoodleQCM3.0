@@ -3,7 +3,7 @@ package sample;
 import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 
-public class TreeItemWithQuestion<S> extends TreeItem {
+public class TreeItemWithQuestion<S> extends TreeItemWithQcmAndBank {
     private Question question;
 
     public TreeItemWithQuestion(Question question) {

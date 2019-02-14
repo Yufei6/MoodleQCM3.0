@@ -73,7 +73,7 @@ public class Bank extends QuestionStorage{
     }
 
 
-    public TreeItemWithBank<String> createQuestionTree(TreeItemWithBank<String> root){
+    public TreeItemWithQcmAndBank<String> createQuestionTree(TreeItemWithQcmAndBank<String> root){
         for(Question q : super.list_question){
             TreeItemWithQuestion<String> treeItem = new TreeItemWithQuestion<String>(q.getName(),q);
             root.getChildren().addAll(treeItem);

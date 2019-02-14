@@ -72,7 +72,7 @@ public class Qcm extends QuestionStorage {
     }
 
 
-    public TreeItemWithQcm<String> createQuestionTree(TreeItemWithQcm<String> root){
+    public TreeItemWithQcmAndBank<String> createQuestionTree(TreeItemWithQcmAndBank<String> root){
         for(Question q : super.list_question){
             TreeItemWithQuestion<String> treeItem = new TreeItemWithQuestion<String>(q.getName(),q);
             root.getChildren().addAll(treeItem);
