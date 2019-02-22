@@ -78,7 +78,7 @@ public abstract class QuestionStorage{
 
 
     public void save(boolean isBank){
-        File file = new File(this.path+".xml");
+        File file = new File(this.path);
         if(!file.exists()){
             try {
                 file.createNewFile();
@@ -213,6 +213,10 @@ public abstract class QuestionStorage{
 
     public void changeName(String name_0){
         name = name_0;
+    }
+
+    public void changePath(String new_path){
+        path = new_path;
     }
 
     public String getName(){
