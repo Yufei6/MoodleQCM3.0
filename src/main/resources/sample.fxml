@@ -20,8 +20,8 @@
                   <Menu mnemonicParsing="false" text="New">
                     <items>
                       <MenuItem accelerator="Ctrl + a" mnemonicParsing="false" text="Question" />
-                        <MenuItem accelerator="Ctrl + b" mnemonicParsing="false" text="Banque" />
-                        <MenuItem accelerator="Ctrl + c" mnemonicParsing="false" text="Qcm" />
+                        <MenuItem accelerator="Ctrl + b" mnemonicParsing="false" onAction="#creerQcm" text="Qcm" />
+                        <MenuItem accelerator="Ctrl + c" mnemonicParsing="false" onAction="#creerBank" text="Banque" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Import">

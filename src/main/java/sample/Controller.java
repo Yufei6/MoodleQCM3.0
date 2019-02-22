@@ -6,16 +6,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.web.HTMLEditor;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.stage.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -192,13 +191,75 @@ public class Controller implements Initializable {
     }
 
 
-    @FXML void createBank(ActionEvent event){
-//        Bank new_bank = new Bank("./target/Bank", );
+    @FXML void creerBank(ActionEvent event){
+        Stage window = new Stage();
+        window.setTitle("Nouveau Banque");
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setMinWidth(300);
+        window.setMinHeight(150);
+        Button button = new Button("Annuler");
+        button.setOnAction(e -> window.close());
+        Button button2 = new Button("OK");
+        TextField notification = new TextField ();
+        notification.setPromptText("Nom du banque");
+        System.out.println(notification.getText());
+        notification.clear();
+        button2.setOnAction((ActionEvent e) -> {
+            createBank(notification.getText());
+            window.close();
+        });
+        Label label = new Label("Entrez le nom du nouveau banque");
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(label , notification, button, button2);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.showAndWait();
     }
 
 
-    @FXML void createQcm(ActionEvent event){
 
+
+    @FXML void creerQcm(ActionEvent event){
+        Stage window = new Stage();
+        window.setTitle("Nouveau Qcm");
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setMinWidth(300);
+        window.setMinHeight(150);
+        Button button = new Button("Annuler");
+        button.setOnAction(e -> window.close());
+        Button button2 = new Button("OK");
+        TextField notification = new TextField ();
+        notification.setPromptText("Nom du qcm");
+        System.out.println(notification.getText());
+        notification.clear();
+        button2.setOnAction((ActionEvent e) -> {
+            createQcm(notification.getText());
+            window.close();
+        });
+        Label label = new Label("Entrez le nom du nouveau qcm");
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(label , notification, button, button2);
+        layout.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.showAndWait();
+    }
+
+    @FXML void createBank(String name_0){
+        Bank new_bank = new Bank(sys_bank_path+name_0,name_0,superBank);
+        new_bank.save();
+        bankList.add(new_bank);
+        displayBanks();
+    }
+
+
+    @FXML void createQcm(String name_0){
+        Qcm new_qcm = new Qcm(sys_bank_path+name_0,name_0,superBank);
+        new_qcm.save();
+        qcmList.add(new_qcm);
+        displayQcms();
     }
 
 
