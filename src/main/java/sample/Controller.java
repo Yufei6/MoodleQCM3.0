@@ -8,17 +8,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.web.HTMLEditor;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.stage.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -157,9 +156,15 @@ public class Controller implements Initializable {
         File file = directoryChooser.showDialog(stage);
         String path = file.getPath();
         System.out.println(path);
-        TreeItemWithBank<String> treeItem = (TreeItemWithBank<String>) bank.getSelectionModel().getSelectedItems().get(0);
-        if (treeItem.getBank() != null){
-            treeItem.getBank().Export(path, treeItem.getBank().getName());
+        if(bank.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+            TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) bank.getSelectionModel().getSelectedItems().get(0);
+            if (treeItem.getBank() != null) {
+                System.out.println("Begin export");
+                treeItem.getBank().Export(path+"/", treeItem.getBank().getName());
+                System.out.println("End export");
+            } else {
+                System.out.println("GG");
+            }
         }
     }
 
@@ -193,20 +198,86 @@ public class Controller implements Initializable {
         File file = directoryChooser.showDialog(stage);
         String path = file.getPath();
         System.out.println(path);
-        TreeItemWithQcm<String> treeItem = (TreeItemWithQcm<String>) qcm.getSelectionModel().getSelectedItems().get(0);
-        if (treeItem.getQcm() != null){
-            treeItem.getQcm().Export(path, treeItem.getQcm().getName());
+        if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+            System.out.println("BB export");
+            TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) qcm.getSelectionModel().getSelectedItems().get(0);
+            if (treeItem.getQcm() != null) {
+                System.out.println("Begin export");
+                treeItem.getQcm().Export(path+"/", treeItem.getQcm().getName());
+            }
         }
     }
 
 
-    @FXML void createBank(ActionEvent event){
-//        Bank new_bank = new Bank("./target/Bank", );
+    @FXML void creerBank(ActionEvent event){
+        Stage window = new Stage();
+        window.setTitle("Nouveau Banque");
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setMinWidth(300);
+        window.setMinHeight(150);
+        Button button = new Button("Annuler");
+        button.setOnAction(e -> window.close());
+        Button button2 = new Button("OK");
+        TextField notification = new TextField ();
+        notification.setPromptText("Nom du banque");
+        System.out.println(notification.getText());
+        notification.clear();
+        button2.setOnAction((ActionEvent e) -> {
+            createBank(notification.getText());
+            window.close();
+        });
+        Label label = new Label("Entrez le nom du nouveau banque");
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(label , notification, button, button2);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.showAndWait();
     }
 
 
-    @FXML void createQcm(ActionEvent event){
 
+
+    @FXML void creerQcm(ActionEvent event){
+        Stage window = new Stage();
+        window.setTitle("Nouveau Qcm");
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setMinWidth(300);
+        window.setMinHeight(150);
+        Button button = new Button("Annuler");
+        button.setOnAction(e -> window.close());
+        Button button2 = new Button("OK");
+        TextField notification = new TextField ();
+        notification.setPromptText("Nom du qcm");
+        System.out.println(notification.getText());
+        notification.clear();
+        button2.setOnAction((ActionEvent e) -> {
+            createQcm(notification.getText());
+            window.close();
+        });
+        Label label = new Label("Entrez le nom du nouveau qcm");
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(label , notification, button, button2);
+        layout.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.showAndWait();
+    }
+
+    @FXML void createBank(String name_0){
+        Bank new_bank = new Bank(sys_bank_path+name_0,name_0,superBank);
+        new_bank.save();
+        bankList.add(new_bank);
+        displayBanks();
+    }
+
+
+    @FXML void createQcm(String name_0){
+        Qcm new_qcm = new Qcm(sys_bank_path+name_0,name_0,superBank);
+        new_qcm.save();
+        qcmList.add(new_qcm);
+        displayQcms();
     }
 
 
@@ -231,7 +302,7 @@ public class Controller implements Initializable {
     private void displayBanks(){
         TreeItem<String> root_bank = new TreeItem<>();
         for(Bank b : bankList){
-            TreeItemWithBank<String> treeItem = new TreeItemWithBank<>(b.getName());
+            TreeItemWithQcmAndBank<String> treeItem = new TreeItemWithQcmAndBank<>(b.getName(),b);
             treeItem = b.createQuestionTree(treeItem);
             root_bank.getChildren().addAll(treeItem);
         }
@@ -243,7 +314,7 @@ public class Controller implements Initializable {
     private void displayQcms(){
         TreeItem<String> root_qcm = new TreeItem<>();
         for(Qcm q: qcmList){
-            TreeItemWithQcm<String> treeItem = new TreeItemWithQcm<>(q.getName());
+            TreeItemWithQcmAndBank<String> treeItem = new TreeItemWithQcmAndBank<>(q.getName(),q);
             treeItem = q.createQuestionTree(treeItem);
             root_qcm.getChildren().addAll(treeItem);
         }
@@ -444,7 +515,7 @@ public class Controller implements Initializable {
             qcm1.addQuestion(q2);
             qcm1.addQuestion(q3);
 
-            qcm1.Export("demo/", "qcm1");
+//            qcm1.Export("demo/", "qcm1");
 
         }
         catch(WrongQuestionTypeException e) {
@@ -480,19 +551,11 @@ public class Controller implements Initializable {
 
 
     public void clickOnQcm(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
-        TreeItemWithQuestion<String> treeItem2 = (TreeItemWithQuestion<String>) qcm.getSelectionModel().getSelectedItems().get(0);
-        if (treeItem2.getQuestion() != null){
-            treeItem2.getQuestion().load(superBank.find(String.valueOf(treeItem2.getQuestion().getID())));
-            String stringHtml = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p>"+treeItem2.getQuestion().getQuestiontext()+"</p></body></html>";
-            question_name_field.setText(treeItem2.getQuestion().getName());
-            question_text_field.setHtmlText(stringHtml);
-            general_feebdack_field.setHtmlText(treeItem2.getQuestion().getGeneralfeedback());
-            correct_feedback_field.setHtmlText(treeItem2.getQuestion().getCorrectfeedback());
-            partially_correct_feedback_field.setHtmlText(treeItem2.getQuestion().getPartiallycorrectfeedback());
-            incorrect_feedback_field.setHtmlText(treeItem2.getQuestion().getIncorrectfeedback());
-            //TODO : question choice type ??
-            defaultgrade_field.setText(String.valueOf(treeItem2.getQuestion().getDefaultgrade()));
-            penalty_field.setText(String.valueOf(treeItem2.getQuestion().getPenalty()));
+        if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
+            TreeItemWithQuestion<String> treeItem2 = (TreeItemWithQuestion<String>) qcm.getSelectionModel().getSelectedItems().get(0);
+            if (treeItem2.getQuestion() != null) {
+                selectQuestion(treeItem2.getQuestion());
+            }
         }
         //TODO : sauvegarder
 
@@ -501,19 +564,11 @@ public class Controller implements Initializable {
 
 
     public void clickOnBank(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
-        TreeItemWithQuestion<String> treeItem3 = (TreeItemWithQuestion<String>) bank.getSelectionModel().getSelectedItems().get(0);
-        if (treeItem3.getQuestion() != null){
-            treeItem3.getQuestion().load(superBank.find(String.valueOf(treeItem3.getQuestion().getID())));
-            String stringHtml = "<html dir=\"ltr\"><head></head><body contenteditable=\"true\"><p>"+treeItem3.getQuestion().getQuestiontext()+"</p></body></html>";
-            question_name_field.setText(treeItem3.getQuestion().getName());
-            question_text_field.setHtmlText(stringHtml);
-            general_feebdack_field.setHtmlText(treeItem3.getQuestion().getGeneralfeedback());
-            correct_feedback_field.setHtmlText(treeItem3.getQuestion().getCorrectfeedback());
-            partially_correct_feedback_field.setHtmlText(treeItem3.getQuestion().getPartiallycorrectfeedback());
-            incorrect_feedback_field.setHtmlText(treeItem3.getQuestion().getIncorrectfeedback());
-            //TODO : question choice type ??
-            defaultgrade_field.setText(String.valueOf(treeItem3.getQuestion().getDefaultgrade()));
-            penalty_field.setText(String.valueOf(treeItem3.getQuestion().getPenalty()));
+        if(bank.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
+            TreeItemWithQuestion<String> treeItem3 = (TreeItemWithQuestion<String>) bank.getSelectionModel().getSelectedItems().get(0);
+            if (treeItem3.getQuestion() != null) {
+                selectQuestion(treeItem3.getQuestion());
+            }
         }
 
     }

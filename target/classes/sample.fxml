@@ -20,24 +20,24 @@
             <items>
                   <Menu mnemonicParsing="false" text="New">
                     <items>
-                      <MenuItem accelerator="Ctrl + d" mnemonicParsing="false" text="Question" />
-                        <MenuItem accelerator="Ctrl + e" mnemonicParsing="false" text="Banque" />
-                        <MenuItem accelerator="Ctrl + f" mnemonicParsing="false" text="Qcm" />
+                      <MenuItem accelerator="Ctrl + a" mnemonicParsing="false" text="Question" />
+                        <MenuItem accelerator="Ctrl + b" mnemonicParsing="false" onAction="#creerQcm" text="Qcm" />
+                        <MenuItem accelerator="Ctrl + c" mnemonicParsing="false" onAction="#creerBank" text="Banque" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Import">
                     <items>
-                      <MenuItem accelerator="Ctrl + a" mnemonicParsing="false" onAction="#importQcm" text="Import une qcm" />
-                      <MenuItem accelerator="Ctrl + b" mnemonicParsing="false" onAction="#importBank" text="Import une banque" />
+                      <MenuItem accelerator="Ctrl + d" mnemonicParsing="false" onAction="#importQcm" text="Import une qcm" />
+                      <MenuItem accelerator="Ctrl + e" mnemonicParsing="false" onAction="#importBank" text="Import une banque" />
                     </items>
                   </Menu>
-                <MenuItem mnemonicParsing="false" text="Close" />
                   <Menu mnemonicParsing="false" text="Export">
                     <items>
-                      <MenuItem accelerator="Ctrl + c" mnemonicParsing="false" onAction="#exportQcm" text="Export une qcm" />
-                      <MenuItem accelerator="Ctrl + d" mnemonicParsing="false" onAction="#exportBank" text="Export une banque" />
+                        <MenuItem accelerator="Ctrl + f" mnemonicParsing="false" onAction="#exportQcm" text="Export une qcm" />
+                        <MenuItem accelerator="Ctrl + g" mnemonicParsing="false" onAction="#exportBank" text="Export une banque" />
                     </items>
                   </Menu>
+                  <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
