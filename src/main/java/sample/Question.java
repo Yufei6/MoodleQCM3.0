@@ -14,10 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Question {
 
@@ -36,7 +33,7 @@ public class Question {
 
     private List<Answer> answers;
 
-    Map<String, String> answer_numbering_map;
+    private Map<String, String> answer_numbering_map;
 
     private Question() {
         answer_numbering_map_init();
@@ -70,12 +67,40 @@ public class Question {
         answer_numbering_map.put("none", "Sans Numérotation");
     }
 
+    public Answer getAnswerByIndex(int index) {
+        if (index >= answers.size()) {
+            return null;
+        }
+        return answers.get(index);
+    }
+
+    public void addAnswer(Answer new_answer) {
+        answers.add(new_answer);
+    }
+
+    public void removeAnswer(int index) {
+        if (index >= answers.size()) {
+            return;
+        }
+        answers.remove(index);
+    }
+
     public ArrayList<String> getAnswerNumberingChoices() {
         return new ArrayList<>(answer_numbering_map.values());
     }
 
     public String getAnswerNumberingDisplay() {
         return answer_numbering_map.get(answernumbering);
+    }
+
+    public ArrayList<String> getAnswersDisplay() {
+        ArrayList<String> display = new ArrayList<>();
+        int index = 0;
+        for (Answer a : answers) {
+            index++;
+            display.add("" + index + " [" + a.getFraction() + "%]");
+        }
+        return display;
     }
 
     public String toString() {

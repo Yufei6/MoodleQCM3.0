@@ -1,4 +1,6 @@
 package sample;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.DirectoryChooser;
@@ -110,6 +113,21 @@ public class Controller implements Initializable {
 
     @FXML
     private RadioButton shuffle_answers_choice;
+
+    @FXML
+    private AnchorPane question_pane;
+
+    @FXML
+    private ChoiceBox<String> answers_box;
+
+    @FXML
+    private HTMLEditor answer_feedback_field;
+
+    @FXML
+    private HTMLEditor answer_text_field;
+
+    @FXML
+    private ChoiceBox<String> answer_fraction_box;
 
     ////////////////////////////////////////////////////
     @FXML void importBank(ActionEvent event){
@@ -266,6 +284,22 @@ public class Controller implements Initializable {
 
         shuffle_answers_choice.setSelected(question.isShuffleanswers());
         multiple_answers_choice.setSelected(!question.isSingle());
+
+        ObservableList<String> answers_display = FXCollections.observableArrayList(question.getAnswersDisplay());
+        answers_box.setItems(answers_display);
+        answers_box.getSelectionModel().select(0);
+
+        answerFieldsInit(current_question.getAnswerByIndex(0));
+
+
+    }
+
+    private void answerFieldsInit(Answer answer) {
+        answer_text_field.setHtmlText(answer.getText());
+        answer_feedback_field.setHtmlText(answer.getFeedback());
+        ObservableList<String> answer_fractions = FXCollections.observableArrayList(answer.getAvailableFractions());
+        answer_fraction_box.setItems(answer_fractions);
+        answer_fraction_box.getSelectionModel().select("" + answer.getFraction());
     }
 
     private void questionFieldsGet(Question question) {  // TODO : Collecter les erreurs et les champs incomplets
@@ -416,6 +450,17 @@ public class Controller implements Initializable {
         catch(WrongQuestionTypeException e) {
             e.printStackTrace();
         }
+
+        answers_box.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                try {
+                    answerFieldsInit(current_question.getAnswerByIndex((int) newValue));
+                }catch(IndexOutOfBoundsException e) {
+                    // TODO : s'occuper de ça? (Est-ce un gros problème?)
+                }
+            }
+        });
 
 
     }
