@@ -20,21 +20,21 @@
             <items>
                   <Menu mnemonicParsing="false" text="New">
                     <items>
-                      <MenuItem accelerator="Ctrl + a" mnemonicParsing="false" text="Question" />
-                        <MenuItem accelerator="Ctrl + b" mnemonicParsing="false" onAction="#creerQcm" text="Qcm" />
-                        <MenuItem accelerator="Ctrl + c" mnemonicParsing="false" onAction="#creerBank" text="Banque" />
+                      <MenuItem accelerator="Ctrl + A" mnemonicParsing="false" text="Question" />
+                        <MenuItem accelerator="Ctrl + B" mnemonicParsing="false" onAction="#creerQcm" text="Qcm" />
+                        <MenuItem accelerator="Ctrl + C" mnemonicParsing="false" onAction="#creerBank" text="Banque" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Import">
                     <items>
-                      <MenuItem accelerator="Ctrl + d" mnemonicParsing="false" onAction="#importQcm" text="Import une qcm" />
-                      <MenuItem accelerator="Ctrl + e" mnemonicParsing="false" onAction="#importBank" text="Import une banque" />
+                      <MenuItem accelerator="Ctrl + D" mnemonicParsing="false" onAction="#importQcm" text="Import une qcm" />
+                      <MenuItem accelerator="Ctrl + E" mnemonicParsing="false" onAction="#importBank" text="Import une banque" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Export">
                     <items>
-                        <MenuItem accelerator="Ctrl + f" mnemonicParsing="false" onAction="#exportQcm" text="Export une qcm" />
-                        <MenuItem accelerator="Ctrl + g" mnemonicParsing="false" onAction="#exportBank" text="Export une banque" />
+                        <MenuItem accelerator="Ctrl + F" mnemonicParsing="false" onAction="#exportQcm" text="Export une qcm" />
+                        <MenuItem accelerator="Ctrl + G" mnemonicParsing="false" onAction="#exportBank" text="Export une banque" />
                     </items>
                   </Menu>
                   <MenuItem mnemonicParsing="false" text="Close" />
@@ -76,7 +76,7 @@
                                  <children>
                                     <TreeView fx:id="bank" layoutX="-16.0" onDragDetected="#treeDrag" onMouseClicked="#clickOnBank" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <contextMenu>
-                                          <ContextMenu>
+                                          <ContextMenu fx:id="contextMenuBank">
                                             <items>
                                               <MenuItem mnemonicParsing="false" text="Unspecified Action" />
                                             </items>
@@ -92,7 +92,7 @@
                                  <children>
                                     <TreeView fx:id="qcm" layoutX="-46.0" layoutY="14.0" onDragDetected="#treeDrag" onMouseClicked="#clickOnQcm" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <contextMenu>
-                                          <ContextMenu>
+                                          <ContextMenu fx:id="contextMenuQcm">
                                             <items>
                                               <MenuItem mnemonicParsing="false" text="Unspecified Action" />
                                             </items>

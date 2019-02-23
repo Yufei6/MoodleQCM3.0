@@ -1,4 +1,5 @@
 package sample;
+import com.sun.tools.corba.se.idl.SymtabEntry;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -25,6 +27,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -59,7 +62,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private ContextMenu contextMenu;
+    private ContextMenu contextMenu, contextMenuBank, contextMenuQcm;
     SuperBank superBank;
     List<Bank> bankList;
     List<Qcm> qcmList;
@@ -140,7 +143,6 @@ public class Controller implements Initializable {
         if (f != null) {
             fileAsString = f.toString();
         }
-        System.out.println(fileAsString);
         Bank new_bank = new Bank(fileAsString,superBank);
         try {
             copyFileByStream(new File(fileAsString), new File(sys_bank_path+ new_bank.getName()+".xml"));
@@ -155,15 +157,11 @@ public class Controller implements Initializable {
         DirectoryChooser directoryChooser=new DirectoryChooser();
         File file = directoryChooser.showDialog(stage);
         String path = file.getPath();
-        System.out.println(path);
         if(bank.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
             TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) bank.getSelectionModel().getSelectedItems().get(0);
             if (treeItem.getBank() != null) {
-                System.out.println("Begin export");
                 treeItem.getBank().Export(path+"/", treeItem.getBank().getName());
-                System.out.println("End export");
             } else {
-                System.out.println("GG");
             }
         }
     }
@@ -181,7 +179,6 @@ public class Controller implements Initializable {
         if (f != null) {
             fileAsString = f.toString();
         }
-        System.out.println(fileAsString);
         Qcm new_qcm = new Qcm(fileAsString,superBank);
         try {
             copyFileByStream(new File(fileAsString), new File(sys_qcm_path+ new_qcm.getName()+".xml"));
@@ -197,12 +194,9 @@ public class Controller implements Initializable {
         DirectoryChooser directoryChooser=new DirectoryChooser();
         File file = directoryChooser.showDialog(stage);
         String path = file.getPath();
-        System.out.println(path);
         if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
-            System.out.println("BB export");
             TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) qcm.getSelectionModel().getSelectedItems().get(0);
             if (treeItem.getQcm() != null) {
-                System.out.println("Begin export");
                 treeItem.getQcm().Export(path+"/", treeItem.getQcm().getName());
             }
         }
@@ -220,7 +214,6 @@ public class Controller implements Initializable {
         Button button2 = new Button("OK");
         TextField notification = new TextField ();
         notification.setPromptText("Nom du banque");
-        System.out.println(notification.getText());
         notification.clear();
         button2.setOnAction((ActionEvent e) -> {
             createBank(notification.getText());
@@ -250,7 +243,6 @@ public class Controller implements Initializable {
         Button button2 = new Button("OK");
         TextField notification = new TextField ();
         notification.setPromptText("Nom du qcm");
-        System.out.println(notification.getText());
         notification.clear();
         button2.setOnAction((ActionEvent e) -> {
             createQcm(notification.getText());
@@ -266,7 +258,7 @@ public class Controller implements Initializable {
     }
 
     @FXML void createBank(String name_0){
-        Bank new_bank = new Bank(sys_bank_path+name_0,name_0,superBank);
+        Bank new_bank = new Bank(sys_bank_path+name_0+".xml",name_0,superBank);
         new_bank.save();
         bankList.add(new_bank);
         displayBanks();
@@ -274,7 +266,7 @@ public class Controller implements Initializable {
 
 
     @FXML void createQcm(String name_0){
-        Qcm new_qcm = new Qcm(sys_bank_path+name_0,name_0,superBank);
+        Qcm new_qcm = new Qcm(sys_qcm_path+name_0+".xml",name_0,superBank);
         new_qcm.save();
         qcmList.add(new_qcm);
         displayQcms();
@@ -331,6 +323,13 @@ public class Controller implements Initializable {
             while ((length = is.read(buffer)) > 0) {
                 os.write(buffer, 0, length);
             }
+        }
+    }
+
+    public static void deleteFile(String sPath) {
+        File file = new File(sPath);
+        if(file.isFile() && file.exists()) {
+            file.delete();
         }
     }
 
@@ -477,9 +476,6 @@ public class Controller implements Initializable {
         MenuItem menuItem1 = new MenuItem("Modifier");
         menuItem1.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                System.out.println("essaie");
-
-                System.out.println("essaieReload"+reload);
                 textTitle = new Text("Modifier");
                 Parent root = null;
                 try {
@@ -495,6 +491,153 @@ public class Controller implements Initializable {
             }
         });
         contextMenu.getItems().addAll(menuItem,menuItem1);
+
+        contextMenuBank.getItems().get(0).setText("Ajouter banque");
+        contextMenuBank.getItems().get(0).setAccelerator(KeyCombination.keyCombination("Ctrl+C"));
+        contextMenuBank.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                creerBank(e);
+            }
+        });
+        MenuItem menuItemBank1 = new MenuItem("Import banque");
+        menuItemBank1.setAccelerator(KeyCombination.keyCombination("Ctrl+E"));
+        menuItemBank1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                importBank(e);
+            }
+        });
+        MenuItem menuItemBank2 = new MenuItem("Export banque");
+        menuItemBank2.setAccelerator(KeyCombination.keyCombination("Ctrl+G"));
+        menuItemBank2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                exportBank(e);
+            }
+        });
+        MenuItem menuItemBank3 = new MenuItem("Supprimer banque");
+        menuItemBank3.setAccelerator(KeyCombination.keyCombination("Ctrl+I"));
+        menuItemBank3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                if(bank.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+                    deleteFile(sys_bank_path+bank.getSelectionModel().getSelectedItems().get(0).getValue()+".xml");
+                    initBanksAndQcms(superBank);
+                }
+            }
+        });
+        MenuItem menuItemBank4 = new MenuItem("Modifier nom d'une banque");
+        menuItemBank4.setAccelerator(KeyCombination.keyCombination("Ctrl+K"));
+        menuItemBank4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                if(bank.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+                    Stage window = new Stage();
+                    window.setTitle("Modification nom de bank");
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setMinWidth(300);
+                    window.setMinHeight(150);
+                    Button button = new Button("Annuler");
+                    button.setOnAction(e1 -> window.close());
+                    Button button2 = new Button("OK");
+                    TextField notification = new TextField();
+                    notification.setPromptText("Nouveau nom de banque");
+                    notification.clear();
+                    button2.setOnAction((ActionEvent e2) -> {
+                        String name_0 = bank.getSelectionModel().getSelectedItems().get(0).getValue();
+                        for(Bank b : bankList) {
+                            if (name_0 == b.getName()){
+                                deleteFile(b.getPath());
+                                b.changeName(notification.getText());
+                                b.changePath(sys_bank_path+notification.getText()+".xml");
+                                b.save();
+                            }
+                        }
+                        initBanksAndQcms(superBank);
+                        window.close();
+                    });
+                    Label label = new Label("Entrez le nom du nouveau banque");
+                    VBox layout = new VBox(10);
+                    layout.getChildren().addAll(label, notification, button, button2);
+                    layout.setAlignment(Pos.CENTER);
+                    Scene scene = new Scene(layout);
+                    window.setScene(scene);
+                    window.showAndWait();
+                }
+            }
+        });
+        contextMenuBank.getItems().addAll(menuItemBank1,menuItemBank2,menuItemBank4, menuItemBank3);
+
+
+        contextMenuQcm.getItems().get(0).setText("Ajouter qcm");
+        contextMenuQcm.getItems().get(0).setAccelerator(KeyCombination.keyCombination("Ctrl+B"));
+        contextMenuQcm.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                creerQcm(e);
+            }
+        });
+        MenuItem menuItemQcm1 = new MenuItem("Import qcm");
+        menuItemQcm1.setAccelerator(KeyCombination.keyCombination("Ctrl+D"));
+        menuItemQcm1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                importQcm(e);
+            }
+        });
+        MenuItem menuItemQcm2 = new MenuItem("Export qcm");
+        menuItemQcm2.setAccelerator(KeyCombination.keyCombination("Ctrl+F"));
+        menuItemQcm2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                exportQcm(e);
+            }
+        });
+        MenuItem menuItemQcm3 = new MenuItem("Supprimer qcm");
+        menuItemQcm3.setAccelerator(KeyCombination.keyCombination("Ctrl+H"));
+        menuItemQcm3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+                    deleteFile(sys_qcm_path+qcm.getSelectionModel().getSelectedItems().get(0).getValue()+".xml");
+                    initBanksAndQcms(superBank);
+                }
+            }
+        });
+        MenuItem menuItemQcm4 = new MenuItem("Modifier nom d'une qcm");
+        menuItemQcm4.setAccelerator(KeyCombination.keyCombination("Ctrl+J"));
+        menuItemQcm4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+                    Stage window = new Stage();
+                    window.setTitle("Modification nom de qcm");
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setMinWidth(300);
+                    window.setMinHeight(150);
+                    Button button = new Button("Annuler");
+                    button.setOnAction(e1 -> window.close());
+                    Button button2 = new Button("OK");
+                    TextField notification = new TextField();
+                    notification.setPromptText("Nouveau nom de qcm");
+                    notification.clear();
+                    button2.setOnAction((ActionEvent e2) -> {
+                        String name_0 = qcm.getSelectionModel().getSelectedItems().get(0).getValue();
+                        for(Qcm q : qcmList) {
+                            if (name_0 == q.getName()){
+                                deleteFile(q.getPath());
+                                q.changeName(notification.getText());
+                                q.changePath(sys_qcm_path+notification.getText()+".xml");
+                                q.save();
+                            }
+                        }
+                        initBanksAndQcms(superBank);
+                        window.close();
+                    });
+                    Label label = new Label("Entrez le nom du nouveau qcm");
+                    VBox layout = new VBox(10);
+                    layout.getChildren().addAll(label, notification, button, button2);
+                    layout.setAlignment(Pos.CENTER);
+                    Scene scene = new Scene(layout);
+                    window.setScene(scene);
+                    window.showAndWait();
+                }
+            }
+        });
+        contextMenuQcm.getItems().addAll(menuItemQcm1,menuItemQcm2,menuItemQcm4,menuItemQcm3);
+
+
 
 
         initBanksAndQcms(superBank);
