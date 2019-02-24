@@ -870,8 +870,10 @@ public class Controller implements Initializable {
 
     public void clickOnItem(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
         TreeItemWithQuestion<String> treeItem = (TreeItemWithQuestion<String>) tree.getSelectionModel().getSelectedItems().get(0);
-        if (treeItem.getQuestion() != null){
-            selectQuestion(treeItem.getQuestion());
+        if(treeItem != null) {
+            if (treeItem.getQuestion() != null) {
+                selectQuestion(treeItem.getQuestion());
+            }
         }
     }
 
@@ -1035,10 +1037,24 @@ public class Controller implements Initializable {
 
                 }
             });
+            this.setOnDragDetected((MouseEvent event) -> dragDetected(event, this, tree));
         }
     }
 
 
+    private void dragDetected(MouseEvent event, TreeCell treeCell, TreeView treeView) {
+        TreeItem draggedItem = treeCell.getTreeItem();
+
+//         root can't be dragged
+        if (draggedItem.getParent() == null) return;
+        Dragboard db = treeCell.startDragAndDrop(TransferMode.MOVE);
+        System.out.println("ppp");
+        ClipboardContent content = new ClipboardContent();
+        content.putString(draggedItem.getValue().toString());
+        db.setContent(content);
+        db.setDragView(treeCell.snapshot(null, null));
+        event.consume();
+    }
 
 
 }
