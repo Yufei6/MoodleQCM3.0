@@ -491,7 +491,7 @@ public class Controller implements Initializable {
         tree.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
             @Override
             public TreeCell<String> call(TreeView<String> p) {
-                return new TextFieldTreeCellImplForSuperbank();
+                return new TextFieldTreeCellImplForSuperBank();
             }
         });
 
@@ -846,10 +846,12 @@ public class Controller implements Initializable {
     }
 
     public void clickOnItem(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
-        TreeItemWithQuestion<String> treeItem = (TreeItemWithQuestion<String>) tree.getSelectionModel().getSelectedItems().get(0);
-        if(treeItem != null) {
-            if (treeItem.getQuestion() != null) {
-                selectQuestion(treeItem.getQuestion());
+        if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
+            TreeItemWithQuestion<String> treeItem = (TreeItemWithQuestion<String>) tree.getSelectionModel().getSelectedItems().get(0);
+            if (treeItem != null) {
+                if (treeItem.getQuestion() != null) {
+                    selectQuestion(treeItem.getQuestion());
+                }
             }
         }
     }
@@ -890,18 +892,9 @@ public class Controller implements Initializable {
         private TextField textField;
 
         public TextFieldTreeCellImpl() {
-            this.setOnDragEntered(new EventHandler<DragEvent>() {
-                @Override
-                public void handle(DragEvent event) {
-                    if (event.getGestureSource() != this &&
-                            event.getDragboard().hasString()) {
-//                        this.setFill(Color.GREEN);
-                    }
+            this.setOnDragDropped((DragEvent event) -> drop(event, this, tree));
+            this.setOnDragOver((DragEvent event) -> dragOver(event, this, tree));
 
-                    event.consume();
-
-                }
-            });
         }
 
         @Override
@@ -984,26 +977,76 @@ public class Controller implements Initializable {
 
     }
 
-    private final class TextFieldTreeCellImplForSuperbank extends TreeCell<String>{
-        public TextFieldTreeCellImplForSuperbank() {
-            this.setOnDragDetected((MouseEvent event) -> dragDetected(event, this, tree));
+    private final class TextFieldTreeCellImplForSuperBank extends TreeCell<String>{
+        private TextField textField;
+
+        public TextFieldTreeCellImplForSuperBank() {
+                this.setOnDragDetected((MouseEvent event) -> dragDetected(event, this, tree));
         }
+
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                if (isEditing()) {
+                    setText(null);
+                } else {
+                    setText(getString());
+                    setGraphic(getTreeItem().getGraphic());
+                }
+            }
+        }
+
+        private String getString() {
+            return getItem() == null ? "" : getItem().toString();
+        }
+
     }
 
 
     private void dragDetected(MouseEvent event, TreeCell treeCell, TreeView treeView) {
         TreeItem draggedItem = treeCell.getTreeItem();
 
-//         root can't be dragged
-        if (draggedItem.getParent() == null) return;
-        Dragboard db = treeCell.startDragAndDrop(TransferMode.MOVE);
-        System.out.println("ppp");
-        ClipboardContent content = new ClipboardContent();
-        content.putString(draggedItem.getValue().toString());
-        db.setContent(content);
-        db.setDragView(treeCell.snapshot(null, null));
+        if(draggedItem instanceof TreeItemWithQuestion) {
+            if(((TreeItemWithQuestion) draggedItem).getQuestion()!=null) {
+                System.out.println("hello"+draggedItem.getValue());
+                Dragboard db = treeCell.startDragAndDrop(TransferMode.COPY);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(((TreeItemWithQuestion) draggedItem).getQuestion().getID() + "");
+                System.out.println(((TreeItemWithQuestion) draggedItem).getQuestion().getID());
+                db.setContent(content);
+                db.setDragView(treeCell.snapshot(null, null));
+            }
+        }
+        event.consume();
+
+
+    }
+
+    private void dragOver(DragEvent event, TreeCell treeCell, TreeView treeView){
+        if (event.getGestureSource() != this && event.getDragboard().hasString()) {
+                treeCell.getTreeItem().setValue("GREEN");
+            }
+
+            event.consume();
+    }
+
+    private void drop(DragEvent event, TreeCell treeCell, TreeView treeView) {
+        System.out.println("IM HERE");
+        Dragboard db = event.getDragboard();
+        boolean success = false;
+        if (db.hasString()) {
+            System.out.println("HERE WE R! " +db.getString());
+            success = true;
+        }
+        event.setDropCompleted(success);
         event.consume();
     }
+
+
 
 
 }
