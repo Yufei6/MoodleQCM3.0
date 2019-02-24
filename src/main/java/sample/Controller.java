@@ -331,7 +331,7 @@ public class Controller implements Initializable {
         bank.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
             @Override
             public TreeCell<String> call(TreeView<String> p) {
-                return new TextFieldTreeCellImpl();
+                return new TextFieldTreeCellImpl(superBank);
             }
 
 
@@ -354,7 +354,7 @@ public class Controller implements Initializable {
         qcm.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
             @Override
             public TreeCell<String> call(TreeView<String> p) {
-                return new TextFieldTreeCellImpl();
+                return new TextFieldTreeCellImpl(superBank);
             }
         });
     }
@@ -891,10 +891,10 @@ public class Controller implements Initializable {
     private final class TextFieldTreeCellImpl extends TreeCell<String>{
         private TextField textField;
 
-        public TextFieldTreeCellImpl() {
-            this.setOnDragDropped((DragEvent event) -> drop(event, this, tree));
-            this.setOnDragOver((DragEvent event) -> dragOver(event, this, tree));
-
+        public TextFieldTreeCellImpl(SuperBank superbank) {
+            this.setOnDragDropped((DragEvent event) -> dragDrop(event, this, superbank));
+            this.setOnDragOver((DragEvent event) -> dragEnter(event, this));
+            this.setOnDragExited((DragEvent event)->mouseExit(event, this));
         }
 
         @Override
@@ -981,7 +981,8 @@ public class Controller implements Initializable {
         private TextField textField;
 
         public TextFieldTreeCellImplForSuperBank() {
-                this.setOnDragDetected((MouseEvent event) -> dragDetected(event, this, tree));
+                this.setOnDragDetected((MouseEvent event) -> dragDetected(event, this));
+                this.setOnDragDone((DragEvent event)->dragDone(event, this));
         }
 
         @Override
@@ -1007,7 +1008,7 @@ public class Controller implements Initializable {
     }
 
 
-    private void dragDetected(MouseEvent event, TreeCell treeCell, TreeView treeView) {
+    private void dragDetected(MouseEvent event, TreeCell treeCell) {
         TreeItem draggedItem = treeCell.getTreeItem();
 
         if(draggedItem instanceof TreeItemWithQuestion) {
@@ -1022,30 +1023,53 @@ public class Controller implements Initializable {
             }
         }
         event.consume();
-
-
     }
 
-    private void dragOver(DragEvent event, TreeCell treeCell, TreeView treeView){
-        if (event.getGestureSource() != this && event.getDragboard().hasString()) {
-                treeCell.getTreeItem().setValue("GREEN");
-            }
-
-            event.consume();
+    private void dragDone(DragEvent event, TreeCell treeCell){
+        if (event.getTransferMode() == TransferMode.MOVE) {
+            treeCell.setText("");
+        }
     }
 
-    private void drop(DragEvent event, TreeCell treeCell, TreeView treeView) {
+    private void dragEnter(DragEvent event, TreeCell treeCell){
+        if (event.getGestureSource() != this && event.getDragboard().hasString() && !(treeCell.getTreeItem() instanceof TreeItemWithQuestion)) {
+                treeCell.getTreeItem().setValue("+++++++++");
+        }
+        event.consume();
+    }
+
+    private void dragDrop(DragEvent event, TreeCell treeCell, SuperBank superbank) {
         System.out.println("IM HERE");
         Dragboard db = event.getDragboard();
         boolean success = false;
-        if (db.hasString()) {
+        TreeItem it = treeCell.getTreeItem();
+        if (db.hasString() && it instanceof TreeItemWithQcmAndBank && !(it instanceof TreeItemWithQuestion)) {
             System.out.println("HERE WE R! " +db.getString());
+            if(((TreeItemWithQcmAndBank) it).getQcm()==null){
+                try {
+                    ((TreeItemWithQcmAndBank) it).getBank().addQuestion(new Question(superbank.find(db.getString())));
+                }catch(WrongQuestionTypeException e){
+                    e.printStackTrace();
+                }
+            }
             success = true;
         }
         event.setDropCompleted(success);
         event.consume();
     }
 
+    private void mouseExit(DragEvent event, TreeCell treeCell){
+        TreeItem it = treeCell.getTreeItem();
+        if(!(it instanceof TreeItemWithQuestion) && it instanceof TreeItemWithQcmAndBank) {
+            if (((TreeItemWithQcmAndBank) it).getQcm() == null){
+                treeCell.getTreeItem().setValue(((TreeItemWithQcmAndBank) it).getBank().getName());
+            }
+            else {
+                treeCell.getTreeItem().setValue(((TreeItemWithQcmAndBank) it).getQcm().getName());
+            }
+        }
+        event.consume();
+    }
 
 
 
