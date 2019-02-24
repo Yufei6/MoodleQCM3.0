@@ -45,4 +45,8 @@ public class TreeItemWithQcmAndBank<S> extends TreeItem {
     public Bank getBank(){
         return this.bank;
     }
+
+    public String getString(){
+        return this.qcm == null? bank.getName() : qcm.getName();
+    }
 }
