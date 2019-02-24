@@ -1,5 +1,5 @@
 package sample;
-import com.sun.tools.corba.se.idl.SymtabEntry;
+//import com.sun.tools.corba.se.idl.SymtabEntry;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -355,9 +355,7 @@ public class Controller implements Initializable {
         shuffle_answers_choice.setSelected(question.isShuffleanswers());
         multiple_answers_choice.setSelected(!question.isSingle());
 
-        ObservableList<String> answers_display = FXCollections.observableArrayList(question.getAnswersDisplay());
-        answers_box.setItems(answers_display);
-        answers_box.getSelectionModel().select(0);
+        answersBoxInit(0);
 
         answerFieldsInit(current_question.getAnswerByIndex(0));
 
@@ -386,6 +384,12 @@ public class Controller implements Initializable {
         question.setShuffleanswers(shuffle_answers_choice.isSelected());
     }
 
+    private void answerFieldsGet(Answer answer) {
+        answer.setText(answer_text_field.getHtmlText());
+        answer.setFeedback(answer_feedback_field.getHtmlText());
+        answer.setFraction(Double.parseDouble(answer_fraction_box.getValue()));
+    }
+
     public Question getCurrent_question() {
         return current_question;
     }
@@ -401,7 +405,10 @@ public class Controller implements Initializable {
 
     }
 
+    @FXML
+    void treeDragDropped(ActionEvent event) {
 
+    }
 
 
 
@@ -437,6 +444,7 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
         tree.setRoot(root);
+
         contextMenu.getItems().get(0).setText("Ajouter Dossier");
         SuperBank finalSuperBank = superBank;
         contextMenu.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
@@ -669,6 +677,7 @@ public class Controller implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 try {
+                    answerFieldsGet(current_question.getAnswerByIndex((int) oldValue));
                     answerFieldsInit(current_question.getAnswerByIndex((int) newValue));
                 }catch(IndexOutOfBoundsException e) {
                     // TODO : s'occuper de ça? (Est-ce un gros problème?)
@@ -676,13 +685,28 @@ public class Controller implements Initializable {
             }
         });
 
+        answer_fraction_box.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
+                    current_question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()).setFraction(Double.parseDouble(newValue));
+                    answersBoxInit(answers_box.getSelectionModel().getSelectedIndex());
+                }catch (NullPointerException e) {
 
+                }
+            }
+        });
     }
 
     private void selectQuestion(Question question) {
         current_question = question;
         question.load(superBank.find(String.valueOf(question.getID())));
         questionFieldsInit(question);
+    }
+
+    private void answersBoxInit(int index) {
+        answers_box.setItems(FXCollections.observableArrayList(current_question.getAnswersDisplay()));
+        answers_box.getSelectionModel().select(index);
     }
 
     public void clickOnItem(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {

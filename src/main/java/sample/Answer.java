@@ -33,6 +33,18 @@ public class Answer {
         return f_format;
     }
 
+    public void setFraction(Double fraction) {
+        this.fraction = fraction;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
     public ArrayList<String> getAvailableFractions() {
         return new ArrayList<String>(Arrays.asList(available_fractions));
     }

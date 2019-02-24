@@ -90,7 +90,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TreeView fx:id="qcm" layoutX="-46.0" layoutY="14.0" onDragDetected="#treeDrag" onMouseClicked="#clickOnQcm" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TreeView fx:id="qcm" layoutX="-46.0" layoutY="14.0" onDragDetected="#treeDrag" onDragDropped="#treeDragDropped" onMouseClicked="#clickOnQcm" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <contextMenu>
                                           <ContextMenu fx:id="contextMenuQcm">
                                             <items>
