@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -1033,7 +1035,7 @@ public class Controller implements Initializable {
 
     private void dragEnter(DragEvent event, TreeCell treeCell){
         if (event.getGestureSource() != this && event.getDragboard().hasString() && !(treeCell.getTreeItem() instanceof TreeItemWithQuestion)) {
-                treeCell.getTreeItem().setValue("+++++++++");
+            treeCell.getTreeItem().setValue("+++++++++++++");
         }
         event.consume();
     }
@@ -1046,11 +1048,24 @@ public class Controller implements Initializable {
         if (db.hasString() && it instanceof TreeItemWithQcmAndBank && !(it instanceof TreeItemWithQuestion)) {
             System.out.println("HERE WE R! " +db.getString());
             if(((TreeItemWithQcmAndBank) it).getQcm()==null){
+                Bank b=((TreeItemWithQcmAndBank) it).getBank();
                 try {
-                    ((TreeItemWithQcmAndBank) it).getBank().addQuestion(new Question(superbank.find(db.getString())));
+                    b.addQuestion(new Question(superbank.find(db.getString())));
                 }catch(WrongQuestionTypeException e){
                     e.printStackTrace();
                 }
+                b.save();
+                displayBanks();
+            }
+            else{
+                Qcm q=((TreeItemWithQcmAndBank) it).getQcm();
+                try {
+                    q.addQuestion(new Question(superbank.find(db.getString())));
+                }catch(WrongQuestionTypeException e){
+                    e.printStackTrace();
+                }
+                q.save();
+                displayQcms();
             }
             success = true;
         }
