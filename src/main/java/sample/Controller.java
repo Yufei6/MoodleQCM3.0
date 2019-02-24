@@ -13,23 +13,28 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.*;
+import javafx.stage.Window;
+import javafx.util.Callback;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 public class Controller implements Initializable {
@@ -132,6 +137,18 @@ public class Controller implements Initializable {
     private ChoiceBox<String> answer_fraction_box;
 
     ////////////////////////////////////////////////////
+    @FXML void afficherError(String msg){
+        Alert _alert = new Alert(Alert.AlertType.CONFIRMATION,msg, new ButtonType("OK", ButtonBar.ButtonData.YES));
+        _alert.setTitle("Il y a une erreur");
+        _alert.setHeaderText("Error!");
+        _alert.initOwner(stage);
+        Optional<ButtonType> _buttonType = _alert.showAndWait();
+        if(_buttonType.get().getButtonData().equals(ButtonBar.ButtonData.YES)){
+            _alert.close();
+        }
+    }
+
+
     @FXML void importBank(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
@@ -154,15 +171,19 @@ public class Controller implements Initializable {
     }
 
     @FXML void exportBank(ActionEvent event){
-        DirectoryChooser directoryChooser=new DirectoryChooser();
-        File file = directoryChooser.showDialog(stage);
-        String path = file.getPath();
         if(bank.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+            DirectoryChooser directoryChooser=new DirectoryChooser();
+            File file = directoryChooser.showDialog(stage);
+            String path = file.getPath();
             TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) bank.getSelectionModel().getSelectedItems().get(0);
             if (treeItem.getBank() != null) {
                 treeItem.getBank().Export(path+"/", treeItem.getBank().getName());
             } else {
+                afficherError("Il faut choisir une banque pour exportBanque");
             }
+        }
+        else{
+            afficherError("Il faut choisir une banque pour exportBanque");
         }
     }
 
@@ -191,14 +212,20 @@ public class Controller implements Initializable {
     }
 
     @FXML void exportQcm(ActionEvent event){
-        DirectoryChooser directoryChooser=new DirectoryChooser();
-        File file = directoryChooser.showDialog(stage);
-        String path = file.getPath();
         if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+            DirectoryChooser directoryChooser=new DirectoryChooser();
+            File file = directoryChooser.showDialog(stage);
+            String path = file.getPath();
             TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) qcm.getSelectionModel().getSelectedItems().get(0);
             if (treeItem.getQcm() != null) {
                 treeItem.getQcm().Export(path+"/", treeItem.getQcm().getName());
             }
+            else{
+                afficherError("Il faut choisir une qcm pour exportQcm");
+            }
+        }
+        else{
+            afficherError("Il faut choisir une qcm pour exportQcm");
         }
     }
 
@@ -300,7 +327,18 @@ public class Controller implements Initializable {
         }
         bank.setRoot(root_bank);
         bank.setShowRoot(false);
+        bank.setEditable(true);
+        bank.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
+            @Override
+            public TreeCell<String> call(TreeView<String> p) {
+                return new TextFieldTreeCellImpl();
+            }
+
+
+        });
     }
+
+
 
 
     private void displayQcms(){
@@ -312,6 +350,13 @@ public class Controller implements Initializable {
         }
         qcm.setRoot(root_qcm);
         qcm.setShowRoot(false);
+        qcm.setEditable(true);
+        qcm.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
+            @Override
+            public TreeCell<String> call(TreeView<String> p) {
+                return new TextFieldTreeCellImpl();
+            }
+        });
     }
 
 
@@ -332,6 +377,11 @@ public class Controller implements Initializable {
             file.delete();
         }
     }
+
+
+
+
+
 
 
 
@@ -437,6 +487,14 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
         tree.setRoot(root);
+        tree.setEditable(true);
+        tree.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
+            @Override
+            public TreeCell<String> call(TreeView<String> p) {
+                return new TextFieldTreeCellImplForSuperbank();
+            }
+        });
+
         contextMenu.getItems().get(0).setText("Ajouter Dossier");
         SuperBank finalSuperBank = superBank;
         contextMenu.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
@@ -456,6 +514,8 @@ public class Controller implements Initializable {
 
             }
         });
+
+
         MenuItem menuItem = new MenuItem("Ajouter Question");
         menuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -554,7 +614,11 @@ public class Controller implements Initializable {
                     });
                     Label label = new Label("Entrez le nom du nouveau banque");
                     VBox layout = new VBox(10);
-                    layout.getChildren().addAll(label, notification, button, button2);
+                    HBox hbox = new HBox();
+                    hbox.getChildren().addAll( button2, button);
+                    hbox.setSpacing(10);
+                    hbox.setAlignment(Pos.CENTER);
+                    layout.getChildren().addAll(label, notification,hbox);
                     layout.setAlignment(Pos.CENTER);
                     Scene scene = new Scene(layout);
                     window.setScene(scene);
@@ -562,7 +626,53 @@ public class Controller implements Initializable {
                 }
             }
         });
-        contextMenuBank.getItems().addAll(menuItemBank1,menuItemBank2,menuItemBank4, menuItemBank3);
+        MenuItem menuItemBank5 = new MenuItem("Ajouter une question");
+        menuItemBank5.setAccelerator(KeyCombination.keyCombination("Ctrl+M"));
+        menuItemBank5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                if(bank.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+                    Stage window = new Stage();
+                    window.setTitle("Ajouter une question");
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setMinWidth(300);
+                    window.setMinHeight(150);
+                    Button button = new Button("Annuler");
+                    button.setOnAction(e1 -> window.close());
+                    Button button2 = new Button("OK");
+                    TextField notification = new TextField();
+                    notification.setPromptText("Numero de la question");
+                    notification.clear();
+                    button2.setOnAction((ActionEvent e2) -> {
+                        String name_0 = bank.getSelectionModel().getSelectedItems().get(0).getValue();
+                        for(Bank b : bankList) {
+                            if (name_0 == b.getName()){
+                                try {
+                                    Question new_q = new Question(superBank.find(notification.getText()));
+                                    b.addQuestion(new_q);
+                                }catch(WrongQuestionTypeException e3){
+                                    e3.printStackTrace();
+                                }
+                                b.save();
+                            }
+                        }
+                        initBanksAndQcms(superBank);
+                        window.close();
+                    });
+                    Label label = new Label("Entrez le numero de la question pour ajouter");
+                    VBox layout = new VBox(10);
+                    HBox hbox = new HBox();
+                    hbox.setSpacing(10);
+                    hbox.setAlignment(Pos.CENTER);
+                    hbox.getChildren().addAll(button2,button);
+                    layout.getChildren().addAll(label, notification, hbox);
+                    layout.setAlignment(Pos.CENTER);
+                    Scene scene = new Scene(layout);
+                    window.setScene(scene);
+                    window.showAndWait();
+                }
+            }
+        });
+        contextMenuBank.getItems().addAll(menuItemBank5,menuItemBank1,menuItemBank2,menuItemBank4, menuItemBank3);
 
 
         contextMenuQcm.getItems().get(0).setText("Ajouter qcm");
@@ -627,7 +737,11 @@ public class Controller implements Initializable {
                     });
                     Label label = new Label("Entrez le nom du nouveau qcm");
                     VBox layout = new VBox(10);
-                    layout.getChildren().addAll(label, notification, button, button2);
+                    HBox hbox = new HBox();
+                    hbox.setSpacing(10);
+                    hbox.setAlignment(Pos.CENTER);
+                    hbox.getChildren().addAll(button2,button);
+                    layout.getChildren().addAll(label, notification, hbox);
                     layout.setAlignment(Pos.CENTER);
                     Scene scene = new Scene(layout);
                     window.setScene(scene);
@@ -635,7 +749,53 @@ public class Controller implements Initializable {
                 }
             }
         });
-        contextMenuQcm.getItems().addAll(menuItemQcm1,menuItemQcm2,menuItemQcm4,menuItemQcm3);
+        MenuItem menuItemQcm5 = new MenuItem("Ajouter une question");
+        menuItemQcm5.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
+        menuItemQcm5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+                    Stage window = new Stage();
+                    window.setTitle("Ajouter une question");
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setMinWidth(300);
+                    window.setMinHeight(150);
+                    Button button = new Button("Annuler");
+                    button.setOnAction(e1 -> window.close());
+                    Button button2 = new Button("OK");
+                    TextField notification = new TextField();
+                    notification.setPromptText("Entrez numero de la question pour ajouter");
+                    notification.clear();
+                    button2.setOnAction((ActionEvent e2) -> {
+                        String name_0 = qcm.getSelectionModel().getSelectedItems().get(0).getValue();
+                        for(Qcm q : qcmList) {
+                            if (name_0 == q.getName()){
+                                try {
+                                    Question new_q = new Question(superBank.find(notification.getText()));
+                                    q.addQuestion(new_q);
+                                }catch(WrongQuestionTypeException e3){
+                                    e3.printStackTrace();
+                                }
+                                q.save();
+                            }
+                        }
+                        initBanksAndQcms(superBank);
+                        window.close();
+                    });
+                    Label label = new Label("Entrez le numero");
+                    VBox layout = new VBox(10);
+                    HBox hbox = new HBox();
+                    hbox.setSpacing(10);
+                    hbox.setAlignment(Pos.CENTER);
+                    hbox.getChildren().addAll(button2,button);
+                    layout.getChildren().addAll(label, notification, hbox);
+                    layout.setAlignment(Pos.CENTER);
+                    Scene scene = new Scene(layout);
+                    window.setScene(scene);
+                    window.showAndWait();
+                }
+            }
+        });
+        contextMenuQcm.getItems().addAll(menuItemQcm5 ,menuItemQcm1,menuItemQcm2,menuItemQcm4,menuItemQcm3);
 
 
 
@@ -720,6 +880,138 @@ public class Controller implements Initializable {
     public void reloadTree(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
 
     }
+
+
+
+
+    private final class TextFieldTreeCellImpl extends TreeCell<String>{
+        private TextField textField;
+
+        public TextFieldTreeCellImpl() {
+            this.setOnDragEntered(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent event) {
+                    if (event.getGestureSource() != this &&
+                            event.getDragboard().hasString()) {
+//                        this.setFill(Color.GREEN);
+                    }
+
+                    event.consume();
+
+                }
+            });
+        }
+
+        @Override
+        public void startEdit() {
+            TreeItem it = getTreeItem();
+            if ((it instanceof TreeItemWithQcmAndBank)&&(!(it instanceof TreeItemWithQuestion))) {
+                super.startEdit();
+                if (textField == null) {
+                    createTextField();
+                }
+                setText(null);
+                setGraphic(textField);
+                textField.selectAll();
+            }
+        }
+
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+            setText((String) getItem());
+            setGraphic(getTreeItem().getGraphic());
+        }
+
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                if (isEditing()) {
+                    if (textField != null) {
+                        textField.setText(getString());
+                    }
+                    setText(null);
+                    setGraphic(textField);
+                } else {
+                    setText(getString());
+                    setGraphic(getTreeItem().getGraphic());
+                }
+            }
+        }
+
+        private void createTextField() {
+            textField = new TextField(getString());
+            textField.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+                @Override
+                public void handle(KeyEvent t) {
+                    TreeItem it = getTreeItem();
+                    if ((t.getCode() == KeyCode.ENTER)&&(it instanceof TreeItemWithQcmAndBank)&&(textField.getText().length()>0)) {
+                        commitEdit(textField.getText());
+                        Bank bk=((TreeItemWithQcmAndBank) it).getBank();
+                        Qcm qc=((TreeItemWithQcmAndBank) it).getQcm();
+                        if(bk!=null){
+                            bk.changeName(textField.getText());
+                            deleteFile(bk.getPath());
+                            bk.changeName(textField.getText());
+                            bk.changePath(sys_bank_path+textField.getText()+".xml");
+                            bk.save();
+                        }
+                        if(qc!=null){
+                            qc.changeName(textField.getText());
+                            deleteFile(qc.getPath());
+                            qc.changeName(textField.getText());
+                            qc.changePath(sys_bank_path+textField.getText()+".xml");
+                            qc.save();
+                        }
+                    } else if (t.getCode() == KeyCode.ESCAPE) {
+                        cancelEdit();
+                    }
+                }
+            });
+        }
+
+        private String getString() {
+            return getItem() == null ? "" : getItem().toString();
+        }
+
+    }
+
+    private final class TextFieldTreeCellImplForSuperbank extends TreeCell<String>{
+        public TextFieldTreeCellImplForSuperbank() {
+            this.setOnDragDetected(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent event) {
+                    TreeItem it = getTreeItem();
+                    if(it instanceof TreeItemWithQuestion){
+                        Dragboard db = this.startDragAndDrop(TransferMode.COPY);
+
+                        db.setContent(((TreeItemWithQuestion) it).getQuestion());
+
+                        event.consume();
+                    }
+                }
+            });
+
+            this.setOnDragEntered(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent event) {
+                    if (event.getGestureSource() != this &&
+                            event.getDragboard().hasString()) {
+                        this.setFill(Color.GREEN);
+                    }
+
+                    event.consume();
+
+                }
+            });
+        }
+    }
+
 
 
 

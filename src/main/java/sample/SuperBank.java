@@ -154,9 +154,6 @@ public class SuperBank {
 
     public String find(String s) {
         for (String[] strings : getQuestionList()){
-            System.out.println("S : "+s);
-            System.out.println("ID :"+ strings[0]);
-            System.out.println("Path :"+ strings[1]);
             if (s.equals(strings[0])){
                 return strings[1];
             }
@@ -223,8 +220,6 @@ public class SuperBank {
         System.out.println("dirBank"+dirBank.getName());
         if (directory.equals(dirBank.getName())){
             File file = new File("bank/"+nameFile);
-            System.out.println(file.getPath());
-            System.out.println(file.mkdir());
             return file;
 
         }
@@ -247,8 +242,6 @@ public class SuperBank {
             }
         }
         File fileToAdd = paths[0];
-        System.out.println(paths[0].getName());
-        System.out.println(fileToAdd.getPath());
         fileToAdd = new File(fileToAdd.getParentFile().getPath()+"/"+nameFile);
         fileToAdd.mkdir();
         return fileToAdd;
