@@ -997,8 +997,8 @@ public class Controller implements Initializable {
 
         public TextFieldTreeCellImpl(SuperBank superbank) {
             this.setOnDragDetected((MouseEvent event)-> dragDetectedInBank(event, this));
-            this.setOnDragDropped((DragEvent event) -> dragEnter(event, this));
-            this.setOnDragOver((DragEvent event) -> dragEnter(event, this));
+            this.setOnDragDropped((DragEvent event) -> dragDrop(event, this, superbank));
+            this.setOnDragOver((DragEvent event) -> dragOver(event, this));
             this.setOnDragExited((DragEvent event)->mouseExit(event, this));
         }
 
@@ -1135,8 +1135,9 @@ public class Controller implements Initializable {
         }
     }
 
-    private void dragEnter(DragEvent event, TreeCell treeCell){
+    private void dragOver(DragEvent event, TreeCell treeCell){
         if (treeCell.getTreeItem() instanceof TreeItemWithQcmAndBank && event.getDragboard().hasString() && !(treeCell.getTreeItem() instanceof TreeItemWithQuestion)) {
+            event.acceptTransferModes(TransferMode.ANY);
             treeCell.getTreeItem().setValue("+++++++++++++");
         }
         event.consume();
