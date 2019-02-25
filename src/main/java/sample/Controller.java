@@ -10,10 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.*;
 import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -554,9 +552,9 @@ public class Controller implements Initializable {
         });
         contextMenu.getItems().addAll(menuItem,menuItem1);
 
-        contextMenuBank.getItems().get(0).setText("Ajouter banque");
-        contextMenuBank.getItems().get(0).setAccelerator(KeyCombination.keyCombination("Ctrl+C"));
-        contextMenuBank.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+        MenuItem menuItemBank0 = new MenuItem("Ajouter banque");
+        menuItemBank0.setAccelerator(KeyCombination.keyCombination("Ctrl+C"));
+        menuItemBank0.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 creerBank(e);
             }
@@ -723,12 +721,26 @@ public class Controller implements Initializable {
                 }
             }
         });
-        contextMenuBank.getItems().addAll(menuItemBank5,menuItemBank6,menuItemBank1,menuItemBank2,menuItemBank4, menuItemBank3);
+
+        bank.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+                TreeItem it = bank.getSelectionModel().getSelectedItems().get(0);
+                if (it instanceof TreeItemWithQuestion){
+                    contextMenuBank.getItems().setAll(menuItemBank6);
+                }
+                else if(it instanceof TreeItemWithQcmAndBank){
+                    contextMenuBank.getItems().setAll(menuItemBank2,menuItemBank3,menuItemBank4,menuItemBank5);
+                }
+                else{
+                    contextMenuBank.getItems().setAll(menuItemBank0,menuItemBank1);
+                }
+            }
+        });
 
 
-        contextMenuQcm.getItems().get(0).setText("Ajouter qcm");
-        contextMenuQcm.getItems().get(0).setAccelerator(KeyCombination.keyCombination("Ctrl+B"));
-        contextMenuQcm.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+        MenuItem menuItemQcm0 = new MenuItem("Ajouter qcm");
+        menuItemQcm0.setAccelerator(KeyCombination.keyCombination("Ctrl+B"));
+        menuItemQcm0.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 creerQcm(e);
             }
@@ -898,9 +910,21 @@ public class Controller implements Initializable {
                 }
             }
         });
-        contextMenuQcm.getItems().addAll(menuItemQcm5,menuItemQcm6,menuItemQcm1,menuItemQcm2,menuItemQcm4,menuItemQcm3);
 
-
+        qcm.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+                TreeItem it = qcm.getSelectionModel().getSelectedItems().get(0);
+                if (it instanceof TreeItemWithQuestion){
+                    contextMenuQcm.getItems().setAll(menuItemQcm6);
+                }
+                else if(it instanceof TreeItemWithQcmAndBank){
+                    contextMenuQcm.getItems().setAll(menuItemQcm2,menuItemQcm3,menuItemQcm4,menuItemQcm5);
+                }
+                else{
+                    contextMenuQcm.getItems().setAll(menuItemQcm0,menuItemQcm1);
+                }
+            }
+        });
 
 
         initBanksAndQcms(superBank);
@@ -1144,12 +1168,10 @@ public class Controller implements Initializable {
     }
 
     private void dragDrop(DragEvent event, TreeCell treeCell, SuperBank superbank) {
-        System.out.println("IM HERE");
         Dragboard db = event.getDragboard();
         boolean success = false;
         TreeItem it = treeCell.getTreeItem();
         if (db.hasString() && it instanceof TreeItemWithQcmAndBank && !(it instanceof TreeItemWithQuestion)) {
-            System.out.println("HERE WE R! " +db.getString());
             if(((TreeItemWithQcmAndBank) it).getQcm()==null){
                 Bank b=((TreeItemWithQcmAndBank) it).getBank();
                 try {
