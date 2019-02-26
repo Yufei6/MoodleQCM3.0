@@ -1024,6 +1024,8 @@ public class Controller implements Initializable {
             this.setOnDragDropped((DragEvent event) -> dragDrop(event, this, superbank));
             this.setOnDragOver((DragEvent event) -> dragOver(event, this));
             this.setOnDragExited((DragEvent event)->mouseExit(event, this));
+            this.setOnDragDone((DragEvent event)->dragDone(event, this));
+
         }
 
         @Override
@@ -1155,14 +1157,18 @@ public class Controller implements Initializable {
 
     private void dragDone(DragEvent event, TreeCell treeCell){
         if (event.getTransferMode() == TransferMode.MOVE) {
-            treeCell.setText("");
+            System.out.println("FFFF");
+            if(treeCell.getTreeItem() != null){
+                System.out.println("gggg");
+            }
+
         }
     }
 
     private void dragOver(DragEvent event, TreeCell treeCell){
         if (treeCell.getTreeItem() instanceof TreeItemWithQcmAndBank && event.getDragboard().hasString() && !(treeCell.getTreeItem() instanceof TreeItemWithQuestion)) {
             event.acceptTransferModes(TransferMode.ANY);
-            treeCell.getTreeItem().setValue("+++++++++++++");
+            treeCell.getTreeItem().setValue("+++++++++++++++++");
         }
         event.consume();
     }
@@ -1216,11 +1222,9 @@ public class Controller implements Initializable {
 
         if(draggedItem instanceof TreeItemWithQuestion) {
             if(((TreeItemWithQuestion) draggedItem).getQuestion()!=null) {
-                System.out.println("helloInBank"+draggedItem.getValue());
                 Dragboard db = treeCell.startDragAndDrop(TransferMode.MOVE);
                 ClipboardContent content = new ClipboardContent();
                 content.putString(((TreeItemWithQuestion) draggedItem).getQuestion().getID() + "");
-                System.out.println(((TreeItemWithQuestion) draggedItem).getQuestion().getID());
                 db.setContent(content);
             }
         }
