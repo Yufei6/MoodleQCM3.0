@@ -10,8 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -331,7 +331,7 @@ public class Controller implements Initializable {
         bank.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
             @Override
             public TreeCell<String> call(TreeView<String> p) {
-                return new TextFieldTreeCellImpl();
+                return new TextFieldTreeCellImpl(superBank);
             }
 
 
@@ -354,7 +354,7 @@ public class Controller implements Initializable {
         qcm.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
             @Override
             public TreeCell<String> call(TreeView<String> p) {
-                return new TextFieldTreeCellImpl();
+                return new TextFieldTreeCellImpl(superBank);
             }
         });
     }
@@ -511,7 +511,7 @@ public class Controller implements Initializable {
         tree.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
             @Override
             public TreeCell<String> call(TreeView<String> p) {
-                return new TextFieldTreeCellImplForSuperbank();
+                return new TextFieldTreeCellImplForSuperBank();
             }
         });
 
@@ -572,9 +572,9 @@ public class Controller implements Initializable {
         });
         contextMenu.getItems().addAll(menuItem,menuItem1);
 
-        contextMenuBank.getItems().get(0).setText("Ajouter banque");
-        contextMenuBank.getItems().get(0).setAccelerator(KeyCombination.keyCombination("Ctrl+C"));
-        contextMenuBank.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+        MenuItem menuItemBank0 = new MenuItem("Ajouter banque");
+        menuItemBank0.setAccelerator(KeyCombination.keyCombination("Ctrl+C"));
+        menuItemBank0.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 creerBank(e);
             }
@@ -644,13 +644,17 @@ public class Controller implements Initializable {
                     window.setScene(scene);
                     window.showAndWait();
                 }
+                else{
+                    afficherError("Il faut choisir une banque pour modifier son nom");
+                }
             }
         });
         MenuItem menuItemBank5 = new MenuItem("Ajouter une question");
         menuItemBank5.setAccelerator(KeyCombination.keyCombination("Ctrl+M"));
         menuItemBank5.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                if(bank.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+                TreeItem it = bank.getSelectionModel().getSelectedItems().get(0);
+                if((it instanceof TreeItemWithQcmAndBank) && !(it instanceof TreeItemWithQuestion)) {
                     Stage window = new Stage();
                     window.setTitle("Ajouter une question");
                     window.initModality(Modality.APPLICATION_MODAL);
@@ -690,14 +694,73 @@ public class Controller implements Initializable {
                     window.setScene(scene);
                     window.showAndWait();
                 }
+                else{
+                    afficherError("Il faut choisir une banque pour y ajouter question!");
+                }
             }
         });
-        contextMenuBank.getItems().addAll(menuItemBank5,menuItemBank1,menuItemBank2,menuItemBank4, menuItemBank3);
+        MenuItem menuItemBank6 = new MenuItem("Supprimer une question");
+        menuItemBank6.setAccelerator(KeyCombination.keyCombination("Ctrl+P"));
+        menuItemBank6.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                TreeItem it = bank.getSelectionModel().getSelectedItems().get(0);
+                if(it instanceof TreeItemWithQuestion) {
+                    Stage window = new Stage();
+                    window.setTitle("Supprimer cette Question");
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setMinWidth(300);
+                    window.setMinHeight(150);
+                    Button button = new Button("Non");
+                    button.setOnAction(e1 -> window.close());
+                    Button button2 = new Button("Oui");
+                    button2.setOnAction((ActionEvent e2) -> {
+                        Question q = ((TreeItemWithQuestion) it).getQuestion();
+                        TreeItem parent = it.getParent();
+                        if(parent instanceof TreeItemWithQcmAndBank){
+                            Bank b=((TreeItemWithQcmAndBank) parent).getBank();
+                            b.deleteQuestion(q);
+                            b.save();
+                        }
+                        displayBanks();
+                        window.close();
+                    });
+                    Label label = new Label("Vous voulez supprimer cette question");
+                    VBox layout = new VBox(10);
+                    HBox hbox = new HBox();
+                    hbox.setSpacing(10);
+                    hbox.setAlignment(Pos.CENTER);
+                    hbox.getChildren().addAll(button2,button);
+                    layout.getChildren().addAll(label,hbox);
+                    layout.setAlignment(Pos.CENTER);
+                    Scene scene = new Scene(layout);
+                    window.setScene(scene);
+                    window.showAndWait();
+                }
+                else{
+                    afficherError("Il faut choisir une question pour le supprimer!");
+                }
+            }
+        });
+
+        bank.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+                TreeItem it = bank.getSelectionModel().getSelectedItems().get(0);
+                if (it instanceof TreeItemWithQuestion){
+                    contextMenuBank.getItems().setAll(menuItemBank6);
+                }
+                else if(it instanceof TreeItemWithQcmAndBank){
+                    contextMenuBank.getItems().setAll(menuItemBank2,menuItemBank3,menuItemBank4,menuItemBank5);
+                }
+                else{
+                    contextMenuBank.getItems().setAll(menuItemBank0,menuItemBank1);
+                }
+            }
+        });
 
 
-        contextMenuQcm.getItems().get(0).setText("Ajouter qcm");
-        contextMenuQcm.getItems().get(0).setAccelerator(KeyCombination.keyCombination("Ctrl+B"));
-        contextMenuQcm.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+        MenuItem menuItemQcm0 = new MenuItem("Ajouter qcm");
+        menuItemQcm0.setAccelerator(KeyCombination.keyCombination("Ctrl+B"));
+        menuItemQcm0.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 creerQcm(e);
             }
@@ -723,6 +786,9 @@ public class Controller implements Initializable {
                 if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
                     deleteFile(sys_qcm_path+qcm.getSelectionModel().getSelectedItems().get(0).getValue()+".xml");
                     initBanksAndQcms(superBank);
+                }
+                else{
+                    afficherError("Il faut choisir une qcm pour le supprimer!");
                 }
             }
         });
@@ -767,13 +833,17 @@ public class Controller implements Initializable {
                     window.setScene(scene);
                     window.showAndWait();
                 }
+                else{
+                    afficherError("Il faut choisir une qcm pour le modifier son nom!");
+                }
             }
         });
         MenuItem menuItemQcm5 = new MenuItem("Ajouter une question");
         menuItemQcm5.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
         menuItemQcm5.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+                TreeItem it =qcm.getSelectionModel().getSelectedItems().get(0);
+                if(it instanceof TreeItemWithQcmAndBank && !(it instanceof TreeItemWithQuestion)) {
                     Stage window = new Stage();
                     window.setTitle("Ajouter une question");
                     window.initModality(Modality.APPLICATION_MODAL);
@@ -813,11 +883,68 @@ public class Controller implements Initializable {
                     window.setScene(scene);
                     window.showAndWait();
                 }
+                else{
+                    afficherError("Il faut choisir une qcm pour y ajouter une question!");
+                }
             }
         });
-        contextMenuQcm.getItems().addAll(menuItemQcm5 ,menuItemQcm1,menuItemQcm2,menuItemQcm4,menuItemQcm3);
+        MenuItem menuItemQcm6 = new MenuItem("Supprimer une question");
+        menuItemQcm6.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
+        menuItemQcm6.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                TreeItem it = qcm.getSelectionModel().getSelectedItems().get(0);
+                if(it instanceof TreeItemWithQuestion) {
+                    Stage window = new Stage();
+                    window.setTitle("Supprimer cette Question");
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setMinWidth(300);
+                    window.setMinHeight(150);
+                    Button button = new Button("Non");
+                    button.setOnAction(e1 -> window.close());
+                    Button button2 = new Button("Oui");
+                    button2.setOnAction((ActionEvent e2) -> {
+                        Question q = ((TreeItemWithQuestion) it).getQuestion();
+                        TreeItem parent = it.getParent();
+                        if(parent instanceof TreeItemWithQcmAndBank){
+                            Qcm qcm=((TreeItemWithQcmAndBank) parent).getQcm();
+                            qcm.deleteQuestion(q);
+                            qcm.save();
+                        }
+                        displayQcms();
+                        window.close();
+                    });
+                    Label label = new Label("Vous voulez supprimer cette question");
+                    VBox layout = new VBox(10);
+                    HBox hbox = new HBox();
+                    hbox.setSpacing(10);
+                    hbox.setAlignment(Pos.CENTER);
+                    hbox.getChildren().addAll(button2,button);
+                    layout.getChildren().addAll(label,hbox);
+                    layout.setAlignment(Pos.CENTER);
+                    Scene scene = new Scene(layout);
+                    window.setScene(scene);
+                    window.showAndWait();
+                }
+                else{
+                    afficherError("Il faut choisir une question pour le supprimer!");
+                }
+            }
+        });
 
-
+        qcm.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+                TreeItem it = qcm.getSelectionModel().getSelectedItems().get(0);
+                if (it instanceof TreeItemWithQuestion){
+                    contextMenuQcm.getItems().setAll(menuItemQcm6);
+                }
+                else if(it instanceof TreeItemWithQcmAndBank){
+                    contextMenuQcm.getItems().setAll(menuItemQcm2,menuItemQcm3,menuItemQcm4,menuItemQcm5);
+                }
+                else{
+                    contextMenuQcm.getItems().setAll(menuItemQcm0,menuItemQcm1);
+                }
+            }
+        });
 
 
         initBanksAndQcms(superBank);
@@ -883,10 +1010,12 @@ public class Controller implements Initializable {
     }
 
     public void clickOnItem(MouseEvent mouseEvent) throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
-        TreeItemWithQuestion<String> treeItem = (TreeItemWithQuestion<String>) tree.getSelectionModel().getSelectedItems().get(0);
-        if(treeItem != null) {
-            if (treeItem.getQuestion() != null) {
-                selectQuestion(treeItem.getQuestion());
+        if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
+            TreeItemWithQuestion<String> treeItem = (TreeItemWithQuestion<String>) tree.getSelectionModel().getSelectedItems().get(0);
+            if (treeItem != null) {
+                if (treeItem.getQuestion() != null) {
+                    selectQuestion(treeItem.getQuestion());
+                }
             }
         }
     }
@@ -926,19 +1055,14 @@ public class Controller implements Initializable {
     private final class TextFieldTreeCellImpl extends TreeCell<String>{
         private TextField textField;
 
-        public TextFieldTreeCellImpl() {
-            this.setOnDragEntered(new EventHandler<DragEvent>() {
-                @Override
-                public void handle(DragEvent event) {
-                    if (event.getGestureSource() != this &&
-                            event.getDragboard().hasString()) {
-//                        this.setFill(Color.GREEN);
-                    }
 
-                    event.consume();
+        public TextFieldTreeCellImpl(SuperBank superbank) {
+            this.setOnDragDetected((MouseEvent event)-> dragDetectedInBank(event, this));
+            this.setOnDragDropped((DragEvent event) -> dragDrop(event, this, superbank));
+            this.setOnDragOver((DragEvent event) -> dragOver(event, this));
+            this.setOnDragExited((DragEvent event)->mouseExit(event, this));
+            this.setOnDragDone((DragEvent event)->dragDone(event, this));
 
-                }
-            });
         }
 
         @Override
@@ -1021,55 +1145,128 @@ public class Controller implements Initializable {
 
     }
 
-    private final class TextFieldTreeCellImplForSuperbank extends TreeCell<String>{
-        public TextFieldTreeCellImplForSuperbank() {
-            TreeCell<String> cell = this;
-            this.setOnDragDetected(new EventHandler<MouseEvent>() {
+    private final class TextFieldTreeCellImplForSuperBank extends TreeCell<String>{
+        private TextField textField;
 
-                public void handle(MouseEvent event) {
-                    TreeItem it = getTreeItem();
-                    if(it instanceof TreeItemWithQuestion){
-                        Dragboard db = cell.startDragAndDrop(TransferMode.COPY);
-                        ClipboardContent content = new ClipboardContent();
-
-                        //db.setContent(((TreeItemWithQuestion) it).getQuestion());
-
-                        event.consume();
-                    }
-                }
-            });
-
-            this.setOnDragEntered(new EventHandler<DragEvent>() {
-                @Override
-                public void handle(DragEvent event) {
-                    if (event.getGestureSource() != this &&
-                            event.getDragboard().hasString()) {
-                      //  this.setFill(Color.GREEN);
-                    }
-
-                    event.consume();
-
-                }
-            });
-            this.setOnDragDetected((MouseEvent event) -> dragDetected(event, this, tree));
+        public TextFieldTreeCellImplForSuperBank() {
+                this.setOnDragDetected((MouseEvent event) -> dragDetected(event, this));
+                this.setOnDragDone((DragEvent event)->dragDone(event, this));
         }
+
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                if (isEditing()) {
+                    setText(null);
+                } else {
+                    setText(getString());
+                    setGraphic(getTreeItem().getGraphic());
+                }
+            }
+        }
+
+        private String getString() {
+            return getItem() == null ? "" : getItem().toString();
+        }
+
     }
 
 
-    private void dragDetected(MouseEvent event, TreeCell treeCell, TreeView treeView) {
+    private void dragDetected(MouseEvent event, TreeCell treeCell) {
         TreeItem draggedItem = treeCell.getTreeItem();
 
-//         root can't be dragged
-        if (draggedItem.getParent() == null) return;
-        Dragboard db = treeCell.startDragAndDrop(TransferMode.MOVE);
-        System.out.println("ppp");
-        ClipboardContent content = new ClipboardContent();
-        content.putString(draggedItem.getValue().toString());
-        db.setContent(content);
-        db.setDragView(treeCell.snapshot(null, null));
+        if(draggedItem instanceof TreeItemWithQuestion) {
+            if(((TreeItemWithQuestion) draggedItem).getQuestion()!=null) {
+                System.out.println("hello"+draggedItem.getValue());
+                Dragboard db = treeCell.startDragAndDrop(TransferMode.ANY);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(((TreeItemWithQuestion) draggedItem).getQuestion().getID() + "");
+                System.out.println(((TreeItemWithQuestion) draggedItem).getQuestion().getID());
+                db.setContent(content);
+            }
+        }
         event.consume();
     }
 
+    private void dragDone(DragEvent event, TreeCell treeCell){
+        if (event.getTransferMode() == TransferMode.MOVE) {
+            System.out.println("FFFF");
+            if(treeCell.getTreeItem() != null){
+                System.out.println("gggg");
+            }
+
+        }
+    }
+
+    private void dragOver(DragEvent event, TreeCell treeCell){
+        if (treeCell.getTreeItem() instanceof TreeItemWithQcmAndBank && event.getDragboard().hasString() && !(treeCell.getTreeItem() instanceof TreeItemWithQuestion)) {
+            event.acceptTransferModes(TransferMode.ANY);
+            treeCell.getTreeItem().setValue("+++++++++++++++++");
+        }
+        event.consume();
+    }
+
+    private void dragDrop(DragEvent event, TreeCell treeCell, SuperBank superbank) {
+        Dragboard db = event.getDragboard();
+        boolean success = false;
+        TreeItem it = treeCell.getTreeItem();
+        if (db.hasString() && it instanceof TreeItemWithQcmAndBank && !(it instanceof TreeItemWithQuestion)) {
+            if(((TreeItemWithQcmAndBank) it).getQcm()==null){
+                Bank b=((TreeItemWithQcmAndBank) it).getBank();
+                try {
+                    b.addQuestion(new Question(superbank.find(db.getString())));
+                }catch(WrongQuestionTypeException e){
+                    e.printStackTrace();
+                }
+                b.save();
+                displayBanks();
+            }
+            else{
+                Qcm q=((TreeItemWithQcmAndBank) it).getQcm();
+                try {
+                    q.addQuestion(new Question(superbank.find(db.getString())));
+                }catch(WrongQuestionTypeException e){
+                    e.printStackTrace();
+                }
+                q.save();
+                displayQcms();
+            }
+            success = true;
+        }
+        event.setDropCompleted(success);
+        event.consume();
+    }
+
+    private void mouseExit(DragEvent event, TreeCell treeCell){
+        TreeItem it = treeCell.getTreeItem();
+        if(!(it instanceof TreeItemWithQuestion) && it instanceof TreeItemWithQcmAndBank) {
+            if (((TreeItemWithQcmAndBank) it).getQcm() == null){
+                treeCell.getTreeItem().setValue(((TreeItemWithQcmAndBank) it).getBank().getName());
+            }
+            else {
+                treeCell.getTreeItem().setValue(((TreeItemWithQcmAndBank) it).getQcm().getName());
+            }
+        }
+        event.consume();
+    }
+
+    private void dragDetectedInBank(MouseEvent event, TreeCell treeCell) {
+        TreeItem draggedItem = treeCell.getTreeItem();
+
+        if(draggedItem instanceof TreeItemWithQuestion) {
+            if(((TreeItemWithQuestion) draggedItem).getQuestion()!=null) {
+                Dragboard db = treeCell.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(((TreeItemWithQuestion) draggedItem).getQuestion().getID() + "");
+                db.setContent(content);
+            }
+        }
+        event.consume();
+    }
 
 }
 

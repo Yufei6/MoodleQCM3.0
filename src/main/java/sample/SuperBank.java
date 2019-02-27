@@ -180,8 +180,8 @@ public class SuperBank {
         }
         return root;
     }
-    public TreeItemWithQuestion<String> generateTreeWithQuestion() throws IOException, SAXException, WrongQuestionTypeException {
-        TreeItemWithQuestion<String> root = new TreeItemWithQuestion<>("bank");
+    public TreeItem<String> generateTreeWithQuestion() throws IOException, SAXException, WrongQuestionTypeException {
+        TreeItem<String> root = new TreeItem<>("bank");
         root.setExpanded(true);
         for(File file : dirBank.listFiles()){
             if (file.isDirectory()){
@@ -200,7 +200,7 @@ public class SuperBank {
     }
 
     private TreeItem<String> generateItem(File file) throws IOException, SAXException, WrongQuestionTypeException {
-        TreeItemWithQuestion<String> treeItem = new TreeItemWithQuestion<>(file.getName());
+        TreeItem<String> treeItem = new TreeItem<>(file.getName());
 
         for (File file1 : file.listFiles()) {
             if (file1.isDirectory()){
