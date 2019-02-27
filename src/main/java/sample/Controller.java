@@ -451,6 +451,19 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    void answerAdded(ActionEvent event) {
+        current_question.addAnswer(new Answer(100.0, "", "html", "", "html"));
+        answersBoxInit(current_question.getAnswersNumber()-1);
+    }
+
+    @FXML
+    void answerDeleted(ActionEvent event) {
+        int index = answers_box.getSelectionModel().getSelectedIndex();
+        current_question.removeAnswer(index);
+        answersBoxInit(/*(index > 0) ? index-1 : */0);
+    }
+
+    @FXML
     void treeDrag(ActionEvent event) {
 
     }
@@ -864,6 +877,7 @@ public class Controller implements Initializable {
     }
 
     private void answersBoxInit(int index) {
+
         answers_box.setItems(FXCollections.observableArrayList(current_question.getAnswersDisplay()));
         answers_box.getSelectionModel().select(index);
     }
@@ -1018,7 +1032,7 @@ public class Controller implements Initializable {
                         Dragboard db = cell.startDragAndDrop(TransferMode.COPY);
                         ClipboardContent content = new ClipboardContent();
 
-                        db.setContent(((TreeItemWithQuestion) it).getQuestion());
+                        //db.setContent(((TreeItemWithQuestion) it).getQuestion());
 
                         event.consume();
                     }
@@ -1030,7 +1044,7 @@ public class Controller implements Initializable {
                 public void handle(DragEvent event) {
                     if (event.getGestureSource() != this &&
                             event.getDragboard().hasString()) {
-                        this.setFill(Color.GREEN);
+                      //  this.setFill(Color.GREEN);
                     }
 
                     event.consume();
