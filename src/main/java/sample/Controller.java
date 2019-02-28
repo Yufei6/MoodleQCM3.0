@@ -435,6 +435,9 @@ public class Controller implements Initializable {
     }
 
     private void answerFieldsGet(Answer answer) {
+        if (answer == null) {
+            return;
+        }
         answer.setText(answer_text_field.getHtmlText());
         answer.setFeedback(answer_feedback_field.getHtmlText());
         answer.setFraction(Double.parseDouble(answer_fraction_box.getValue()));
@@ -973,11 +976,15 @@ public class Controller implements Initializable {
         }
 
         answers_box.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 try {
-                    answerFieldsGet(current_question.getAnswerByIndex((int) oldValue));
-                    answerFieldsInit(current_question.getAnswerByIndex((int) newValue));
+                    if (is_user_action) {
+                        answerFieldsGet(current_question.getAnswerByIndex((int) oldValue));  // <= Ici, lorsque on regen une liste de choix, on essaye de get les champs de ce qu'on vient de supprimer
+                        answerFieldsInit(current_question.getAnswerByIndex((int) newValue));
+                    }
+                    is_user_action = true;
                 }catch(IndexOutOfBoundsException e) {
                     // TODO : s'occuper de ça? (Est-ce un gros problème?)
                 }
@@ -1003,8 +1010,10 @@ public class Controller implements Initializable {
         questionFieldsInit(question);
     }
 
-    private void answersBoxInit(int index) {
+    private boolean is_user_action = true;
 
+    private void answersBoxInit(int index) {
+        is_user_action = false;
         answers_box.setItems(FXCollections.observableArrayList(current_question.getAnswersDisplay()));
         answers_box.getSelectionModel().select(index);
     }
