@@ -530,6 +530,10 @@ public class Question {
         this.answernumbering = "abc";  //Défaut si problème
     }
 
+    public int getAnswersNumber() {
+        return answers.size();
+    }
+
     public void setDefaultgrade(double defaultgrade) {
         this.defaultgrade = defaultgrade;
     }

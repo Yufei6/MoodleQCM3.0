@@ -90,7 +90,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TreeView fx:id="qcm" layoutX="-46.0" layoutY="14.0" onDragDetected="#treeDrag" onMouseClicked="#clickOnQcm" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TreeView fx:id="qcm" layoutX="-46.0" layoutY="14.0" onDragDetected="#treeDrag" onDragDropped="#treeDragDropped" onMouseClicked="#clickOnQcm" prefHeight="323.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <contextMenu>
                                           <ContextMenu fx:id="contextMenuQcm">
                                             <items>
@@ -141,8 +141,8 @@
                                                 <Rectangle arcHeight="5.0" arcWidth="1.0" fill="#9a9a9a" height="590.0" layoutX="30.0" layoutY="1455.0" opacity="0.3" smooth="false" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="655.0" />
                                                 <Text layoutX="47.0" layoutY="1481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Réponses :" />
                                                 <ChoiceBox fx:id="answers_box" layoutX="115.0" layoutY="1465.0" prefWidth="150.0" />
-                                                <Button layoutX="290.0" layoutY="1465.0" mnemonicParsing="false" text="Supprimer" />
-                                                <Button layoutX="386.0" layoutY="1465.0" mnemonicParsing="false" text="Ajouter une réponse" />
+                                                <Button fx:id="delete_answer_btn" layoutX="290.0" layoutY="1465.0" mnemonicParsing="false" onAction="#answerDeleted" text="Supprimer" />
+                                                <Button fx:id="add_answer_btn" layoutX="386.0" layoutY="1465.0" mnemonicParsing="false" onAction="#answerAdded" text="Ajouter une réponse" />
                                                 <Text layoutX="47.0" layoutY="1540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Texte :" />
                                                 <HTMLEditor fx:id="answer_text_field" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="47.0" layoutY="1547.0" prefHeight="200.0" prefWidth="506.0" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Retour :" x="47.0" y="1780.0" />

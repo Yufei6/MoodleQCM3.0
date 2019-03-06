@@ -31,22 +31,22 @@
     <single>false</single>
     <answernumbering>none</answernumbering>
     <shuffleanswers>true</shuffleanswers>
-    <answer format="html" fraction="-100.0">
-      <text><![CDATA[<p>-8</p>]]></text>
+    <answer format="html" fraction="-70.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>-8</p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>vous y étiez presque</p>]]></text>
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>vous y étiez presque</p></body></html>]]></text>
       </feedback>
     </answer>
     <answer format="html" fraction="-50.0">
-      <text><![CDATA[<p>85</p>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>85</p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>bien tenté</p>]]></text>
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>bien tenté</p></body></html>]]></text>
       </feedback>
     </answer>
-    <answer format="html" fraction="100.0">
-      <text><![CDATA[<p>40</p>]]></text>
+    <answer format="html" fraction="25.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>40</p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>bien bien</p>]]></text>
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>bien bien</p></body></html>]]></text>
       </feedback>
     </answer>
   </question>
