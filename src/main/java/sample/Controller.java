@@ -422,6 +422,9 @@ public class Controller implements Initializable {
     }
 
     private void answerFieldsInit(Answer answer) {
+        if (answer == null) {
+            return;
+        }
         answer_text_field.setHtmlText(answer.getText());
         answer_feedback_field.setHtmlText(answer.getFeedback());
         ObservableList<String> answer_fractions = FXCollections.observableArrayList(answer.getAvailableFractions());

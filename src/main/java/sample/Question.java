@@ -37,6 +37,7 @@ public class Question {
 
     private Question() {
         answer_numbering_map_init();
+        answers = new ArrayList<>();
     }
 
     public Question(Element question, SuperBank s_bank) {
@@ -53,6 +54,8 @@ public class Question {
     }
 
     public Question(String name, int id) {
+        this();
+        loaded = true;
         this.name = name;
         this.id = id;
     }
@@ -332,7 +335,6 @@ public class Question {
         answernumbering = x_question.getElementsByTagName("answernumbering").item(0).getTextContent();
         shuffleanswers = Boolean.parseBoolean(x_question.getElementsByTagName("shuffleanswers").item(0).getTextContent());
 
-        answers = new ArrayList<>();
         NodeList x_answers = x_question.getElementsByTagName("answer");
         int answers_nb = x_answers.getLength();
         for (int ans = 0; ans < answers_nb; ans++) {
