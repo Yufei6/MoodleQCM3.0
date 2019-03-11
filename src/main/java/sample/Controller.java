@@ -527,6 +527,28 @@ public class Controller implements Initializable {
 
 
 
+    void delete_questions_repertoire(TreeItemWithRepertoire it){
+        for(Object it_0 : it.getChildren()){
+            if(it_0 instanceof TreeItemWithRepertoire){
+                delete_questions_repertoire((TreeItemWithRepertoire) it_0);
+            }
+            else if(it_0 instanceof TreeItemWithQuestion){
+                Question question_delete = ((TreeItemWithQuestion) it_0).getQuestion();
+                for(Qcm qcm : qcmList){
+                    qcm.deleteQuestion(question_delete);
+                    qcm.save();
+                }
+                for(Bank bank : bankList){
+                    bank.deleteQuestion(question_delete);
+                    bank.save();
+                }
+                initBanksAndQcms(superBank);
+            }
+        }
+    }
+
+
+
     void initSuperbank(){
         try {
             superBank = new SuperBank();
@@ -611,13 +633,13 @@ public class Controller implements Initializable {
         menuItemSB1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
-
-                    deleteFile(((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath());
-                    initSuperbank();
-                }
-                else{
-                    afficherError("Il faut choisir un dossier pour le supprimer");
+                if(tree.getSelectionModel().getSelectedItems().get(0).getParent()!=null) {
+                    if (tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
+                        delete_questions_repertoire((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0));
+                        initSuperbank();
+                    } else {
+                        afficherError("Il faut choisir un dossier pour le supprimer");
+                    }
                 }
             }
         });
@@ -677,7 +699,7 @@ public class Controller implements Initializable {
         });
 
 
-        MenuItem menuItemSB3 = new MenuItem("Ajouter Question");
+        MenuItem menuItemSB3 = new MenuItem("Ajouter une Question");
         menuItemSB3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -727,7 +749,22 @@ public class Controller implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
-                    deleteFile(((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath());
+                    Question question_delete = ((TreeItemWithQuestion) tree.getSelectionModel().getSelectedItems().get(0)).getQuestion();
+                    for(Qcm qcm : qcmList){
+                        qcm.deleteQuestion(question_delete);
+                        qcm.save();
+                    }
+                    for(Bank bank : bankList){
+                        bank.deleteQuestion(question_delete);
+                        bank.save();
+                    }
+                    initBanksAndQcms(superBank);
+                    String path_0 = "";
+                    TreeItem parent = tree.getSelectionModel().getSelectedItems().get(0).getParent();
+                    if(parent instanceof TreeItemWithRepertoire){
+                        path_0=((TreeItemWithRepertoire) parent).getPath();
+                    }
+                    deleteFile(path_0+"/"+(tree.getSelectionModel().getSelectedItems().get(0)).getValue()+".xml");
                     initSuperbank();
                 }
                 else{
