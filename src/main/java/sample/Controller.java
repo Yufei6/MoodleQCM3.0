@@ -43,6 +43,7 @@ public class Controller implements Initializable {
     private boolean reload;
     private String sys_qcm_path = "./target/Qcm/";
     private String sys_bank_path = "./target/Bank/";
+    private boolean deletion_mode;
 
     public static String getNameFile() {
         return nameFile;
@@ -74,7 +75,6 @@ public class Controller implements Initializable {
 
     QuestionStorage current_quizz;
     Question current_question;
-
 
     @FXML
     private ResourceBundle resources;
@@ -457,13 +457,15 @@ public class Controller implements Initializable {
     void answerAdded(ActionEvent event) {
         current_question.addAnswer(new Answer(100.0, "", "html", "", "html"));
         answersBoxInit(current_question.getAnswersNumber()-1);
+        answerFieldsInit(current_question.getAnswerByIndex(current_question.getAnswersNumber()-1));
     }
 
     @FXML
     void answerDeleted(ActionEvent event) {
         int index = answers_box.getSelectionModel().getSelectedIndex();
         current_question.removeAnswer(index);
-        answersBoxInit(/*(index > 0) ? index-1 : */0);
+        deletion_mode = true;
+        answersBoxInit((index > 0) ? index-1 : 0);
     }
 
     @FXML
@@ -483,6 +485,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        deletion_mode = false;
         try {
             superBank = new SuperBank();
             //new_q = new Question("42.xml");
@@ -979,12 +982,13 @@ public class Controller implements Initializable {
 
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("it changed");
                 try {
-                    if (is_user_action) {
+                    if (!deletion_mode) {
                         answerFieldsGet(current_question.getAnswerByIndex((int) oldValue));  // <= Ici, lorsque on regen une liste de choix, on essaye de get les champs de ce qu'on vient de supprimer
-                        answerFieldsInit(current_question.getAnswerByIndex((int) newValue));
                     }
-                    is_user_action = true;
+                    answerFieldsInit(current_question.getAnswerByIndex((int) newValue));
+                    deletion_mode = false;
                 }catch(IndexOutOfBoundsException e) {
                     // TODO : s'occuper de ça? (Est-ce un gros problème?)
                 }
@@ -994,9 +998,10 @@ public class Controller implements Initializable {
         answer_fraction_box.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                System.out.println("fraction box changed");
                 try {
                     current_question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()).setFraction(Double.parseDouble(newValue));
-                    answersBoxInit(answers_box.getSelectionModel().getSelectedIndex());
+                   // answersBoxInit(answers_box.getSelectionModel().getSelectedIndex());
                 }catch (NullPointerException e) {
 
                 }
@@ -1007,13 +1012,12 @@ public class Controller implements Initializable {
     private void selectQuestion(Question question) {
         current_question = question;
         question.load(superBank.find(String.valueOf(question.getID())));
+        deletion_mode = true;
         questionFieldsInit(question);
     }
 
-    private boolean is_user_action = true;
-
     private void answersBoxInit(int index) {
-        is_user_action = false;
+        System.out.println("answer box initialized with index: " + index);
         answers_box.setItems(FXCollections.observableArrayList(current_question.getAnswersDisplay()));
         answers_box.getSelectionModel().select(index);
     }

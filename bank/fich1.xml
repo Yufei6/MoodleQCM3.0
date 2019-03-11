@@ -29,10 +29,10 @@
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
     <single>false</single>
-    <answernumbering>none</answernumbering>
+    <answernumbering>ABC</answernumbering>
     <shuffleanswers>true</shuffleanswers>
-    <answer format="html" fraction="-70.0">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>-8</p></body></html>]]></text>
+    <answer format="html" fraction="-60.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>-5</p></body></html>]]></text>
       <feedback format="html">
         <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>vous y étiez presque</p></body></html>]]></text>
       </feedback>
