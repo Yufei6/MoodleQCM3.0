@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<question_data>
+  <id_header>
+    <id>303</id>
+    <name>
+      <text>new_question</text>
+    </name>
+  </id_header>
+  <question type="multichoice">
+    <name>
+      <text>new_question</text>
+    </name>
+    <questiontext format="">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+    </questiontext>
+    <generalfeedback format="">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+    </generalfeedback>
+    <correctfeedback format="">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+    </incorrectfeedback>
+    <defaultgrade>0.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <answernumbering>abc</answernumbering>
+    <shuffleanswers>false</shuffleanswers>
+  </question>
+</question_data>
