@@ -149,8 +149,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Question.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="58" column="25" lean-forward="true" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+            <state relative-caret-position="494">
+              <caret line="77" column="9" lean-forward="true" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#17352#17353#0" expanded="true" />
@@ -234,17 +234,9 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="149">
-              <caret line="1235" column="5" lean-forward="true" selection-start-line="1235" selection-start-column="5" selection-end-line="1235" selection-end-column="5" />
+              <caret line="1242" column="5" lean-forward="true" selection-start-line="1242" selection-start-column="5" selection-end-line="1242" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#10712#10713#0" expanded="true" />
-                <element signature="e#10787#10788#0" expanded="true" />
-                <element signature="e#11400#11401#0" expanded="true" />
-                <element signature="e#11475#11476#0" expanded="true" />
-                <element signature="e#15469#15470#0" expanded="true" />
-                <element signature="e#15508#15509#0" expanded="true" />
-                <element signature="e#18125#18126#0" expanded="true" />
-                <element signature="e#18203#18204#0" expanded="true" />
                 <element signature="e#30829#30830#0" expanded="true" />
                 <element signature="e#30873#30874#0" expanded="true" />
                 <element signature="e#31154#31155#0" expanded="true" />
@@ -403,7 +395,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="-21" />
     <option name="y" value="9" />
     <option name="width" value="1936" />
@@ -496,7 +488,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552317309416" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552320486077" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -638,7 +630,7 @@
       <workItem from="1551899794301" duration="620000" />
       <workItem from="1552141646869" duration="8734000" />
       <workItem from="1552237613009" duration="2865000" />
-      <workItem from="1552305328100" duration="11772000" />
+      <workItem from="1552305328100" duration="13407000" />
     </task>
     <servers />
   </component>
@@ -657,10 +649,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="140094000" />
+    <option name="totallyTimeSpent" value="141729000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-21" y="9" width="1936" height="1096" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.31522897" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -878,17 +871,9 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
-          <caret line="1235" column="5" lean-forward="true" selection-start-line="1235" selection-start-column="5" selection-end-line="1235" selection-end-column="5" />
+          <caret line="1242" column="5" lean-forward="true" selection-start-line="1242" selection-start-column="5" selection-end-line="1242" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10712#10713#0" expanded="true" />
-            <element signature="e#10787#10788#0" expanded="true" />
-            <element signature="e#11400#11401#0" expanded="true" />
-            <element signature="e#11475#11476#0" expanded="true" />
-            <element signature="e#15469#15470#0" expanded="true" />
-            <element signature="e#15508#15509#0" expanded="true" />
-            <element signature="e#18125#18126#0" expanded="true" />
-            <element signature="e#18203#18204#0" expanded="true" />
             <element signature="e#30829#30830#0" expanded="true" />
             <element signature="e#30873#30874#0" expanded="true" />
             <element signature="e#31154#31155#0" expanded="true" />
@@ -909,8 +894,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/Question.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="58" column="25" lean-forward="true" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+        <state relative-caret-position="494">
+          <caret line="77" column="9" lean-forward="true" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#17352#17353#0" expanded="true" />
