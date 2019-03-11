@@ -44,7 +44,7 @@ public class Controller implements Initializable {
     private String sys_qcm_path = "./target/Qcm/";
     private String sys_bank_path = "./target/Bank/";
     private boolean deletion_mode;
-    private boolean creating_new_questiion=false;
+    private boolean creating_new_question=false;
 
     public static String getNameFile() {
         return nameFile;
@@ -471,9 +471,9 @@ public class Controller implements Initializable {
         questionFieldsGet(current_question);
         answerFieldsGet(current_question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()));
         List<String> errors = current_question.save(superBank.find(String.valueOf(current_question.getID())));
-        if(creating_new_questiion){
+        if(creating_new_question){
             initSuperbank();
-            creating_new_questiion=false;
+            creating_new_question=false;
         }
         if (errors.size() > 0) {
             showInvalidQuestionError(errors);
@@ -694,7 +694,7 @@ public class Controller implements Initializable {
                     notification.clear();
                     button2.setOnAction((ActionEvent e2) -> {
                         if(notification.getText().length()>0) {
-                            creating_new_questiion=true;
+                            creating_new_question=true;
                             String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
                             int new_id = superBank.addQuestion(path_0+"/"+notification.getText()+".xml");
                             Question new_question = new Question(notification.getText(),new_id);
