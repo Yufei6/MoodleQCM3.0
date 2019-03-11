@@ -612,6 +612,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
+
                     deleteFile(((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath());
                     initSuperbank();
                 }
@@ -676,7 +677,7 @@ public class Controller implements Initializable {
         });
 
 
-        MenuItem menuItemSB3 = new MenuItem("Ajouter une Question");
+        MenuItem menuItemSB3 = new MenuItem("Ajouter Question");
         menuItemSB3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
