@@ -30,7 +30,7 @@ public class SuperBank {
     }
 
     public SuperBank() throws ParserConfigurationException, IOException, SAXException, WrongQuestionTypeException {
-        dirBank =new File("bank");
+        dirBank =new File("./target/Superbank");
         questionList = new ArrayList<>();
         questions = new ArrayList<>();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -52,9 +52,6 @@ public class SuperBank {
         return dirBank;
     }
 
-    String newQuestion(Question question){
-        return "bank/"+question.getID();
-    }
 
 
     public boolean havefiles() {
@@ -113,8 +110,6 @@ public class SuperBank {
                 if (extractQuestion(dir) != null){
                     questionList.add(extractQuestion(dir));
                 }
-
-
             }
         }
         return questionList;
@@ -128,11 +123,11 @@ public class SuperBank {
         return questionList;
     }
 
-    public void addQuestion(Question question) {
+    public int addQuestion(String path) {
         int new_id = generateId();
-        question.setId(new_id);
-        String[] new_question_entry = {""+new_id, newQuestion(question)};
+        String[] new_question_entry = {""+new_id, path};
         questionList.add(new_question_entry);
+        return new_id;
     }
 
     public String[] extractQuestion(File file) throws IOException, SAXException {
@@ -166,7 +161,7 @@ public class SuperBank {
 
 
     public TreeItem<String> generateTree() throws IOException, SAXException, WrongQuestionTypeException {
-        TreeItem<String> root = new TreeItem<>("bank");
+        TreeItemWithRepertoire root = new TreeItemWithRepertoire("bank", dirBank.getName());
         root.setExpanded(true);
         for(File file : dirBank.listFiles()){
             if (file.isDirectory()){
@@ -180,8 +175,8 @@ public class SuperBank {
         }
         return root;
     }
-    public TreeItem<String> generateTreeWithQuestion() throws IOException, SAXException, WrongQuestionTypeException {
-        TreeItem<String> root = new TreeItem<>("bank");
+    public TreeItemWithRepertoire<String> generateTreeWithQuestion() throws IOException, SAXException, WrongQuestionTypeException {
+        TreeItemWithRepertoire root = new TreeItemWithRepertoire("superBank",dirBank.getPath());
         root.setExpanded(true);
         for(File file : dirBank.listFiles()){
             if (file.isDirectory()){
@@ -200,7 +195,7 @@ public class SuperBank {
     }
 
     private TreeItem<String> generateItem(File file) throws IOException, SAXException, WrongQuestionTypeException {
-        TreeItem<String> treeItem = new TreeItem<>(file.getName());
+        TreeItemWithRepertoire<String> treeItem = new TreeItemWithRepertoire("["+file.getName()+"]",file.getPath());
 
         for (File file1 : file.listFiles()) {
             if (file1.isDirectory()){
