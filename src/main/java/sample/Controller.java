@@ -433,6 +433,9 @@ public class Controller implements Initializable {
     }
 
     private void questionFieldsGet(Question question) {  // TODO : Collecter les erreurs et les champs incomplets
+        if (question == null) {
+            return;
+        }
         question.setName(question_name_field.getText());
         question.setQuestiontext(question_text_field.getHtmlText());
         question.setGeneralfeedback(general_feebdack_field.getHtmlText());
@@ -461,8 +464,35 @@ public class Controller implements Initializable {
 
     @FXML
     void questionSaved(ActionEvent event) {
+        if (current_question == null) {
+            return;
+        }
         questionFieldsGet(current_question);
-        current_question.save(superBank.find(String.valueOf(current_question.getID())));
+        answerFieldsGet(current_question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()));
+        List<String> errors = current_question.save(superBank.find(String.valueOf(current_question.getID())));
+        if (errors.size() > 0) {
+            showInvalidQuestionError(errors);
+        }
+    }
+
+    private void showInvalidQuestionError(List<String> errors) {
+        final Stage popup = new Stage();
+        popup.initOwner(stage);
+        popup.setTitle("Question invalide");
+        popup.setMinHeight(100);
+        popup.setMinWidth(300);
+        popup.initModality(Modality.APPLICATION_MODAL);
+        VBox errorDialog = new VBox(20);
+        String error_message = "La question ne peut pas être sauvegardée à cause des erreurs suivantes : ";
+        for (String err : errors) {
+            Text txt = new Text("ha");
+            error_message += "\n - " + err;
+        }
+        errorDialog.getChildren().add(new Text(error_message));
+        Scene errorScene = new Scene(errorDialog, 300, 200);
+        popup.setScene(errorScene);
+        popup.show();
+        System.out.println("Erreur !");
     }
 
     @FXML
@@ -1473,6 +1503,7 @@ public class Controller implements Initializable {
         }
         event.consume();
     }
+
 
 }
 

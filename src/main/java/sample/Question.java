@@ -58,6 +58,8 @@ public class Question {
         loaded = true;
         this.name = name;
         this.id = id;
+        answers.add(new Answer(100.0, "", "html", "", "html"));
+        answers.add(new Answer(100.0, "", "html", "", "html"));
     }
 
     private void answer_numbering_map_init() {
@@ -229,7 +231,12 @@ public class Question {
         return root;
     }
 
-    public void save(String xml_path) {
+    public List<String> save(String xml_path) {
+
+        List<String> errors = checkValidity();
+        if (errors.size() > 0) {
+            return errors;
+        }
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -276,6 +283,8 @@ public class Question {
         catch (TransformerException e) {
             e.printStackTrace();
         }
+
+        return errors;
     }
 
     private void init(String xml_path) throws WrongQuestionTypeException {
@@ -378,6 +387,37 @@ public class Question {
         }
 
         loaded = true;
+    }
+
+    private List<String> checkValidity() {
+        List<String> errors_collector = new ArrayList<>();
+        if (name.trim().equals("")) {
+            errors_collector.add("Un nom doit être spécifié.");
+        }
+        if (questiontext.trim().replaceAll("\\<.*?>","").equals("")) {
+            errors_collector.add("Un énoncé doit être spécifié.");
+        }
+        if (answers.size() < 2) {
+            errors_collector.add("Minimum 2 réponses doivent être spécifiées.");
+        }
+        else {
+            boolean has_max = false, names_completed = true;
+            for (Answer ans : answers) {
+                if (ans.getFraction() == 100.0) {
+                    has_max = true;
+                }
+                if (ans.getText().trim().equals("")) {
+                    names_completed = false;
+                }
+            }
+            if (!has_max) {
+                errors_collector.add("Minimum une question doit rapporter 100% des points.");
+            }
+            if (!names_completed) {
+                errors_collector.add("Les énoncés de toutes les questions doivent être spécifiés");
+            }
+        }
+        return errors_collector;
     }
 
     public int getID() {

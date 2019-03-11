@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <question_data>
   <id_header>
-    <id>301</id>
+    <id>302</id>
     <name>
       <text>ff</text>
     </name>
@@ -11,19 +11,19 @@
       <text>ff</text>
     </name>
     <questiontext format="">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">gg</font></p></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">ff</font></p></body></html>]]></text>
     </questiontext>
     <generalfeedback format="">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">test_general_feedback</body></html>]]></text>
     </generalfeedback>
     <correctfeedback format="">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>Votre réponse est correcte.</p></body></html>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>Votre réponse est partiellement correcte.</p></body></html>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>Votre réponse est ... voila</p></body></html>]]></text>
     </incorrectfeedback>
     <defaultgrade>0.0</defaultgrade>
     <penalty>0.0</penalty>
@@ -32,9 +32,15 @@
     <answernumbering>abc</answernumbering>
     <shuffleanswers>false</shuffleanswers>
     <answer format="html" fraction="100.0">
-      <text/>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
       <feedback format="html">
-        <text/>
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
       </feedback>
     </answer>
   </question>

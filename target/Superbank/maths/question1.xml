@@ -31,16 +31,10 @@
     <single>true</single>
     <answernumbering>III</answernumbering>
     <shuffleanswers>true</shuffleanswers>
-    <answer format="html" fraction="-100.0">
-      <text><![CDATA[<p>-8</p>]]></text>
-      <feedback format="html">
-        <text><![CDATA[<p>vous y étiez presque</p>]]></text>
-      </feedback>
-    </answer>
     <answer format="html" fraction="-50.0">
-      <text><![CDATA[<p>85</p>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>85</p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<p>bien tenté</p>]]></text>
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>bien tenté</p></body></html>]]></text>
       </feedback>
     </answer>
     <answer format="html" fraction="100.0">

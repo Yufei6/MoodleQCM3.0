@@ -3,15 +3,15 @@
   <id_header>
     <id>300</id>
     <name>
-      <text>fich1</text>
+      <text>fff</text>
     </name>
   </id_header>
   <question type="multichoice">
     <name>
-      <text>fich1</text>
+      <text>fff</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>8*5</p></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">ff</font></p></body></html>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">test_general_feedback</body></html>]]></text>
@@ -31,22 +31,16 @@
     <single>false</single>
     <answernumbering>ABC</answernumbering>
     <shuffleanswers>true</shuffleanswers>
-    <answer format="html" fraction="-60.0">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>-5</p></body></html>]]></text>
-      <feedback format="html">
-        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>vous y étiez presque</p></body></html>]]></text>
-      </feedback>
-    </answer>
-    <answer format="html" fraction="-50.0">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>85</p></body></html>]]></text>
-      <feedback format="html">
-        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>bien tenté</p></body></html>]]></text>
-      </feedback>
-    </answer>
     <answer format="html" fraction="25.0">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>40</p></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><br></p></body></html>]]></text>
       <feedback format="html">
         <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>bien bien</p></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
       </feedback>
     </answer>
   </question>
