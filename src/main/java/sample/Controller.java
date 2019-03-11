@@ -243,8 +243,10 @@ public class Controller implements Initializable {
         notification.setPromptText("Nom du banque");
         notification.clear();
         button2.setOnAction((ActionEvent e) -> {
-            createBank(notification.getText());
-            window.close();
+            if(notification.getText().length()>0) {
+                createBank(notification.getText());
+                window.close();
+            }
         });
         Label label = new Label("Entrez le nom du nouveau banque");
         VBox layout = new VBox(10);
@@ -272,8 +274,10 @@ public class Controller implements Initializable {
         notification.setPromptText("Nom du qcm");
         notification.clear();
         button2.setOnAction((ActionEvent e) -> {
-            createQcm(notification.getText());
-            window.close();
+            if(notification.getText().length()>0) {
+                createQcm(notification.getText());
+                window.close();
+            }
         });
         Label label = new Label("Entrez le nom du nouveau qcm");
         VBox layout = new VBox(10);
@@ -304,16 +308,20 @@ public class Controller implements Initializable {
         bankList = new ArrayList<Bank>();
         File banks = new File(sys_bank_path);
         for(File b : banks.listFiles()){
-             Bank new_bank = new Bank(sys_bank_path+b.getName(),superBank);
-            bankList.add(new_bank);
+            if (isXmlFile(b)) {
+                Bank new_bank = new Bank(sys_bank_path + b.getName(), superBank);
+                bankList.add(new_bank);
+            }
         }
         displayBanks();
 
         qcmList = new ArrayList<Qcm>();
         File qcms = new File(sys_qcm_path);
         for(File q : qcms.listFiles()){
-            Qcm new_qcm = new Qcm(sys_qcm_path+q.getName(),superBank);
-            qcmList.add(new_qcm);
+            if (isXmlFile(q)) {
+                Qcm new_qcm = new Qcm(sys_qcm_path + q.getName(), superBank);
+                qcmList.add(new_qcm);
+            }
         }
         displayQcms();
     }
@@ -373,9 +381,10 @@ public class Controller implements Initializable {
 
     public static void deleteFile(String sPath) {
         File file = new File(sPath);
-        if(file.isFile() && file.exists()) {
+        if(file.exists()) {
             file.delete();
         }
+
     }
 
 
@@ -480,16 +489,11 @@ public class Controller implements Initializable {
 
 
 
-
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        deletion_mode = false;
+    void initSuperbank(){
         try {
             superBank = new SuperBank();
             //new_q = new Question("42.xml");
-          //  new_q.load("42.xml");
+            //  new_q.load("42.xml");
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (WrongQuestionTypeException e) {
@@ -499,7 +503,7 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        TreeItem root = new TreeItem();
+        TreeItemWithRepertoire root = new TreeItemWithRepertoire();
         try {
             root=superBank.generateTreeWithQuestion();
         } catch (IOException | SAXException e) {
@@ -521,62 +525,253 @@ public class Controller implements Initializable {
             }
         });
 
-        contextMenu.getItems().get(0).setText("Ajouter Dossier");
-        SuperBank finalSuperBank = superBank;
-        contextMenu.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                nameFile = tree.getSelectionModel().getSelectedItems().get(0).getValue();
-                textTitle = new Text("Ajouter Dossier");
-                Parent root = null;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/popup.fxml"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-                Stage stage = new Stage();
-                stage.setTitle("Hello World");
-                stage.setScene(new Scene(root, 300, 275));
-                stage.show();
 
+        MenuItem menuItemSB0 = new MenuItem("Ajouter Dossier");
+        menuItemSB0.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
+                    Stage window = new Stage();
+                    window.setTitle("Nouveau dossier");
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setMinWidth(300);
+                    window.setMinHeight(150);
+                    Button button = new Button("Annuler");
+                    button.setOnAction(e1 -> window.close());
+                    Button button2 = new Button("OK");
+                    TextField notification = new TextField();
+                    notification.setPromptText("Nouveau nom de dossier");
+                    notification.clear();
+                    button2.setOnAction((ActionEvent e2) -> {
+                        if(notification.getText().length()>0) {
+                            String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
+                            File new_rep = new File(path_0 + "/" + notification.getText());
+                            new_rep.mkdir();
+                            initSuperbank();
+                            window.close();
+                        }
+                    });
+                    Label label = new Label("Entrez le nom du nouveau dossier");
+                    VBox layout = new VBox(10);
+                    HBox hbox = new HBox();
+                    hbox.getChildren().addAll( button2, button);
+                    hbox.setSpacing(10);
+                    hbox.setAlignment(Pos.CENTER);
+                    layout.getChildren().addAll(label, notification,hbox);
+                    layout.setAlignment(Pos.CENTER);
+                    Scene scene = new Scene(layout);
+                    window.setScene(scene);
+                    window.showAndWait();
+                }
+                else{
+                    afficherError("Il faut choisir un dossier pour y ajouter le nouveau dossie");
+                }
+            }
+        });
+
+        MenuItem menuItemSB1 = new MenuItem("Supprimer Dossier");
+        menuItemSB1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
+                    deleteFile(((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath());
+                    initSuperbank();
+                }
+                else{
+                    afficherError("Il faut choisir un dossier pour le supprimer");
+                }
+            }
+        });
+
+        MenuItem menuItemSB2 = new MenuItem("Modifier le nom de dossier");
+        menuItemSB2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
+                    Stage window = new Stage();
+                    window.setTitle("Modification le nom du dossier");
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setMinWidth(300);
+                    window.setMinHeight(150);
+                    Button button = new Button("Annuler");
+                    button.setOnAction(e1 -> window.close());
+                    Button button2 = new Button("OK");
+                    TextField notification = new TextField();
+                    notification.setPromptText("Nouveau nom de dossier");
+                    notification.clear();
+                    button2.setOnAction((ActionEvent e2) -> {
+                        String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
+                        File f = new File(path_0);
+                        if(notification.getText().length()==0){
+                            afficherError("Il ne faut pas donner un nom vide");
+                        }
+                        else{
+                            String old_path = (String)((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
+                            String new_path = old_path.substring(0, old_path.lastIndexOf("/")) + "/" + notification.getText();
+                            File nf = new File(new_path);
+                            try {
+                                f.renameTo(nf);
+                            } catch (Exception err) {
+                                err.printStackTrace();
+                            }
+                        }
+
+                        initSuperbank();
+                        window.close();
+                    });
+                    Label label = new Label("Entrez le nom du nouveau dossier");
+                    VBox layout = new VBox(10);
+                    HBox hbox = new HBox();
+                    hbox.getChildren().addAll( button2, button);
+                    hbox.setSpacing(10);
+                    hbox.setAlignment(Pos.CENTER);
+                    layout.getChildren().addAll(label, notification,hbox);
+                    layout.setAlignment(Pos.CENTER);
+                    Scene scene = new Scene(layout);
+                    window.setScene(scene);
+                    window.showAndWait();
+                }
+                else{
+                    afficherError("Il faut choisir un dossier pour le supprimer");
+                }
             }
         });
 
 
-        MenuItem menuItem = new MenuItem("Ajouter Question");
-        menuItem.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                textTitle = new Text("Ajouter Question");
-                Parent root = null;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/popup.fxml"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+        MenuItem menuItemSB3 = new MenuItem("Ajouter Question");
+        menuItemSB3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
+                    Stage window = new Stage();
+                    window.setTitle("Nouveau question");
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setMinWidth(300);
+                    window.setMinHeight(150);
+                    Button button = new Button("Annuler");
+                    button.setOnAction(e1 -> window.close());
+                    Button button2 = new Button("OK");
+                    TextField notification = new TextField();
+                    notification.setPromptText("Nom de la nouvelle question");
+                    notification.clear();
+                    button2.setOnAction((ActionEvent e2) -> {
+                        if(notification.getText().length()>0) {
+                            String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
+                            int new_id = superBank.addQuestion(path_0+"/"+notification.getText()+".xml");
+                            Question new_question = new Question(notification.getText(),new_id);
+                            selectQuestion(new_question);
+                            window.close();
+                        }
+                    });
+                    Label label = new Label("Entrez le nom de nouvelle question");
+                    VBox layout = new VBox(10);
+                    HBox hbox = new HBox();
+                    hbox.getChildren().addAll( button2, button);
+                    hbox.setSpacing(10);
+                    hbox.setAlignment(Pos.CENTER);
+                    layout.getChildren().addAll(label, notification,hbox);
+                    layout.setAlignment(Pos.CENTER);
+                    Scene scene = new Scene(layout);
+                    window.setScene(scene);
+                    window.showAndWait();
                 }
-                Stage stage = new Stage();
-                stage.setTitle("Hello World");
-                stage.setScene(new Scene(root, 500, 500));
-                stage.show();
-
+                else{
+                    afficherError("Il faut choisir un dossier pour y ajouter la nouvelle qusetion");
+                }
             }
         });
-        MenuItem menuItem1 = new MenuItem("Modifier");
-        menuItem1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                textTitle = new Text("Modifier");
-                Parent root = null;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/popup.fxml"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-                Stage stage = new Stage();
-                stage.setTitle("Hello World");
-                stage.setScene(new Scene(root, 500, 500));
-                stage.show();
 
+        MenuItem menuItemSB4 = new MenuItem("Supprimer Question");
+        menuItemSB4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
+                    deleteFile(((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath());
+                    initSuperbank();
+                }
+                else{
+                    afficherError("Il faut choisir une question à supprimer");
+                }
             }
         });
-        contextMenu.getItems().addAll(menuItem,menuItem1);
+
+        MenuItem menuItemSB5 = new MenuItem("Modifier le nom de Question");
+        menuItemSB5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
+                    Stage window = new Stage();
+                    window.setTitle("Modification le nom d'une question");
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setMinWidth(300);
+                    window.setMinHeight(150);
+                    Button button = new Button("Annuler");
+                    button.setOnAction(e1 -> window.close());
+                    Button button2 = new Button("OK");
+                    TextField notification = new TextField();
+                    notification.setPromptText("Nouveau nom de question");
+                    notification.clear();
+                    button2.setOnAction((ActionEvent e2) -> {
+                        String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
+                        File f = new File(path_0);
+                        if(notification.getText().length()==0){
+                            afficherError("Il ne faut pas donner un nom vide");
+                        }
+                        else{
+                            String old_path = (String)((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getValue();
+                            String new_path = old_path.substring(0, old_path.lastIndexOf("/")) + "/" + notification.getText() + ".xml";
+                            File nf = new File(new_path);
+                            try {
+                                f.renameTo(nf);
+                            } catch (Exception err) {
+                                err.printStackTrace();
+                            }
+                        }
+
+                        initSuperbank();
+                        window.close();
+                    });
+                    Label label = new Label("Entrez le nom du nouveau dossier");
+                    VBox layout = new VBox(10);
+                    HBox hbox = new HBox();
+                    hbox.getChildren().addAll( button2, button);
+                    hbox.setSpacing(10);
+                    hbox.setAlignment(Pos.CENTER);
+                    layout.getChildren().addAll(label, notification,hbox);
+                    layout.setAlignment(Pos.CENTER);
+                    Scene scene = new Scene(layout);
+                    window.setScene(scene);
+                    window.showAndWait();
+                }
+                else{
+                    afficherError("Il faut choisir un dossier pour le supprimer");
+                }
+            }
+        });
+
+        tree.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+                TreeItem it = tree.getSelectionModel().getSelectedItems().get(0);
+                if (it instanceof TreeItemWithQuestion){
+                    contextMenu.getItems().setAll(menuItemSB4,menuItemSB5);
+                }
+                else if(it instanceof TreeItemWithRepertoire){
+                    contextMenu.getItems().setAll(menuItemSB0,menuItemSB1,menuItemSB2,menuItemSB3);
+                }
+                else{
+                    contextMenu.getItems().setAll();
+                }
+            }
+        });
+    }
+
+
+
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initSuperbank();
 
         MenuItem menuItemBank0 = new MenuItem("Ajouter banque");
         menuItemBank0.setAccelerator(KeyCombination.keyCombination("Ctrl+C"));
@@ -815,17 +1010,22 @@ public class Controller implements Initializable {
                     notification.setPromptText("Nouveau nom de qcm");
                     notification.clear();
                     button2.setOnAction((ActionEvent e2) -> {
-                        String name_0 = qcm.getSelectionModel().getSelectedItems().get(0).getValue();
-                        for(Qcm q : qcmList) {
-                            if (name_0 == q.getName()){
-                                deleteFile(q.getPath());
-                                q.changeName(notification.getText());
-                                q.changePath(sys_qcm_path+notification.getText()+".xml");
-                                q.save();
-                            }
+                        if(notification.getText().length()==0){
+                            afficherError("Il ne faut pas mettre vide pour nom de qcm");
                         }
-                        initBanksAndQcms(superBank);
-                        window.close();
+                        else {
+                            String name_0 = qcm.getSelectionModel().getSelectedItems().get(0).getValue();
+                            for (Qcm q : qcmList) {
+                                if (name_0 == q.getName()) {
+                                    deleteFile(q.getPath());
+                                    q.changeName(notification.getText());
+                                    q.changePath(sys_qcm_path + notification.getText() + ".xml");
+                                    q.save();
+                                }
+                            }
+                            initBanksAndQcms(superBank);
+                            window.close();
+                        }
                     });
                     Label label = new Label("Entrez le nom du nouveau qcm");
                     VBox layout = new VBox(10);
@@ -862,20 +1062,25 @@ public class Controller implements Initializable {
                     notification.setPromptText("Entrez numero de la question pour ajouter");
                     notification.clear();
                     button2.setOnAction((ActionEvent e2) -> {
-                        String name_0 = qcm.getSelectionModel().getSelectedItems().get(0).getValue();
-                        for(Qcm q : qcmList) {
-                            if (name_0 == q.getName()){
-                                try {
-                                    Question new_q = new Question(superBank.find(notification.getText()));
-                                    q.addQuestion(new_q);
-                                }catch(WrongQuestionTypeException e3){
-                                    e3.printStackTrace();
-                                }
-                                q.save();
-                            }
+                        if(notification.getText().length()==0){
+                            afficherError("Il ne faut pas mettre valeur vide");
                         }
-                        initBanksAndQcms(superBank);
-                        window.close();
+                        else {
+                            String name_0 = qcm.getSelectionModel().getSelectedItems().get(0).getValue();
+                            for (Qcm q : qcmList) {
+                                if (name_0 == q.getName()) {
+                                    try {
+                                        Question new_q = new Question(superBank.find(notification.getText()));
+                                        q.addQuestion(new_q);
+                                    } catch (WrongQuestionTypeException e3) {
+                                        e3.printStackTrace();
+                                    }
+                                    q.save();
+                                }
+                            }
+                            initBanksAndQcms(superBank);
+                            window.close();
+                        }
                     });
                     Label label = new Label("Entrez le numero");
                     VBox layout = new VBox(10);
@@ -958,25 +1163,6 @@ public class Controller implements Initializable {
         setCurrent_question(new_q);*/
 
 
-        try {
-            Question q1 = new Question("demo/1.xml");
-            q1.load("demo/1.xml");
-            Question q2 = new Question("demo/2.xml");
-            q2.load("demo/2.xml");
-            Question q3 = new Question("demo/3.xml");
-            q3.load("demo/3.xml");
-
-            Qcm qcm1 = new Qcm();
-            qcm1.addQuestion(q1);
-            qcm1.addQuestion(q2);
-            qcm1.addQuestion(q3);
-
-//            qcm1.Export("demo/", "qcm1");
-
-        }
-        catch(WrongQuestionTypeException e) {
-            e.printStackTrace();
-        }
 
         answers_box.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
@@ -1252,6 +1438,10 @@ public class Controller implements Initializable {
         }
         event.setDropCompleted(success);
         event.consume();
+    }
+
+    public boolean isXmlFile(File file) {
+        return file.isFile() && file.getName().contains(".xml");
     }
 
     private void mouseExit(DragEvent event, TreeCell treeCell){
