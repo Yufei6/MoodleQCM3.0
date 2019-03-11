@@ -676,7 +676,7 @@ public class Controller implements Initializable {
         });
 
 
-        MenuItem menuItemSB3 = new MenuItem("Ajouter Question");
+        MenuItem menuItemSB3 = new MenuItem("Ajouter une Question");
         menuItemSB3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -194,7 +194,7 @@ public class SuperBank {
         return root;
     }
 
-    private TreeItem<String> generateItem(File file) throws IOException, SAXException, WrongQuestionTypeException {
+    private TreeItemWithRepertoire<String> generateItem(File file) throws IOException, SAXException, WrongQuestionTypeException {
         TreeItemWithRepertoire<String> treeItem = new TreeItemWithRepertoire("["+file.getName()+"]",file.getPath());
 
         for (File file1 : file.listFiles()) {
