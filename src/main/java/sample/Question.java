@@ -317,6 +317,8 @@ public class Question {
     }
 
     private void load_from_element(Element x_question) {
+        name = x_question.getElementsByTagName("name").item(0).getTextContent();
+
         Element x_questiontext = (Element) x_question.getElementsByTagName("questiontext").item(0);
         qt_format = x_questiontext.getAttribute("format");     // Init qt_format
         questiontext = x_questiontext.getElementsByTagName("text").item(0).getTextContent();  // Init questiontext
