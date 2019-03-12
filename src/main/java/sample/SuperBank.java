@@ -132,7 +132,7 @@ public class SuperBank {
 
     public int addQuestion(Question question) {
         int new_id = generateId();
-        String q_path  = "./target/Superbank/" + new_id + ".xml";
+        String q_path  = "./target/Superbank/" + question.getName() + ".xml";
         String[] new_question_entry = {""+new_id, q_path};
         questionList.add(new_question_entry);
         question.setId(new_id);

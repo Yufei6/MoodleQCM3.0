@@ -36,6 +36,24 @@ public class Question {
     private Map<String, String> answer_numbering_map;
 
     private Question() {
+        single = true;
+        shuffleanswers = false;
+        hidden = 0;
+        name = "unknown";
+        questiontext = "";
+        generalfeedback = "";
+        correctfeedback = "";
+        partiallycorrectfeedback = "";
+        incorrectfeedback = "";
+        qt_format = "html";
+        gf_format = "html";
+        cf_format = "html";
+        pcf_format = "html";
+        if_format = "html";
+        answernumbering = "123";
+        defaultgrade = 1.0;
+        penalty = 0.0;
+
         answer_numbering_map_init();
         answers = new ArrayList<>();
     }
@@ -301,9 +319,9 @@ public class Question {
             id = Integer.parseInt(id_header.getElementsByTagName("id").item(0).getTextContent());  //Init ID
 
             final Element x_question = (Element) document.getElementsByTagName("question").item(0);
-            if (!x_question.getAttribute("type").equals("multichoice")) {
+            /*if (!x_question.getAttribute("type").equals("multichoice")) {
                 throw new WrongQuestionTypeException();
-            }
+            }*/
         }
         catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -317,46 +335,102 @@ public class Question {
     }
 
     private void load_from_element(Element x_question) {
-        name = x_question.getElementsByTagName("name").item(0).getTextContent();
+        if (x_question.getElementsByTagName("name").item(0) != null) {
+            name = x_question.getElementsByTagName("name").item(0).getTextContent();
+        }
+        if (x_question.getElementsByTagName("questiontext").item(0) != null) {
+            Element x_questiontext = (Element) x_question.getElementsByTagName("questiontext").item(0);
+            if (x_questiontext.getAttribute("format") != null) {
+                qt_format = x_questiontext.getAttribute("format");     // Init qt_format
+            }
+            questiontext = x_questiontext.getTextContent();
+        }
+        if (x_question.getElementsByTagName("generalfeedback").item(0) != null) {
+            Element x_generalfeeback = (Element) x_question.getElementsByTagName("generalfeedback").item(0);
+            if (x_generalfeeback.hasAttribute("format")) {
+                gf_format = x_generalfeeback.getAttribute("format");     // Init gf_format
+            }
+            generalfeedback = x_generalfeeback.getElementsByTagName("text").item(0).getTextContent();  // Init generalfeedback
+        }
 
-        Element x_questiontext = (Element) x_question.getElementsByTagName("questiontext").item(0);
-        qt_format = x_questiontext.getAttribute("format");     // Init qt_format
-        questiontext = x_questiontext.getElementsByTagName("text").item(0).getTextContent();  // Init questiontext
+        if (x_question.getElementsByTagName("correctfeedback").item(0) != null) {
+            Element x_correctfeedback = (Element) x_question.getElementsByTagName("correctfeedback").item(0);
+            if (x_correctfeedback.hasAttribute("format")) {
+                cf_format = x_correctfeedback.getAttribute("format");     // Init cf_format
+            }
+            correctfeedback = x_correctfeedback.getTextContent();  // Init correctfeedback
+        }
 
-        Element x_generalfeeback = (Element) x_question.getElementsByTagName("generalfeedback").item(0);
-        gf_format = x_generalfeeback.getAttribute("format");     // Init gf_format
-        generalfeedback = x_generalfeeback.getElementsByTagName("text").item(0).getTextContent();  // Init generalfeedback
+        if (x_question.getElementsByTagName("partiallycorrectfeedback").item(0) != null) {
+            Element x_partiallycorrectfeedback = (Element) x_question.getElementsByTagName("partiallycorrectfeedback").item(0);
+            if (x_partiallycorrectfeedback.hasAttribute("format")) {
+                pcf_format = x_partiallycorrectfeedback.getAttribute("format");     // Init pcf_format
+            }
+            partiallycorrectfeedback = x_partiallycorrectfeedback.getTextContent();  // Init partiallycorrectfeedback
+        }
 
-        Element x_correctfeedback = (Element) x_question.getElementsByTagName("correctfeedback").item(0);
-        cf_format = x_correctfeedback.getAttribute("format");     // Init cf_format
-        correctfeedback = x_correctfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init correctfeedback
+        if (x_question.getElementsByTagName("incorrectfeedback").item(0) != null) {
+            Element x_incorrectfeedback = (Element) x_question.getElementsByTagName("incorrectfeedback").item(0);
+            if (x_incorrectfeedback.hasAttribute("format")) {
+                if_format = x_incorrectfeedback.getAttribute("format");     // Init if_format
+            }
+            incorrectfeedback = x_incorrectfeedback.getTextContent();  // Init incorrectfeedback
+        }
 
-        Element x_partiallycorrectfeedback = (Element) x_question.getElementsByTagName("partiallycorrectfeedback").item(0);
-        pcf_format = x_partiallycorrectfeedback.getAttribute("format");     // Init pcf_format
-        partiallycorrectfeedback = x_partiallycorrectfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init partiallycorrectfeedback
+        if (x_question.getElementsByTagName("defaultgrade").item(0) != null) {
+            defaultgrade = Double.parseDouble(x_question.getElementsByTagName("defaultgrade").item(0).getTextContent());
+        }
 
-        Element x_incorrectfeedback = (Element) x_question.getElementsByTagName("incorrectfeedback").item(0);
-        if_format = x_incorrectfeedback.getAttribute("format");     // Init if_format
-        incorrectfeedback = x_incorrectfeedback.getElementsByTagName("text").item(0).getTextContent();  // Init incorrectfeedback
+        if (x_question.getElementsByTagName("penalty").item(0) != null) {
+            penalty = Double.parseDouble(x_question.getElementsByTagName("penalty").item(0).getTextContent());
+        }
 
-        defaultgrade = Double.parseDouble(x_question.getElementsByTagName("defaultgrade").item(0).getTextContent());
-        penalty = Double.parseDouble(x_question.getElementsByTagName("penalty").item(0).getTextContent());
-        hidden = Integer.parseInt(x_question.getElementsByTagName("hidden").item(0).getTextContent());
-        single = Boolean.parseBoolean(x_question.getElementsByTagName("single").item(0).getTextContent());
-        answernumbering = x_question.getElementsByTagName("answernumbering").item(0).getTextContent();
-        shuffleanswers = Boolean.parseBoolean(x_question.getElementsByTagName("shuffleanswers").item(0).getTextContent());
+        if (x_question.getElementsByTagName("hidden").item(0) != null) {
+            hidden = Integer.parseInt(x_question.getElementsByTagName("hidden").item(0).getTextContent());
+        }
 
-        NodeList x_answers = x_question.getElementsByTagName("answer");
-        int answers_nb = x_answers.getLength();
-        for (int ans = 0; ans < answers_nb; ans++) {
-            Element answer = (Element) x_answers.item(ans);
-            Double fraction = Double.parseDouble(answer.getAttribute("fraction"));
-            String text = answer.getElementsByTagName("text").item(0).getTextContent();
-            String t_format = answer.getAttribute("format");
-            Element feedback = (Element) answer.getElementsByTagName("feedback").item(0);
-            String f_format = feedback.getAttribute("format");
-            String q_feedback = feedback.getElementsByTagName("text").item(0).getTextContent();
-            answers.add(new Answer(fraction, text, t_format, q_feedback, f_format));
+        if (x_question.getElementsByTagName("single").item(0) != null) {
+            single = Boolean.parseBoolean(x_question.getElementsByTagName("single").item(0).getTextContent());
+        }
+
+        if (x_question.getElementsByTagName("answernumbering").item(0) != null) {
+            answernumbering = x_question.getElementsByTagName("answernumbering").item(0).getTextContent();
+        }
+
+        if (x_question.getElementsByTagName("shuffleanswers").item(0) != null) {
+            shuffleanswers = Boolean.parseBoolean(x_question.getElementsByTagName("shuffleanswers").item(0).getTextContent());
+        }
+
+        if (x_question.getElementsByTagName("answer").item(0) != null) {
+            NodeList x_answers = x_question.getElementsByTagName("answer");
+            int answers_nb = x_answers.getLength();
+            for (int ans = 0; ans < answers_nb; ans++) {
+                Double fraction = 100.0;
+                String text = "";
+                String t_format = "html";
+                String q_feedback = "";
+                String f_format = "html";
+
+                Element answer = (Element) x_answers.item(ans);
+
+                if (answer.getElementsByTagName("fraction").item(0) != null) {
+                    fraction = Double.parseDouble(answer.getAttribute("fraction"));
+                }
+                if (answer.getElementsByTagName("text").item(0) != null) {
+                    text = answer.getElementsByTagName("text").item(0).getTextContent();
+                }
+                if (answer.hasAttribute("format")) {
+                    t_format = answer.getAttribute("format");
+                }
+                if (answer.getElementsByTagName("feedback").item(0) != null) {
+                    Element feedback = (Element) answer.getElementsByTagName("feedback").item(0);
+                    if (feedback.hasAttribute("format")) {
+                        f_format = feedback.getAttribute("format");
+                    }
+                    q_feedback = feedback.getTextContent();
+                }
+                answers.add(new Answer(fraction, text, t_format, q_feedback, f_format));
+            }
         }
     }
 
