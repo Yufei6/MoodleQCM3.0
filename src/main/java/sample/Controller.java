@@ -161,7 +161,7 @@ public class Controller implements Initializable {
         if (f != null) {
             fileAsString = f.toString();
         }
-        Bank new_bank = new Bank(fileAsString,superBank);
+        Bank new_bank = Bank.Import(fileAsString,superBank);
         try {
             copyFileByStream(new File(fileAsString), new File(sys_bank_path+ new_bank.getName()+".xml"));
         }catch (IOException e){
@@ -169,6 +169,7 @@ public class Controller implements Initializable {
         }
         bankList.add(new_bank);
         displayBanks();
+        initSuperbank();
     }
 
     @FXML void exportBank(ActionEvent event){
@@ -201,7 +202,7 @@ public class Controller implements Initializable {
         if (f != null) {
             fileAsString = f.toString();
         }
-        Qcm new_qcm = new Qcm(fileAsString,superBank);
+        Qcm new_qcm = Qcm.Import(fileAsString,superBank);
         try {
             copyFileByStream(new File(fileAsString), new File(sys_qcm_path+ new_qcm.getName()+".xml"));
         }catch (IOException e){
@@ -209,7 +210,7 @@ public class Controller implements Initializable {
         }
         qcmList.add(new_qcm);
         displayQcms();
-
+        initSuperbank();
     }
 
     @FXML void exportQcm(ActionEvent event){
@@ -484,12 +485,14 @@ public class Controller implements Initializable {
         questionFieldsGet(current_question);
         answerFieldsGet(current_question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()));
         List<String> errors = current_question.save(superBank.find(String.valueOf(current_question.getID())));
-        if(creating_new_question){
-            initSuperbank();
-            creating_new_question=false;
-        }
         if (errors.size() > 0) {
             showInvalidQuestionError(errors);
+        }
+        else{
+            if(creating_new_question){
+                initSuperbank();
+                creating_new_question=false;
+            }
         }
     }
 

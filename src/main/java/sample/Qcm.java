@@ -37,9 +37,10 @@ public class Qcm extends QuestionStorage {
 
 
 
-    public static Qcm Import(String xml_path, String new_name, SuperBank super_bank0){
+    public static Qcm Import(String xml_path, SuperBank super_bank0){
+        String new_name=xml_path.substring(xml_path.lastIndexOf("/"),xml_path.lastIndexOf("."));
         String qcm_dir_path = "./target/Qcm/";
-        Qcm new_qcm = new Qcm(qcm_dir_path + new_name , new_name, super_bank0);
+        Qcm new_qcm = new Qcm(qcm_dir_path + new_name +".xml", new_name, super_bank0);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
