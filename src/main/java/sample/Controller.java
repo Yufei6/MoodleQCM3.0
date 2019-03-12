@@ -384,7 +384,9 @@ public class Controller implements Initializable {
 
     public static void deleteFile(String sPath) {
         File file = new File(sPath);
+        System.out.println("44444444"+sPath);
         if(file.exists()) {
+            System.out.println("55555"+sPath);
             file.delete();
         }
 
@@ -799,9 +801,13 @@ public class Controller implements Initializable {
                     initBanksAndQcms(superBank);
                     String path_0 = "";
                     TreeItem parent = tree.getSelectionModel().getSelectedItems().get(0).getParent();
+                    System.out.println("1111111");
                     if(parent instanceof TreeItemWithRepertoire){
                         path_0=((TreeItemWithRepertoire) parent).getPath();
+                        System.out.println("2222"+path_0);
                     }
+                    System.out.println("33333"+path_0+"/"+(tree.getSelectionModel().getSelectedItems().get(0)).getValue()+".xml");
+
                     deleteFile(path_0+"/"+(tree.getSelectionModel().getSelectedItems().get(0)).getValue()+".xml");
                     initSuperbank();
                 }

@@ -186,7 +186,7 @@ public class SuperBank {
         return root;
     }
     public TreeItemWithRepertoire<String> generateTreeWithQuestion() throws IOException, SAXException, WrongQuestionTypeException {
-        TreeItemWithRepertoire root = new TreeItemWithRepertoire("[SuperBank]",dirBank.getPath());
+        TreeItemWithRepertoire root = new TreeItemWithRepertoire("[SuperBank]", dirBank.getPath());
         root.setExpanded(true);
         for(File file : dirBank.listFiles()){
             if (file.isDirectory()){

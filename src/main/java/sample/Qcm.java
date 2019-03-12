@@ -38,7 +38,12 @@ public class Qcm extends QuestionStorage {
 
 
     public static Qcm Import(String xml_path, SuperBank super_bank0){
-        String new_name=xml_path.substring(xml_path.lastIndexOf("/"),xml_path.lastIndexOf("."));
+        String new_name=xml_path.substring(xml_path.lastIndexOf("/")+1,xml_path.lastIndexOf("."));
+        int slash_pos = xml_path.lastIndexOf("/");
+        if (slash_pos == -1) {
+            slash_pos = xml_path.lastIndexOf("\\");
+            new_name=xml_path.substring(slash_pos,xml_path.lastIndexOf("."));
+        }
         String qcm_dir_path = "./target/Qcm/";
         Qcm new_qcm = new Qcm(qcm_dir_path + new_name +".xml", new_name, super_bank0);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -52,7 +57,10 @@ public class Qcm extends QuestionStorage {
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element question = (Element) list_Id.item(i);
                 Question new_question = new Question(question ,super_bank0);
-                new_qcm.addQuestion(new_question);   // <===============================================================
+                new_qcm.addQuestion(new_question);
+                if(super_bank0.find(new_question.getID()+"")==null){
+                    super_bank0.addQuestion(new_question);
+                }
             }
         } catch (ParserConfigurationException e) {
             // TODO Auto-generated catch block
