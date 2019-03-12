@@ -131,9 +131,12 @@ public class SuperBank {
     }
 
     public int addQuestion(Question question) {
-        int new_id = addQuestion("./target/Superbank");
+        int new_id = generateId();
+        String q_path  = "./target/Superbank/" + new_id + ".xml";
+        String[] new_question_entry = {""+new_id, q_path};
+        questionList.add(new_question_entry);
         question.setId(new_id);
-        question.save("./target/Superbank");
+        question.save(q_path);
         return new_id;
     }
 

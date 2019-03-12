@@ -124,12 +124,12 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="fxml" value="7" />
-          <entry key="java" value="8626" />
+          <entry key="java" value="8866" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="8626" />
+          <entry key="JAVA" value="8866" />
           <entry key="XML" value="7" />
         </counts>
       </usages-collector>
@@ -137,11 +137,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/SuperBank.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-990">
-              <caret line="136" column="22" lean-forward="true" selection-start-line="136" selection-start-column="22" selection-end-line="136" selection-end-column="22" />
+            <state relative-caret-position="179">
+              <caret line="138" selection-start-line="138" selection-end-line="138" />
             </state>
           </provider>
         </entry>
@@ -149,7 +149,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1659">
+            <state relative-caret-position="2073">
               <caret line="163" column="30" selection-start-line="163" selection-start-column="30" selection-end-line="163" selection-end-column="30" />
             </state>
           </provider>
@@ -165,11 +165,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Question.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1250">
-              <caret line="267" selection-start-line="267" selection-end-line="267" />
+            <state relative-caret-position="266">
+              <caret line="319" column="80" selection-start-line="319" selection-start-column="80" selection-end-line="319" selection-end-column="80" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#18661#18662#0" expanded="true" />
@@ -190,8 +190,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8717">
-              <caret line="428" column="66" lean-forward="true" selection-start-line="428" selection-start-column="66" selection-end-line="428" selection-end-column="66" />
+            <state relative-caret-position="179">
+              <caret line="164" selection-start-line="164" selection-end-line="164" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1527#1528#0" expanded="true" />
@@ -206,6 +206,16 @@
                 <element signature="e#1832#1833#0" expanded="true" />
                 <element signature="e#1873#1874#0" expanded="true" />
                 <element signature="e#1900#1901#0" expanded="true" />
+                <element signature="e#15624#15625#0" expanded="true" />
+                <element signature="e#15663#15664#0" expanded="true" />
+                <element signature="e#20026#20027#0" expanded="true" />
+                <element signature="e#20104#20105#0" expanded="true" />
+                <element signature="e#34649#34650#0" expanded="true" />
+                <element signature="e#34693#34694#0" expanded="true" />
+                <element signature="e#34974#34975#0" expanded="true" />
+                <element signature="e#35019#35020#0" expanded="true" />
+                <element signature="e#35300#35301#0" expanded="true" />
+                <element signature="e#35345#35346#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -214,8 +224,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Bank.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="920">
-              <caret line="56" column="13" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
+            <state relative-caret-position="179">
+              <caret line="60" selection-start-line="60" selection-end-line="60" />
+              <folding>
+                <element signature="e#2687#2688#0" expanded="true" />
+                <element signature="e#2745#2746#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -224,7 +238,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Qcm.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="598">
-              <caret line="53" column="120" selection-start-line="53" selection-start-column="120" selection-end-line="53" selection-end-column="120" />
+              <caret line="54" column="120" selection-start-line="54" selection-start-column="120" selection-end-line="54" selection-end-column="120" />
             </state>
           </provider>
         </entry>
@@ -267,8 +281,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>it changed</find>
-      <find>user</find>
       <find>initiali</find>
       <find>answersBoxI</find>
       <find>load</find>
@@ -290,13 +302,15 @@
       <find>createQues</find>
       <find>creer</find>
       <find>selectQu</find>
-      <find>questionFie</find>
       <find>gene</find>
-      <find>addQue</find>
       <find>adda</find>
       <find>find</find>
       <find>path</find>
       <find>extrac</find>
+      <find>Import</find>
+      <find>questionFie</find>
+      <find>addQue</find>
+      <find>init</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -312,10 +326,11 @@
         <option value="$PROJECT_DIR$/src/main/java/sample/Main.java" />
         <option value="$PROJECT_DIR$/src/main/resources/sample.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/sample/Answer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/Question.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/Controller.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/Qcm.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/SuperBank.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/Bank.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/Question.java" />
       </list>
     </option>
   </component>
@@ -333,10 +348,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-72" />
+    <option name="x" value="-57" />
     <option name="y" value="-18" />
-    <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="width" value="1918" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -569,7 +584,7 @@
       <workItem from="1552237613009" duration="2865000" />
       <workItem from="1552305328100" duration="15889000" />
       <workItem from="1552335971478" duration="47000" />
-      <workItem from="1552399585473" duration="6295000" />
+      <workItem from="1552399585473" duration="8507000" />
     </task>
     <servers />
   </component>
@@ -588,13 +603,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150553000" />
+    <option name="totallyTimeSpent" value="152765000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32161874" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.32161874" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -603,7 +618,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.06688596" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.096491225" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -749,13 +764,6 @@
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Bank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="920">
-          <caret line="56" column="13" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/QuestionDisplay.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
@@ -787,10 +795,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Qcm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="54" column="120" selection-start-line="54" selection-start-column="120" selection-end-line="54" selection-end-column="120" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2073">
+          <caret line="163" column="30" selection-start-line="163" selection-start-column="30" selection-end-line="163" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8717">
-          <caret line="428" column="66" lean-forward="true" selection-start-line="428" selection-start-column="66" selection-end-line="428" selection-end-column="66" />
+        <state relative-caret-position="179">
+          <caret line="164" selection-start-line="164" selection-end-line="164" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1527#1528#0" expanded="true" />
@@ -805,14 +827,42 @@
             <element signature="e#1832#1833#0" expanded="true" />
             <element signature="e#1873#1874#0" expanded="true" />
             <element signature="e#1900#1901#0" expanded="true" />
+            <element signature="e#15624#15625#0" expanded="true" />
+            <element signature="e#15663#15664#0" expanded="true" />
+            <element signature="e#20026#20027#0" expanded="true" />
+            <element signature="e#20104#20105#0" expanded="true" />
+            <element signature="e#34649#34650#0" expanded="true" />
+            <element signature="e#34693#34694#0" expanded="true" />
+            <element signature="e#34974#34975#0" expanded="true" />
+            <element signature="e#35019#35020#0" expanded="true" />
+            <element signature="e#35300#35301#0" expanded="true" />
+            <element signature="e#35345#35346#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/SuperBank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="138" selection-start-line="138" selection-end-line="138" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Bank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="60" selection-start-line="60" selection-end-line="60" />
+          <folding>
+            <element signature="e#2687#2688#0" expanded="true" />
+            <element signature="e#2745#2746#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/Question.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1250">
-          <caret line="267" selection-start-line="267" selection-end-line="267" />
+        <state relative-caret-position="266">
+          <caret line="319" column="80" selection-start-line="319" selection-start-column="80" selection-end-line="319" selection-end-column="80" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#18661#18662#0" expanded="true" />
@@ -820,27 +870,6 @@
             <element signature="e#19922#19923#0" expanded="true" />
             <element signature="e#19976#19977#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1659">
-          <caret line="163" column="30" selection-start-line="163" selection-start-column="30" selection-end-line="163" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Qcm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="53" column="120" selection-start-line="53" selection-start-column="120" selection-end-line="53" selection-end-column="120" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/SuperBank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-990">
-          <caret line="136" column="22" lean-forward="true" selection-start-line="136" selection-start-column="22" selection-end-line="136" selection-end-column="22" />
         </state>
       </provider>
     </entry>

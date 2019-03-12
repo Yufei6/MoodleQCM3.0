@@ -40,7 +40,10 @@ public class Bank extends QuestionStorage{
 
 
     public static Bank Import(String xml_path, SuperBank super_bank0){
-        String new_name=xml_path.substring(xml_path.lastIndexOf("/"),xml_path.lastIndexOf("."));
+        System.out.println("/ :" + xml_path);
+        System.out.println(". :" + xml_path.lastIndexOf("."));
+        int slash_pos = xml_path.lastIndexOf("/"); if (slash_pos == -1) { slash_pos = xml_path.lastIndexOf("\\"); }
+        String new_name=xml_path.substring(slash_pos,xml_path.lastIndexOf("."));
         String bank_dir_path = "./target/Bank/";
         Bank new_bank = new Bank(bank_dir_path+new_name+".xml", new_name,super_bank0);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
