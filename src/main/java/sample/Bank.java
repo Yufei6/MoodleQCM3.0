@@ -40,7 +40,8 @@ public class Bank extends QuestionStorage{
 
 
     public static Bank Import(String xml_path, SuperBank super_bank0){
-        String new_name=xml_path.substring(xml_path.lastIndexOf("/"),xml_path.lastIndexOf("."));
+        String new_name=xml_path.substring(xml_path.lastIndexOf("/")+1,xml_path.lastIndexOf("."));
+        System.out.println("2222"+new_name);
         String bank_dir_path = "./target/Bank/";
         Bank new_bank = new Bank(bank_dir_path+new_name+".xml", new_name,super_bank0);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -51,6 +52,7 @@ public class Bank extends QuestionStorage{
 
             final NodeList list_Id = racine.getElementsByTagName("question");
             final int nbIDsElements = list_Id.getLength();
+            System.out.println("3333"+nbIDsElements);
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element question = (Element) list_Id.item(i);
                 Question new_question = new Question(question,super_bank0);
@@ -67,6 +69,7 @@ public class Bank extends QuestionStorage{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        new_bank.save();
         return new_bank;
     }
 
