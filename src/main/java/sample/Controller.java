@@ -487,12 +487,11 @@ public class Controller implements Initializable {
         List<String> errors = current_question.save(superBank.find(String.valueOf(current_question.getID())));
         if (errors.size() > 0) {
             showInvalidQuestionError(errors);
+            return;
         }
-        else{
-            if(creating_new_question){
-                initSuperbank();
-                creating_new_question=false;
-            }
+        if(creating_new_question){
+            initSuperbank();
+            creating_new_question=false;
         }
     }
 

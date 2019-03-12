@@ -130,6 +130,13 @@ public class SuperBank {
         return new_id;
     }
 
+    public int addQuestion(Question question) {
+        int new_id = addQuestion("./target/Superbank");
+        question.setId(new_id);
+        question.save("./target/Superbank");
+        return new_id;
+    }
+
     public String[] extractQuestion(File file) throws IOException, SAXException {
         String[] strings=new String[2];
         Element nodeId_Header;
