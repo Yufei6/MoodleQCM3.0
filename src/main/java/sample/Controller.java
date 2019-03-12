@@ -161,7 +161,8 @@ public class Controller implements Initializable {
         if (f != null) {
             fileAsString = f.toString();
         }
-        Bank new_bank = new Bank(fileAsString,superBank);
+        System.out.println("111"+fileAsString);
+        Bank new_bank = Bank.Import(fileAsString,superBank);
         try {
             copyFileByStream(new File(fileAsString), new File(sys_bank_path+ new_bank.getName()+".xml"));
         }catch (IOException e){
@@ -169,6 +170,7 @@ public class Controller implements Initializable {
         }
         bankList.add(new_bank);
         displayBanks();
+        initSuperbank();
     }
 
     @FXML void exportBank(ActionEvent event){
@@ -201,7 +203,7 @@ public class Controller implements Initializable {
         if (f != null) {
             fileAsString = f.toString();
         }
-        Qcm new_qcm = new Qcm(fileAsString,superBank);
+        Qcm new_qcm = Qcm.Import(fileAsString,superBank);
         try {
             copyFileByStream(new File(fileAsString), new File(sys_qcm_path+ new_qcm.getName()+".xml"));
         }catch (IOException e){
@@ -209,7 +211,7 @@ public class Controller implements Initializable {
         }
         qcmList.add(new_qcm);
         displayQcms();
-
+        initSuperbank();
     }
 
     @FXML void exportQcm(ActionEvent event){

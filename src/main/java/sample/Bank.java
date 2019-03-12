@@ -39,21 +39,23 @@ public class Bank extends QuestionStorage{
     }
 
 
-    public static Bank Import(String xml_path, String new_name, SuperBank super_bank0){
+    public static Bank Import(String xml_path, SuperBank super_bank0){
+        String new_name=xml_path.substring(xml_path.lastIndexOf("/"),xml_path.lastIndexOf("."));
         String bank_dir_path = "./target/Bank/";
-        Bank new_bank = new Bank(bank_dir_path+new_name, new_name,super_bank0);
+        Bank new_bank = new Bank(bank_dir_path+new_name+".xml", new_name,super_bank0);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document= builder.parse(new File(xml_path));
             Element racine = document.getDocumentElement();
 
-            final NodeList list_Id = racine.getElementsByTagName("question_list");
+            final NodeList list_Id = racine.getElementsByTagName("question");
             final int nbIDsElements = list_Id.getLength();
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element question = (Element) list_Id.item(i);
                 Question new_question = new Question(question,super_bank0);
                 new_bank.addQuestion(new_question);
+                super_bank0.addQuestion(new_question);
             }
         } catch (ParserConfigurationException e) {
             // TODO Auto-generated catch block
