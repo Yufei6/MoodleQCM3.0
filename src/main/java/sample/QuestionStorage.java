@@ -208,7 +208,6 @@ public abstract class QuestionStorage{
         list_question.remove(question);
     }
 
-
     public void changeName(String name_0){
         name = name_0;
     }

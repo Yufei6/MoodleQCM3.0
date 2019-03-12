@@ -388,7 +388,20 @@ public class Controller implements Initializable {
 
     }
 
+    public static void deleteRep(String sPath) {
+        File file = new File(sPath);
+        for (File chil : file.listFiles()){
+            if (chil.isDirectory()) {
+                deleteRep(chil.getPath());
+            } else {
+                deleteFile(chil.getPath());
+            }
+        }
+        if(file.exists()) {
+            file.delete();
+        }
 
+    }
 
 
 
@@ -528,6 +541,39 @@ public class Controller implements Initializable {
 
 
 
+    void delete_questions_repertoire(TreeItemWithRepertoire it){
+        for(Object it_0 : it.getChildren()){
+            if(it_0 instanceof TreeItemWithRepertoire){
+                delete_questions_repertoire((TreeItemWithRepertoire) it_0);
+            }
+            else if(it_0 instanceof TreeItemWithQuestion){
+                Question question_delete = ((TreeItemWithQuestion) it_0).getQuestion();
+                for(Qcm qcm : qcmList){
+                    qcm.deleteQuestion(question_delete);
+                    qcm.save();
+                }
+                for(Bank bank : bankList){
+                    bank.deleteQuestion(question_delete);
+                    bank.save();
+                }
+                initBanksAndQcms(superBank);
+            }
+        }
+    }
+
+    boolean has_already_name(String name_0, TreeItem it){
+        for(Object it_0 : it.getChildren()){
+            if(it_0 instanceof TreeItem){
+                if(((TreeItem) it_0).getValue()==name_0){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
     void initSuperbank(){
         try {
             superBank = new SuperBank();
@@ -585,9 +631,14 @@ public class Controller implements Initializable {
                         if(notification.getText().length()>0) {
                             String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
                             File new_rep = new File(path_0 + "/" + notification.getText());
-                            new_rep.mkdir();
-                            initSuperbank();
-                            window.close();
+                            if(new_rep.exists()){
+                                afficherError("Il existe déjà ce répertoire!");
+                            }
+                            else {
+                                new_rep.mkdir();
+                                initSuperbank();
+                                window.close();
+                            }
                         }
                     });
                     Label label = new Label("Entrez le nom du nouveau dossier");
@@ -612,12 +663,16 @@ public class Controller implements Initializable {
         menuItemSB1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
-
-                    deleteFile(((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath());
-                    initSuperbank();
+                if (tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
+                    if (tree.getSelectionModel().getSelectedItems().get(0).getValue() == "[SuperBank]") {
+                        afficherError("Vous ne pouvez pas supprimer le racine de SuperBank!");
+                    } else {
+                        delete_questions_repertoire((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0));
+                        deleteRep(((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath());
+                        initSuperbank();
+                    }
                 }
-                else{
+                else {
                     afficherError("Il faut choisir un dossier pour le supprimer");
                 }
             }
@@ -627,58 +682,61 @@ public class Controller implements Initializable {
         menuItemSB2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
-                    Stage window = new Stage();
-                    window.setTitle("Modification le nom du dossier");
-                    window.initModality(Modality.APPLICATION_MODAL);
-                    window.setMinWidth(300);
-                    window.setMinHeight(150);
-                    Button button = new Button("Annuler");
-                    button.setOnAction(e1 -> window.close());
-                    Button button2 = new Button("OK");
-                    TextField notification = new TextField();
-                    notification.setPromptText("Nouveau nom de dossier");
-                    notification.clear();
-                    button2.setOnAction((ActionEvent e2) -> {
-                        String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
-                        File f = new File(path_0);
-                        if(notification.getText().length()==0){
-                            afficherError("Il ne faut pas donner un nom vide");
-                        }
-                        else{
-                            String old_path = (String)((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
-                            String new_path = old_path.substring(0, old_path.lastIndexOf("/")) + "/" + notification.getText();
-                            File nf = new File(new_path);
-                            try {
-                                f.renameTo(nf);
-                            } catch (Exception err) {
-                                err.printStackTrace();
+                if (tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithRepertoire) {
+                    if (tree.getSelectionModel().getSelectedItems().get(0).getValue() == "[SuperBank]") {
+                        afficherError("Vous ne pouvez pas modifier le nom de la racine SuperBank!");
+                    } else {
+                        Stage window = new Stage();
+                        window.setTitle("Modification le nom du dossier");
+                        window.initModality(Modality.APPLICATION_MODAL);
+                        window.setMinWidth(300);
+                        window.setMinHeight(150);
+                        Button button = new Button("Annuler");
+                        button.setOnAction(e1 -> window.close());
+                        Button button2 = new Button("OK");
+                        TextField notification = new TextField();
+                        notification.setPromptText("Nouveau nom de dossier");
+                        notification.clear();
+                        button2.setOnAction((ActionEvent e2) -> {
+                            String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
+                            File f = new File(path_0);
+                            if (notification.getText().length() == 0) {
+                                afficherError("Il ne faut pas donner un nom vide");
+                            } else {
+                                String old_path = (String) ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
+                                String new_path = old_path.substring(0, old_path.lastIndexOf("/")) + "/" + notification.getText();
+                                File nf = new File(new_path);
+                                try {
+                                    f.renameTo(nf);
+                                } catch (Exception err) {
+                                    err.printStackTrace();
+                                }
                             }
-                        }
-
-                        initSuperbank();
-                        window.close();
-                    });
-                    Label label = new Label("Entrez le nom du nouveau dossier");
-                    VBox layout = new VBox(10);
-                    HBox hbox = new HBox();
-                    hbox.getChildren().addAll( button2, button);
-                    hbox.setSpacing(10);
-                    hbox.setAlignment(Pos.CENTER);
-                    layout.getChildren().addAll(label, notification,hbox);
-                    layout.setAlignment(Pos.CENTER);
-                    Scene scene = new Scene(layout);
-                    window.setScene(scene);
-                    window.showAndWait();
+                            initSuperbank();
+                            window.close();
+                        });
+                        Label label = new Label("Entrez le nom du nouveau dossier");
+                        VBox layout = new VBox(10);
+                        HBox hbox = new HBox();
+                        hbox.getChildren().addAll(button2, button);
+                        hbox.setSpacing(10);
+                        hbox.setAlignment(Pos.CENTER);
+                        layout.getChildren().addAll(label, notification, hbox);
+                        layout.setAlignment(Pos.CENTER);
+                        Scene scene = new Scene(layout);
+                        window.setScene(scene);
+                        window.showAndWait();
+                    }
                 }
                 else{
-                    afficherError("Il faut choisir un dossier pour le supprimer");
+                        afficherError("Il faut choisir un dossier pour le supprimer");
+                    }
+
                 }
-            }
         });
 
 
-        MenuItem menuItemSB3 = new MenuItem("Ajouter Question");
+        MenuItem menuItemSB3 = new MenuItem("Ajouter une Question");
         menuItemSB3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -702,7 +760,6 @@ public class Controller implements Initializable {
                             Question new_question = new Question(notification.getText(),new_id);
                             selectQuestion(new_question);
                             window.close();
-
                         }
                     });
                     Label label = new Label("Entrez le nom de nouvelle question");
@@ -728,7 +785,22 @@ public class Controller implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
-                    deleteFile(((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath());
+                    Question question_delete = ((TreeItemWithQuestion) tree.getSelectionModel().getSelectedItems().get(0)).getQuestion();
+                    for(Qcm qcm : qcmList){
+                        qcm.deleteQuestion(question_delete);
+                        qcm.save();
+                    }
+                    for(Bank bank : bankList){
+                        bank.deleteQuestion(question_delete);
+                        bank.save();
+                    }
+                    initBanksAndQcms(superBank);
+                    String path_0 = "";
+                    TreeItem parent = tree.getSelectionModel().getSelectedItems().get(0).getParent();
+                    if(parent instanceof TreeItemWithRepertoire){
+                        path_0=((TreeItemWithRepertoire) parent).getPath();
+                    }
+                    deleteFile(path_0+"/"+(tree.getSelectionModel().getSelectedItems().get(0)).getValue()+".xml");
                     initSuperbank();
                 }
                 else{
@@ -951,8 +1023,8 @@ public class Controller implements Initializable {
                     Stage window = new Stage();
                     window.setTitle("Supprimer cette Question");
                     window.initModality(Modality.APPLICATION_MODAL);
-                    window.setMinWidth(300);
-                    window.setMinHeight(150);
+                    window.setWidth(300);
+                    window.setHeight(150);
                     Button button = new Button("Non");
                     button.setOnAction(e1 -> window.close());
                     Button button2 = new Button("Oui");
