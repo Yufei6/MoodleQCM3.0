@@ -55,6 +55,7 @@ public class Bank extends QuestionStorage{
                 final Element question = (Element) list_Id.item(i);
                 Question new_question = new Question(question,super_bank0);
                 new_bank.addQuestion(new_question);
+                super_bank0.addQuestion(new_question);
             }
         } catch (ParserConfigurationException e) {
             // TODO Auto-generated catch block

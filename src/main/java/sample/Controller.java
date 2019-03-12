@@ -161,6 +161,7 @@ public class Controller implements Initializable {
         if (f != null) {
             fileAsString = f.toString();
         }
+        System.out.println("111"+fileAsString);
         Bank new_bank = Bank.Import(fileAsString,superBank);
         try {
             copyFileByStream(new File(fileAsString), new File(sys_bank_path+ new_bank.getName()+".xml"));
