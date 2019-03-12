@@ -51,7 +51,7 @@ public class Qcm extends QuestionStorage {
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element question = (Element) list_Id.item(i);
                 Question new_question = new Question(question ,super_bank0);
-                new_qcm.addQuestion(new_question);
+                new_qcm.addQuestion(new_question);   // <===============================================================
             }
         } catch (ParserConfigurationException e) {
             // TODO Auto-generated catch block
