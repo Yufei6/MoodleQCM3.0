@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Bank>
-  <!--Question Bank-->
-  <name>Bank_test_005</name>
-  <question_id_list>
-    <question_id>200</question_id>
-  </question_id_list>
-  <date>11/21/2019</date>
-</Bank>
