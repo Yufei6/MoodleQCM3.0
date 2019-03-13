@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Qcm>
   <!--Question Qcm-->
-  <name>QCM2</name>
+  <name>Test</name>
   <question_id_list>
+    <question_id>8</question_id>
+    <question_id>10</question_id>
     <question_id>6</question_id>
+    <question_id>11</question_id>
     <question_id>4</question_id>
     <question_id>5</question_id>
+    <question_id>9</question_id>
+    <question_id>12</question_id>
   </question_id_list>
   <date>13/21/2019</date>
 </Qcm>
