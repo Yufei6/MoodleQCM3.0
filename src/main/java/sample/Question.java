@@ -703,5 +703,9 @@ public class Question {
             return false;
         return true;
     }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
 }
 
