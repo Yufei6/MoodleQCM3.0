@@ -47,7 +47,6 @@ public class Qcm extends QuestionStorage {
             new_name=xml_path.substring(slash_pos,xml_path.lastIndexOf("."));
         }
         String qcm_dir_path = "./target/Qcm/";
-        System.out.println("aaaaa"+qcm_dir_path + new_name +".xml");
         Qcm new_qcm = new Qcm(qcm_dir_path + new_name +".xml", new_name, super_bank0);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
@@ -59,6 +58,9 @@ public class Qcm extends QuestionStorage {
             final int nbIDsElements = list_Id.getLength();
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element question = (Element) list_Id.item(i);
+                if (question.hasAttribute("type") && question.getAttribute("type").equals("category")) {
+                    continue;
+                }
                 Question new_question = new Question(question);
                 super_bank0.addQuestion(new_question);
                 new_qcm.addQuestion(new_question);
