@@ -33,6 +33,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
 
@@ -625,7 +626,7 @@ public class Controller implements Initializable {
         tree.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
             @Override
             public TreeCell<String> call(TreeView<String> p) {
-                return new TextFieldTreeCellImplForSuperBank();
+                return new TextFieldTreeCellImplForSuperBank(superBank);
             }
         });
 
@@ -1484,9 +1485,12 @@ public class Controller implements Initializable {
     private final class TextFieldTreeCellImplForSuperBank extends TreeCell<String>{
         private TextField textField;
 
-        public TextFieldTreeCellImplForSuperBank() {
+        public TextFieldTreeCellImplForSuperBank(SuperBank superbank) {
                 this.setOnDragDetected((MouseEvent event) -> dragDetected(event, this));
                 this.setOnDragDone((DragEvent event)->dragDone(event, this));
+                this.setOnDragOver((DragEvent event)->dragOver(event, this));
+                this.setOnDragExited((DragEvent event)->mouseExit(event, this));
+                this.setOnDragDropped((DragEvent event)->dragDrop(event, this, superbank));
         }
 
         @Override
@@ -1539,7 +1543,7 @@ public class Controller implements Initializable {
     }
 
     private void dragOver(DragEvent event, TreeCell treeCell){
-        if (treeCell.getTreeItem() instanceof TreeItemWithQcmAndBank && event.getDragboard().hasString() && !(treeCell.getTreeItem() instanceof TreeItemWithQuestion)) {
+        if (((treeCell.getTreeItem() instanceof TreeItemWithQcmAndBank && event.getDragboard().hasString() && !(treeCell.getTreeItem() instanceof TreeItemWithQuestion))) || (treeCell.getTreeItem() instanceof  TreeItemWithRepertoire)) {
             event.acceptTransferModes(TransferMode.ANY);
             treeCell.getTreeItem().setValue("+++++++++++++++++");
         }
@@ -1550,6 +1554,30 @@ public class Controller implements Initializable {
         Dragboard db = event.getDragboard();
         boolean success = false;
         TreeItem it = treeCell.getTreeItem();
+
+        if (db.hasString() && it instanceof TreeItemWithRepertoire) {
+
+
+            String path = superbank.find(db.getString());
+
+            String new_name = path.substring(path.lastIndexOf("/") + 1);
+            new_name.trim();
+            int slash_pos = path.lastIndexOf("/") + 1;
+            if (slash_pos == 0) {
+                slash_pos = path.lastIndexOf("\\") + 1;
+                new_name = path.substring(slash_pos);
+                try {
+                    Files.move(Paths.get(superbank.find(db.getString())), Paths.get(((TreeItemWithRepertoire) it).getPath() + "\\" + new_name));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                initSuperbank();
+
+
+            }
+        }
+
+
         if (db.hasString() && it instanceof TreeItemWithQcmAndBank && !(it instanceof TreeItemWithQuestion)) {
             if(((TreeItemWithQcmAndBank) it).getQcm()==null){
                 Bank b=((TreeItemWithQcmAndBank) it).getBank();
@@ -1590,6 +1618,17 @@ public class Controller implements Initializable {
             else {
                 treeCell.getTreeItem().setValue(((TreeItemWithQcmAndBank) it).getQcm().getName());
             }
+        }
+        if (it instanceof TreeItemWithRepertoire) {
+            String path = ((TreeItemWithRepertoire) it).getPath();
+            String new_name=path.substring(path.lastIndexOf("/")+1);
+            new_name.trim();
+            int slash_pos = path.lastIndexOf("/") + 1;
+            if (slash_pos == 0) {
+                slash_pos = path.lastIndexOf("\\") + 1;
+                new_name=path.substring(slash_pos);
+            }
+            treeCell.getTreeItem().setValue(new_name);
         }
         event.consume();
     }

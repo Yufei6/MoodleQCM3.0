@@ -44,7 +44,7 @@ public class Bank extends QuestionStorage{
         String new_name=xml_path.substring(xml_path.lastIndexOf("/")+1,xml_path.lastIndexOf("."));
         new_name.trim();
         int slash_pos = xml_path.lastIndexOf("/") + 1;
-        if (slash_pos == -1) {
+        if (slash_pos == 0) {
             slash_pos = xml_path.lastIndexOf("\\") + 1;
             new_name=xml_path.substring(slash_pos,xml_path.lastIndexOf("."));
         }
