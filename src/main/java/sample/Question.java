@@ -30,12 +30,14 @@ public class Question {
     private String answernumbering;
     private double defaultgrade;
     private double penalty;
+    private boolean is_valid;
 
     private List<Answer> answers;
 
     private Map<String, String> answer_numbering_map;
 
     private Question() {
+        is_valid = true;
         single = true;
         shuffleanswers = false;
         hidden = 0;
@@ -58,9 +60,9 @@ public class Question {
         answers = new ArrayList<>();
     }
 
-    public Question(Element question, SuperBank s_bank) {
+    public Question(Element question) {
         this();
-        id = s_bank.generateId();
+        //id = s_bank.generateId();
         load_from_element(question);
         loaded = true;
     }
@@ -249,11 +251,20 @@ public class Question {
         return root;
     }
 
+    public boolean isValid() {
+        return is_valid;
+    }
+
     public List<String> save(String xml_path) {
 
         List<String> errors = checkValidity();
         if (errors.size() > 0) {
-            return errors;
+            is_valid = false;
+            //return errors;
+        }
+        else {
+
+            is_valid = true;
         }
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -336,7 +347,7 @@ public class Question {
 
     private void load_from_element(Element x_question) {
         if (x_question.getElementsByTagName("name").item(0) != null) {
-            name = x_question.getElementsByTagName("name").item(0).getTextContent();
+            name = x_question.getElementsByTagName("name").item(0).getTextContent().trim();
         }
         if (x_question.getElementsByTagName("questiontext").item(0) != null) {
             Element x_questiontext = (Element) x_question.getElementsByTagName("questiontext").item(0);
@@ -431,6 +442,12 @@ public class Question {
                 }
                 answers.add(new Answer(fraction, text, t_format, q_feedback, f_format));
             }
+        }
+        if (checkValidity().size() > 0) {
+            is_valid = false;
+        }
+        else {
+            is_valid = true;
         }
     }
 

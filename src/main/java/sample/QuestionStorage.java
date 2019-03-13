@@ -16,9 +16,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 public abstract class QuestionStorage{
@@ -146,7 +144,8 @@ public abstract class QuestionStorage{
 
 
 
-    public void Export(String xml_path, String name_for_xml, boolean isBank){
+    public List<String> Export(String xml_path, String name_for_xml, boolean isBank){
+        List<String> invalid = new ArrayList<>();
         File file = new File(xml_path+name_for_xml+".xml");
         if(!file.exists()){
             try {
@@ -175,11 +174,19 @@ public abstract class QuestionStorage{
 
             for (Question q:list_question) {
                 q.load(super_bank.find(""+q.getID()));
+                if (!q.isValid()) {
+                    invalid.add(q.getName());
+                }
                 Comment commentaire_question = null;
                 commentaire_question = document.createComment(" question: "+q.getID()+" ");
                 racine.appendChild(commentaire_question);
                 racine.appendChild(q.getQuestionXml(document));
             }
+
+            if (invalid.size() > 0) {
+                return invalid;
+            }
+
             Calendar c = Calendar.getInstance();
             final TransformerFactory transformerFactory = TransformerFactory.newInstance();
             final Transformer transformer = transformerFactory.newTransformer();
@@ -197,6 +204,8 @@ public abstract class QuestionStorage{
         catch (TransformerException e) {
             e.printStackTrace();
         }
+
+        return invalid;
 
     }
 

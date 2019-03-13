@@ -180,7 +180,15 @@ public class Controller implements Initializable {
             String path = file.getPath();
             TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) bank.getSelectionModel().getSelectedItems().get(0);
             if (treeItem.getBank() != null) {
-                treeItem.getBank().Export(path+"/", treeItem.getBank().getName());
+                List<String> invalid = treeItem.getBank().Export(path+"/", treeItem.getBank().getName());
+                if (invalid. size() > 0) {
+                    System.out.println("Erreuuuuurs");
+                    String err_msg = "Des erreurs apparaissent dans les questions suivantes: ";
+                    for (String err : invalid) {
+                        err_msg += err + " ";
+                    }
+                    afficherError(err_msg);
+                }
             } else {
                 afficherError("Il faut choisir une banque pour exportBanque");
             }
@@ -221,7 +229,14 @@ public class Controller implements Initializable {
             String path = file.getPath();
             TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) qcm.getSelectionModel().getSelectedItems().get(0);
             if (treeItem.getQcm() != null) {
-                treeItem.getQcm().Export(path+"/", treeItem.getQcm().getName());
+                List<String> invalid = treeItem.getQcm().Export(path+"/", treeItem.getQcm().getName());
+                if (invalid.size() > 0) {
+                    String err_msg = "Des erreurs apparaissent dans les questions suivantes: ";
+                    for (String err : invalid) {
+                        err_msg += err + " ";
+                    }
+                    afficherError(err_msg);
+                }
             }
             else{
                 afficherError("Il faut choisir une qcm pour exportQcm");
@@ -332,7 +347,7 @@ public class Controller implements Initializable {
     private void displayBanks(){
         TreeItem<String> root_bank = new TreeItem<>();
         for(Bank b : bankList){
-            TreeItemWithQcmAndBank<String> treeItem = new TreeItemWithQcmAndBank<>(b.getName(),b);
+            TreeItemWithQcmAndBank<String> treeItem = new TreeItemWithQcmAndBank<>(b.getName().trim(),b);
             treeItem = b.createQuestionTree(treeItem);
             root_bank.getChildren().addAll(treeItem);
         }
@@ -355,7 +370,7 @@ public class Controller implements Initializable {
     private void displayQcms(){
         TreeItem<String> root_qcm = new TreeItem<>();
         for(Qcm q: qcmList){
-            TreeItemWithQcmAndBank<String> treeItem = new TreeItemWithQcmAndBank<>(q.getName(),q);
+            TreeItemWithQcmAndBank<String> treeItem = new TreeItemWithQcmAndBank<>(q.getName().trim(),q);
             treeItem = q.createQuestionTree(treeItem);
             root_qcm.getChildren().addAll(treeItem);
         }
