@@ -36,6 +36,8 @@ import java.nio.file.Files;
 import java.util.*;
 import java.util.List;
 
+import static javafx.application.Platform.exit;
+
 
 public class Controller implements Initializable {
     private static String nameFile;
@@ -235,6 +237,11 @@ public class Controller implements Initializable {
         else{
             afficherError("Il faut choisir une qcm pour exportQcm");
         }
+    }
+
+    @FXML
+    void close(ActionEvent event){
+        exit();
     }
 
 
@@ -1258,6 +1265,8 @@ public class Controller implements Initializable {
                     hbox.setAlignment(Pos.CENTER);
                     hbox.getChildren().addAll(button2,button);
                     layout.getChildren().addAll(label,hbox);
+                    layout.setPrefWidth(300);
+                    layout.setPrefHeight(300);
                     layout.setAlignment(Pos.CENTER);
                     Scene scene = new Scene(layout);
                     window.setScene(scene);

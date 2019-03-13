@@ -20,7 +20,6 @@
             <items>
                   <Menu mnemonicParsing="false" text="New">
                     <items>
-                      <MenuItem accelerator="Ctrl + A" mnemonicParsing="false" text="Question" />
                         <MenuItem accelerator="Ctrl + B" mnemonicParsing="false" onAction="#creerQcm" text="Qcm" />
                         <MenuItem accelerator="Ctrl + C" mnemonicParsing="false" onAction="#creerBank" text="Banque" />
                     </items>
@@ -37,17 +36,7 @@
                         <MenuItem accelerator="Ctrl + G" mnemonicParsing="false" onAction="#exportBank" text="Export une banque" />
                     </items>
                   </Menu>
-                  <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
             </items>
           </Menu>
         </menus>
@@ -155,11 +144,6 @@
                                        </content>
                                     </ScrollPane>
                                  </children></AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab text="Créer Un QCM">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                         </content>
                       </Tab>
                     </tabs>
