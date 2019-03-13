@@ -47,6 +47,7 @@ public class Qcm extends QuestionStorage {
             new_name=xml_path.substring(slash_pos,xml_path.lastIndexOf("."));
         }
         String qcm_dir_path = "./target/Qcm/";
+        System.out.println("aaaaa"+qcm_dir_path + new_name +".xml");
         Qcm new_qcm = new Qcm(qcm_dir_path + new_name +".xml", new_name, super_bank0);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
@@ -72,6 +73,7 @@ public class Qcm extends QuestionStorage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        System.out.println("bbbbb");
         new_qcm.save();
         return new_qcm;
     }

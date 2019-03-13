@@ -161,13 +161,7 @@ public class Controller implements Initializable {
         if (f != null) {
             fileAsString = f.toString();
         }
-        System.out.println("111"+fileAsString);
         Bank new_bank = Bank.Import(fileAsString,superBank);
-        try {
-            copyFileByStream(new File(fileAsString), new File(sys_bank_path+ new_bank.getName()+".xml"));
-        }catch (IOException e){
-            e.printStackTrace();
-        }
         bankList.add(new_bank);
         displayBanks();
         initSuperbank();
@@ -212,11 +206,7 @@ public class Controller implements Initializable {
             fileAsString = f.toString();
         }
         Qcm new_qcm = Qcm.Import(fileAsString,superBank);
-        try {
-            copyFileByStream(new File(fileAsString), new File(sys_qcm_path+ new_qcm.getName()+".xml"));
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+
         qcmList.add(new_qcm);
         displayQcms();
         initSuperbank();
