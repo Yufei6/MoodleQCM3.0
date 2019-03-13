@@ -512,23 +512,24 @@ public class Controller implements Initializable {
     }
 
     private void showInvalidQuestionError(List<String> errors) {
-        final Stage popup = new Stage();
+        /*final Stage popup = new Stage();
         popup.initOwner(stage);
         popup.setTitle("Question invalide");
         popup.setMinHeight(100);
         popup.setMinWidth(300);
         popup.initModality(Modality.APPLICATION_MODAL);
-        VBox errorDialog = new VBox(20);
+        VBox errorDialog = new VBox(20);*/
         String error_message = "La question ne peut pas être sauvegardée à cause des erreurs suivantes : ";
         for (String err : errors) {
             Text txt = new Text("ha");
             error_message += "\n - " + err;
         }
-        errorDialog.getChildren().add(new Text(error_message));
+        afficherError(error_message);
+        /*errorDialog.getChildren().add(new Text(error_message));
         Scene errorScene = new Scene(errorDialog, 300, 200);
         popup.setScene(errorScene);
         popup.show();
-        System.out.println("Erreur !");
+        System.out.println("Erreur !");*/
     }
 
     @FXML
