@@ -14,8 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 
@@ -70,7 +69,19 @@ public abstract class QuestionStorage{
     }
 
 
-
+    public String getLatex() {
+        String latex = "\\documentclass{article}\\usepackage[utf8]{inputenc}";
+        latex += "\\title{" + name + "}\\date{}\\begin{document}\\maketitle\\centerline{Nom:\\hspace{15em}Prenom:}\\vskip5em";
+        for (Question q : list_question) {
+            q.load(super_bank.find(""+q.getID()));
+            latex += "\\section{" + q.getName().trim() + "}";
+            for (Answer a : q.getAnswers()) {
+                latex += "- " + a.getText().replaceAll("\\<[^>]*>","").trim() + "\\newline";
+            }
+        }
+        latex += "\\end{document}";
+        return latex;
+    }
 
 
 
@@ -145,7 +156,31 @@ public abstract class QuestionStorage{
     }
 
 
+    public List<String> ExportLatex(String tex_path, String name_for_tex) {
+        List<String> invalid = new ArrayList<>();
+        String path = tex_path+name_for_tex+".tex";
+        for (Question q:list_question) {
+            q.load(super_bank.find("" + q.getID()));
+            if (!q.isValid()) {
+                invalid.add(q.getName());
+            }
+        }
+        if (invalid.size() > 0) {
+            return invalid;
+        }
+        Writer writer = null;
 
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(path), "utf-8"));
+            writer.write(getLatex());
+        } catch (IOException ex) {
+            // Report
+        } finally {
+            try {writer.close();} catch (Exception ex) {/*ignore*/}
+        }
+        return invalid;
+    }
 
 
     public List<String> Export(String xml_path, String name_for_xml, boolean isBank){

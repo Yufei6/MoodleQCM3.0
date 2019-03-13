@@ -240,6 +240,31 @@ public class Controller implements Initializable {
         }
     }
 
+    @FXML void generateLatex(ActionEvent event){
+        if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+            DirectoryChooser directoryChooser=new DirectoryChooser();
+            File file = directoryChooser.showDialog(stage);
+            String path = file.getPath();
+            TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) qcm.getSelectionModel().getSelectedItems().get(0);
+            if (treeItem.getQcm() != null) {
+                List<String> invalid = treeItem.getQcm().ExportLatex(path+"/", treeItem.getQcm().getName());
+                if (invalid.size() > 0) {
+                    String err_msg = "Des erreurs apparaissent dans les questions suivantes: ";
+                    for (String err : invalid) {
+                        err_msg += err + " ";
+                    }
+                    afficherError(err_msg);
+                }
+            }
+            else{
+                afficherError("Il faut choisir une qcm pour exportLatex");
+            }
+        }
+        else{
+            afficherError("Il faut choisir une qcm pour exportLatex");
+        }
+    }
+
     @FXML
     void close(ActionEvent event){
         exit();
@@ -1279,6 +1304,14 @@ public class Controller implements Initializable {
                 }
             }
         });
+        MenuItem menuItemQcm7 = new MenuItem("Générer le LaTeX");
+        menuItemQcm7.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
+        menuItemQcm7.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                generateLatex(e);
+            }
+        });
 
         qcm.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
             public void handle(MouseEvent event){
@@ -1287,7 +1320,7 @@ public class Controller implements Initializable {
                     contextMenuQcm.getItems().setAll(menuItemQcm6);
                 }
                 else if(it instanceof TreeItemWithQcmAndBank){
-                    contextMenuQcm.getItems().setAll(menuItemQcm2,menuItemQcm3,menuItemQcm4,menuItemQcm5);
+                    contextMenuQcm.getItems().setAll(menuItemQcm2,menuItemQcm3,menuItemQcm4,menuItemQcm5,menuItemQcm7);
                 }
                 else{
                     contextMenuQcm.getItems().setAll(menuItemQcm0,menuItemQcm1);
