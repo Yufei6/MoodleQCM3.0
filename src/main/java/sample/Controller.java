@@ -152,6 +152,10 @@ public class Controller implements Initializable {
         }
     }
 
+    public void htmlEditorFix(HTMLEditor editor) {
+
+    }
+
 
     @FXML void importBank(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
@@ -499,7 +503,11 @@ public class Controller implements Initializable {
         question.setPartiallycorrectfeedback(partially_correct_feedback_field.getHtmlText());
         question.setCorrectfeedback(correct_feedback_field.getHtmlText());
         question.setAnswernumbering(question_choice_type.getValue());
-        question.setDefaultgrade(Double.parseDouble(defaultgrade_field.getText()));
+        try {
+            question.setDefaultgrade(Double.parseDouble(defaultgrade_field.getText()));
+        }catch(NumberFormatException e) {
+            question.setDefaultgrade(0);
+        }
         question.setPenalty(Double.parseDouble(penalty_field.getText()));
         question.setSingle(!(multiple_answers_choice.isSelected()));
         question.setShuffleanswers(shuffle_answers_choice.isSelected());
@@ -559,6 +567,12 @@ public class Controller implements Initializable {
 
     @FXML
     void answerAdded(ActionEvent event) {
+        if (current_question == null) {
+            return;
+        }
+        if (current_question.getAnswersNumber() >= 20) {
+            return;
+        }
         current_question.addAnswer(new Answer(100.0, "", "html", "", "html"));
         answersBoxInit(current_question.getAnswersNumber()-1);
         answerFieldsInit(current_question.getAnswerByIndex(current_question.getAnswersNumber()-1));
@@ -566,6 +580,9 @@ public class Controller implements Initializable {
 
     @FXML
     void answerDeleted(ActionEvent event) {
+        if (current_question == null) {
+            return;
+        }
         int index = answers_box.getSelectionModel().getSelectedIndex();
         current_question.removeAnswer(index);
         deletion_mode = true;

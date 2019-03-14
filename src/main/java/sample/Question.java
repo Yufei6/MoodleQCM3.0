@@ -14,6 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.*;
 
 public class Question {
@@ -104,7 +105,8 @@ public class Question {
     }
 
     public void removeAnswer(int index) {
-        if (index >= answers.size()) {
+        System.out.println("Index to delete : " + index);
+        if (index >= answers.size() || index < 0) {
             return;
         }
         answers.remove(index);
@@ -345,6 +347,10 @@ public class Question {
         }
     }
 
+    private void init_simple(Element x_question) {
+
+    }
+
     private void load_from_element(Element x_question) {
         if (x_question.getElementsByTagName("name").item(0) != null) {
             name = x_question.getElementsByTagName("name").item(0).getTextContent().trim();
@@ -356,6 +362,13 @@ public class Question {
             }
             questiontext = x_questiontext.getTextContent();
         }
+        else {
+            if (x_question.getElementsByTagName("text").item(0) != null) {
+                Element x_questiontext = (Element) x_question.getElementsByTagName("text").item(0);
+                questiontext = x_questiontext.getTextContent();
+            }
+        }
+
         if (x_question.getElementsByTagName("generalfeedback").item(0) != null) {
             Element x_generalfeeback = (Element) x_question.getElementsByTagName("generalfeedback").item(0);
             if (x_generalfeeback.hasAttribute("format")) {
@@ -412,6 +425,21 @@ public class Question {
             shuffleanswers = Boolean.parseBoolean(x_question.getElementsByTagName("shuffleanswers").item(0).getTextContent());
         }
 
+        if (x_question.getElementsByTagName("ans").item(0) != null) {   // Formalisme de réponse simplifié
+            NodeList x_answers = x_question.getElementsByTagName("ans");
+            int answers_nb = x_answers.getLength();
+            for (int ans = 0; ans < answers_nb; ans++) {
+                Element answer = (Element) x_answers.item(ans);
+                Double fraction = 0.0;
+                if (answer.getAttribute("correct").equals("true")) {
+                    fraction = 100.0;
+                }
+                String text = "";
+                text = answer.getTextContent();
+                answers.add(new Answer(fraction, text, "html", "", "html"));
+            }
+        }
+
         if (x_question.getElementsByTagName("answer").item(0) != null) {
             NodeList x_answers = x_question.getElementsByTagName("answer");
             int answers_nb = x_answers.getLength();
@@ -450,6 +478,8 @@ public class Question {
             is_valid = true;
         }
     }
+
+
 
     public void load(String xml_path) {
 
@@ -490,6 +520,9 @@ public class Question {
         if (questiontext.trim().replaceAll("\\<.*?>","").equals("")) {
             errors_collector.add("Un énoncé doit être spécifié.");
         }
+        if (defaultgrade < 0) {
+            errors_collector.add("La note par défaut doit être positive.");
+        }
         if (answers.size() < 2) {
             errors_collector.add("Minimum 2 réponses doivent être spécifiées.");
         }
@@ -499,7 +532,7 @@ public class Question {
                 if (ans.getFraction() == 100.0) {
                     has_max = true;
                 }
-                if (ans.getText().trim().equals("")) {
+                if (ans.getText().trim().replaceAll("\\<.*?>","").equals("")) {
                     names_completed = false;
                 }
             }

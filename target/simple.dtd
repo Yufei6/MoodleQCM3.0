@@ -1,0 +1,9 @@
+<!-- Forme de QCM la plus basique acceptée  -->
+
+<!ELEMENT quiz (question*)>
+<!ELEMENT question (name, text?, ans*)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT text (#PCDATA)>
+<!ELEMENT ans (#PCDATA)>
+<!ATTLIST ans correct (true|false) "false">
+

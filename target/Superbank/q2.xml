@@ -12,6 +12,7 @@
     </name>
     <questiontext format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">Nom Scientifique du Sanglier?</font></p>
+    
     </body></html>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -19,14 +20,17 @@
     </generalfeedback>
     <correctfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
+    
     </body></html>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
+    
     </body></html>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
+    
     </body></html>]]></text>
     </incorrectfeedback>
     <defaultgrade>1.0</defaultgrade>
@@ -39,25 +43,128 @@
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p style="orphans: 2; widows: 2;"><span style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: 32px; font-variant-ligatures: normal; background-color: rgb(255, 255, 255);">Capreolus capreolus</span></p></body></html>]]></text>
       <feedback format="html">
         <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
+      
       </body></html>]]></text>
       </feedback>
     </answer>
     <answer format="html" fraction="100.0">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">Sus scrofa</font></p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
-      </body></html>]]></text>
+        <text><![CDATA[
+        <html dir="ltr"><head></head><body contenteditable="true">
+      </body></html>
+      ]]></text>
       </feedback>
     </answer>
     <answer format="html" fraction="100.0">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><span style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: 32px; font-variant-ligatures: normal; orphans: 2; widows: 2; background-color: rgb(255, 255, 255);">Meles meles</span></p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
-      </body></html>]]></text>
+        <text><![CDATA[
+        <html dir="ltr"><head></head><body contenteditable="true">
+      </body></html>
+      ]]></text>
       </feedback>
     </answer>
     <answer format="html" fraction="100.0">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><span style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: 32px; font-variant-ligatures: normal; orphans: 2; widows: 2; background-color: rgb(255, 255, 255);">Ursus arctos</span></p></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[
+        <html dir="ltr"><head></head><body contenteditable="true"></body></html>
+      ]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
       <feedback format="html">
         <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
       </feedback>
