@@ -151,8 +151,12 @@ public class Controller implements Initializable {
         _alert.setHeaderText("Error!");
         _alert.initOwner(stage);
         Optional<ButtonType> _buttonType = _alert.showAndWait();
-        if(_buttonType.get().getButtonData().equals(ButtonBar.ButtonData.YES)){
-            _alert.close();
+        try {
+            if (_buttonType.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
+                _alert.close();
+            }
+        }catch (NoSuchElementException e) {
+
         }
     }
 
@@ -531,7 +535,7 @@ public class Controller implements Initializable {
         answer_fraction_box.getSelectionModel().select("" + answer.getFraction());
     }
 
-    private void questionFieldsGet(Question question) {  // TODO : Collecter les erreurs et les champs incomplets
+    private void questionFieldsGet(Question question) {
         if (question == null) {
             return;
         }
@@ -547,9 +551,14 @@ public class Controller implements Initializable {
         }catch(NumberFormatException e) {
             question.setDefaultgrade(0);
         }
-        question.setPenalty(Double.parseDouble(penalty_field.getText()));
+        try {
+            question.setPenalty(Double.parseDouble(penalty_field.getText()));
+        }catch (NumberFormatException e) {
+            question.setPenalty(0.0);
+        }
         question.setSingle(!(multiple_answers_choice.isSelected()));
         question.setShuffleanswers(shuffle_answers_choice.isSelected());
+        answerFieldsGet(question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()));
     }
 
     private void answerFieldsGet(Answer answer) {
@@ -584,7 +593,7 @@ public class Controller implements Initializable {
     }
 
     private void showInvalidQuestionError(List<String> errors) {
-        String error_message = "La question ne peut pas être sauvegardée à cause des erreurs suivantes : ";
+        String error_message = "La question présente les erreurs suivantes (ne peut actuellement pas être exportée) : ";
         for (String err : errors) {
             Text txt = new Text("ha");
             error_message += "\n - " + err;
@@ -846,7 +855,7 @@ public class Controller implements Initializable {
                         if(notification.getText().length()>0) {
                             creating_new_question=true;
                             String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
-                            int new_id = superBank.addQuestion(path_0+"/"+notification.getText()+".xml");
+                            int new_id = superBank.addQuestion(path_0,notification.getText());
                             Question new_question = new Question(notification.getText(),new_id);
                             selectQuestion(new_question);
                             window.close();
@@ -1329,8 +1338,21 @@ public class Controller implements Initializable {
     }
 
     private void selectQuestion(Question question) {
+        if (question == null) {
+            System.out.println("[!] Null Question selected");
+            return;
+        }
+        if (current_question != null) {
+            questionFieldsGet(current_question);
+            current_question.save(superBank.find(""+current_question.getID()), superBank);
+        }
         current_question = question;
-        question.load(superBank.find(String.valueOf(question.getID())));
+        String q_path = superBank.find(String.valueOf(question.getID()));
+        if (q_path == null) {
+            System.out.println("[!] Null path given by SB");
+            return;
+        }
+        question.load(q_path);
         deletion_mode = true;
         questionFieldsInit(question);
     }
@@ -1588,7 +1610,8 @@ public class Controller implements Initializable {
             if(((TreeItemWithQcmAndBank) it).getQcm()==null){
                 Bank b=((TreeItemWithQcmAndBank) it).getBank();
                 try {
-                    b.addQuestion(new Question(superbank.find(db.getString())));
+                    //b.addQuestion(new Question(superbank.find(db.getString())));
+                    b.addQuestion(superbank.findQuestion(db.getString()));
                 }catch(WrongQuestionTypeException e){
                     e.printStackTrace();
                 }
@@ -1598,7 +1621,8 @@ public class Controller implements Initializable {
             else{
                 Qcm q=((TreeItemWithQcmAndBank) it).getQcm();
                 try {
-                    q.addQuestion(new Question(superbank.find(db.getString())));
+                  //  q.addQuestion(new Question(superbank.find(db.getString())));  // <=================================================
+                    q.addQuestion(superbank.findQuestion(db.getString()));
                 }catch(WrongQuestionTypeException e){
                     e.printStackTrace();
                 }
