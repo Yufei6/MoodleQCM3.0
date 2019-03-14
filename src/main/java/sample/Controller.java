@@ -179,7 +179,6 @@ public class Controller implements Initializable {
             if (treeItem.getBank() != null) {
                 List<String> invalid = treeItem.getBank().Export(path+"/", treeItem.getBank().getName());
                 if (invalid. size() > 0) {
-                    System.out.println("Erreuuuuurs");
                     String err_msg = "Des erreurs apparaissent dans les questions suivantes: ";
                     for (String err : invalid) {
                         err_msg += err + " ";
@@ -240,12 +239,11 @@ public class Controller implements Initializable {
         }
     }
 
-    @FXML void generateLatex(ActionEvent event){
-        if(qcm.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQcmAndBank) {
+    @FXML void generateLatex(ActionEvent event, TreeItemWithQcmAndBank<String> treeItem){
+        if(treeItem instanceof TreeItemWithQcmAndBank) {
             DirectoryChooser directoryChooser=new DirectoryChooser();
             File file = directoryChooser.showDialog(stage);
             String path = file.getPath();
-            TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) qcm.getSelectionModel().getSelectedItems().get(0);
             if (treeItem.getQcm() != null) {
                 List<String> invalid = treeItem.getQcm().ExportLatex(path+"/", treeItem.getQcm().getName());
                 if (invalid.size() > 0) {
@@ -256,12 +254,19 @@ public class Controller implements Initializable {
                     afficherError(err_msg);
                 }
             }
-            else{
-                afficherError("Il faut choisir une qcm pour exportLatex");
+            else if(treeItem.getBank() != null){
+                List<String> invalid = treeItem.getBank().ExportLatex(path+"/", treeItem.getBank().getName());
+                if (invalid.size() > 0) {
+                    String err_msg = "Des erreurs apparaissent dans les questions suivantes: ";
+                    for (String err : invalid) {
+                        err_msg += err + " ";
+                    }
+                    afficherError(err_msg);
+                }
             }
         }
         else{
-            afficherError("Il faut choisir une qcm pour exportLatex");
+            afficherError("Il faut choisir une banque/un qcm pour exportLatex");
         }
     }
 
@@ -422,9 +427,7 @@ public class Controller implements Initializable {
 
     public static void deleteFile(String sPath) {
         File file = new File(sPath);
-        System.out.println("44444444"+sPath);
         if(file.exists()) {
-            System.out.println("55555"+sPath);
             file.delete();
         }
 
@@ -537,24 +540,13 @@ public class Controller implements Initializable {
     }
 
     private void showInvalidQuestionError(List<String> errors) {
-        /*final Stage popup = new Stage();
-        popup.initOwner(stage);
-        popup.setTitle("Question invalide");
-        popup.setMinHeight(100);
-        popup.setMinWidth(300);
-        popup.initModality(Modality.APPLICATION_MODAL);
-        VBox errorDialog = new VBox(20);*/
         String error_message = "La question ne peut pas être sauvegardée à cause des erreurs suivantes : ";
         for (String err : errors) {
             Text txt = new Text("ha");
             error_message += "\n - " + err;
         }
         afficherError(error_message);
-        /*errorDialog.getChildren().add(new Text(error_message));
-        Scene errorScene = new Scene(errorDialog, 300, 200);
-        popup.setScene(errorScene);
-        popup.show();
-        System.out.println("Erreur !");*/
+
     }
 
     @FXML
@@ -620,8 +612,6 @@ public class Controller implements Initializable {
     void initSuperbank(){
         try {
             superBank = new SuperBank();
-            //new_q = new Question("42.xml");
-            //  new_q.load("42.xml");
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (WrongQuestionTypeException e) {
@@ -840,13 +830,9 @@ public class Controller implements Initializable {
                     initBanksAndQcms(superBank);
                     String path_0 = "";
                     TreeItem parent = tree.getSelectionModel().getSelectedItems().get(0).getParent();
-                    System.out.println("1111111");
                     if(parent instanceof TreeItemWithRepertoire){
                         path_0=((TreeItemWithRepertoire) parent).getPath();
-                        System.out.println("2222"+path_0);
                     }
-                    System.out.println("33333"+path_0+"/"+(tree.getSelectionModel().getSelectedItems().get(0)).getValue()+".xml");
-
                     deleteFile(path_0+"/"+(tree.getSelectionModel().getSelectedItems().get(0)).getValue()+".xml");
                     initSuperbank();
                 }
@@ -1104,6 +1090,16 @@ public class Controller implements Initializable {
             }
         });
 
+        MenuItem menuItemBank7 = new MenuItem("Générer le LaTeX");
+        menuItemBank7.setAccelerator(KeyCombination.keyCombination("Ctrl+V"));
+        menuItemBank7.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) bank.getSelectionModel().getSelectedItems().get(0);
+                generateLatex(e, treeItem);
+            }
+        });
+
         bank.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
             public void handle(MouseEvent event){
                 TreeItem it = bank.getSelectionModel().getSelectedItems().get(0);
@@ -1111,7 +1107,7 @@ public class Controller implements Initializable {
                     contextMenuBank.getItems().setAll(menuItemBank6);
                 }
                 else if(it instanceof TreeItemWithQcmAndBank){
-                    contextMenuBank.getItems().setAll(menuItemBank2,menuItemBank3,menuItemBank4,menuItemBank5);
+                    contextMenuBank.getItems().setAll(menuItemBank2,menuItemBank3,menuItemBank4,menuItemBank5,menuItemBank7);
                 }
                 else{
                     contextMenuBank.getItems().setAll(menuItemBank0,menuItemBank1);
@@ -1309,7 +1305,8 @@ public class Controller implements Initializable {
         menuItemQcm7.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                generateLatex(e);
+                TreeItemWithQcmAndBank<String> treeItem = (TreeItemWithQcmAndBank<String>) qcm.getSelectionModel().getSelectedItems().get(0);
+                generateLatex(e, treeItem);
             }
         });
 
@@ -1339,7 +1336,6 @@ public class Controller implements Initializable {
 
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("it changed");
                 try {
                     if (!deletion_mode) {
                         answerFieldsGet(current_question.getAnswerByIndex((int) oldValue));  // <= Ici, lorsque on regen une liste de choix, on essaye de get les champs de ce qu'on vient de supprimer
@@ -1355,7 +1351,6 @@ public class Controller implements Initializable {
         answer_fraction_box.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println("fraction box changed");
                 try {
                     current_question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()).setFraction(Double.parseDouble(newValue));
                    // answersBoxInit(answers_box.getSelectionModel().getSelectedIndex());
@@ -1374,7 +1369,6 @@ public class Controller implements Initializable {
     }
 
     private void answersBoxInit(int index) {
-        System.out.println("answer box initialized with index: " + index);
         answers_box.setItems(FXCollections.observableArrayList(current_question.getAnswersDisplay()));
         answers_box.getSelectionModel().select(index);
     }
@@ -1554,11 +1548,9 @@ public class Controller implements Initializable {
 
         if(draggedItem instanceof TreeItemWithQuestion) {
             if(((TreeItemWithQuestion) draggedItem).getQuestion()!=null) {
-                System.out.println("hello"+draggedItem.getValue());
                 Dragboard db = treeCell.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
                 content.putString(((TreeItemWithQuestion) draggedItem).getQuestion().getID() + "");
-                System.out.println(((TreeItemWithQuestion) draggedItem).getQuestion().getID());
                 db.setContent(content);
             }
         }
@@ -1567,9 +1559,7 @@ public class Controller implements Initializable {
 
     private void dragDone(DragEvent event, TreeCell treeCell){
         if (event.getTransferMode() == TransferMode.MOVE) {
-            System.out.println("FFFF");
             if(treeCell.getTreeItem() != null){
-                System.out.println("gggg");
             }
 
         }
@@ -1639,7 +1629,7 @@ public class Controller implements Initializable {
     }
 
     public boolean isXmlFile(File file) {
-        return file.isFile() && file.getName().contains(".xml");
+        return file.isFile() && (file.getName().contains("xml"));
     }
 
     private void mouseExit(DragEvent event, TreeCell treeCell){

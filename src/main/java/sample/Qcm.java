@@ -14,13 +14,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class Qcm extends QuestionStorage {
-//    private String path;
-//     private static int name_default_nomber = 0;
 
     public Qcm(){
         super();
-//         changeName("Qcmdefaut" + name_default_nomber);
-//         name_default_nomber++;
     }
 
     public Qcm(String path, String new_name, SuperBank sb){
@@ -75,7 +71,6 @@ public class Qcm extends QuestionStorage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println("bbbbb");
         new_qcm.save();
         return new_qcm;
     }

@@ -51,8 +51,10 @@ public abstract class QuestionStorage{
             final int nbIDsElements = list_Id.getLength();
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element Id = (Element) list_Id.item(i);
-                Question new_question = new Question(super_bank.find(Id.getTextContent()));
-                list_question.add(new_question);
+                Question new_question = super_bank.findQuestion(Id.getTextContent());
+                if(new_question != null) {
+                    list_question.add(new_question);
+                }
             }
         } catch (ParserConfigurationException e) {
             // TODO Auto-generated catch block
@@ -87,12 +89,10 @@ public abstract class QuestionStorage{
 
 
     public void save(boolean isBank){
-        System.out.println("cccc"+this.path);
         File file = new File(this.path);
         if(!file.exists()){
             try {
                 file.createNewFile();
-                System.out.println("dddd"+this.path);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -111,7 +111,6 @@ public abstract class QuestionStorage{
             else{
                 racine = document.createElement("Qcm");
                 commentaire = document.createComment("Question Qcm");
-                System.out.println("eeee"+this.path);
 
             }
             document.appendChild(racine);

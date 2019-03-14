@@ -25,23 +25,6 @@ public class PopupController implements Initializable {
     private Text text;
     @FXML
     private TextField nameFile;
-    @FXML
-    private Button button;
-    @FXML
-    private ContextMenu contextMenu;
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private TreeView<String> tree;
-
-    @FXML
-    void treeDrag(ActionEvent event) {
-
-    }
     private SuperBank superBank;
 
 

@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <question_data>
   <id_header>
-    <id>5</id>
+    <id>1</id>
     <name>
-      <text>ss</text>
+      <text>question1</text>
     </name>
   </id_header>
   <question type="multichoice">
     <name>
-      <text>ss</text>
+      <text>question1</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>sssss</p>
-    
-    </body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">Am I question3?</font></p></body></html>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
@@ -28,23 +26,21 @@
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
     </incorrectfeedback>
     <defaultgrade>1.0</defaultgrade>
-    <penalty>0.3333333</penalty>
+    <penalty>0.0</penalty>
     <hidden>0</hidden>
     <single>true</single>
     <answernumbering>123</answernumbering>
     <shuffleanswers>false</shuffleanswers>
-    <answer format="moodle_auto_format" fraction="100.0">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">1</body></html>]]></text>
+    <answer format="html" fraction="100.0">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">OUI</font></p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p>ssss</p>
-      
-      </body></html>]]></text>
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">Pas bien</font></p></body></html>]]></text>
       </feedback>
     </answer>
     <answer format="html" fraction="100.0">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">dfdf</font></p></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">NON</font></p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">Bien</font></p></body></html>]]></text>
       </feedback>
     </answer>
   </question>

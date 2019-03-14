@@ -1,7 +1,5 @@
 package sample;
 
-
-import javafx.scene.control.TreeItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -15,16 +13,11 @@ import java.io.IOException;
 import java.util.List;
 
 public class Bank extends QuestionStorage{
-//    private static int name_default_nomber = 0;
-//    private static int number_default = 0;
 
 
 
     public Bank(){
         super();
-        //path = "./Bank_default"+number_default+".xml";
-//        changeName("Bankdefaut" + name_default_nomber);
-//        name_default_nomber++;
     }
 
     public Bank(String path, String new_name, SuperBank sb){
@@ -58,7 +51,6 @@ public class Bank extends QuestionStorage{
 
             final NodeList list_Id = racine.getElementsByTagName("question");
             final int nbIDsElements = list_Id.getLength();
-            System.out.println("size : " + nbIDsElements);
             for(int i =  0; i<nbIDsElements; i++) {
                 final Element question = (Element) list_Id.item(i);
                 if (question.hasAttribute("type") && question.getAttribute("type").equals("category")) {
