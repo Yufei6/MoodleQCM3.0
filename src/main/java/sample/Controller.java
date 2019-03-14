@@ -1559,6 +1559,14 @@ public class Controller implements Initializable {
                         Bank bk=((TreeItemWithQcmAndBank) it).getBank();
                         Qcm qc=((TreeItemWithQcmAndBank) it).getQcm();
                         if(bk!=null){
+                            for(Bank b : bankList){
+                                if(b.getName().equals(textField.getText())){
+                                    afficherError("Il existe déjà cette banque");
+                                    cancelEdit();
+                                    displayBanks();
+                                    return;
+                                }
+                            }
                             bk.changeName(textField.getText());
                             deleteFile(bk.getPath());
                             bk.changeName(textField.getText());
@@ -1566,6 +1574,14 @@ public class Controller implements Initializable {
                             bk.save();
                         }
                         if(qc!=null){
+                            for(Qcm q : qcmList){
+                                if(q.getName().equals(textField.getText())){
+                                    afficherError("Il existe déjà ce qcm");
+                                    cancelEdit();
+                                    displayQcms();
+                                    return ;
+                                }
+                            }
                             qc.changeName(textField.getText());
                             deleteFile(qc.getPath());
                             qc.changeName(textField.getText());
