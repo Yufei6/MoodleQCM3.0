@@ -9,9 +9,6 @@ public class TreeItemWithRepertoire<S> extends TreeItem {
         super();
     }
 
-    TreeItemWithRepertoire(String value){
-        super(value);
-    }
 
     TreeItemWithRepertoire(String value, String path_0){
         super(value);

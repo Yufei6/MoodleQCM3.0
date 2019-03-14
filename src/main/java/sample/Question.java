@@ -332,9 +332,6 @@ public class Question {
             id = Integer.parseInt(id_header.getElementsByTagName("id").item(0).getTextContent());  //Init ID
 
             final Element x_question = (Element) document.getElementsByTagName("question").item(0);
-            /*if (!x_question.getAttribute("type").equals("multichoice")) {
-                throw new WrongQuestionTypeException();
-            }*/
         }
         catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -556,7 +553,6 @@ public class Question {
         return loaded;
     }
 
-    //////////////// [ Getters ] ////////////////
 
     public boolean isSingle() {
         return single;
@@ -564,10 +560,6 @@ public class Question {
 
     public boolean isShuffleanswers() {
         return shuffleanswers;
-    }
-
-    public int getHidden() {
-        return hidden;
     }
 
     public String getName() {
@@ -594,30 +586,6 @@ public class Question {
         return incorrectfeedback;
     }
 
-    public String getQt_format() {
-        return qt_format;
-    }
-
-    public String getGf_format() {
-        return gf_format;
-    }
-
-    public String getCf_format() {
-        return cf_format;
-    }
-
-    public String getPcf_format() {
-        return pcf_format;
-    }
-
-    public String getIf_format() {
-        return if_format;
-    }
-
-    public String getAnswernumbering() {
-        return answernumbering;
-    }
-
     public double getDefaultgrade() {
         return defaultgrade;
     }
@@ -626,7 +594,6 @@ public class Question {
         return penalty;
     }
 
-    //////////////// [ Setters ] ////////////////
 
     public void setId(int id) {
         this.id = id;
@@ -638,10 +605,6 @@ public class Question {
 
     public void setShuffleanswers(boolean shuffleanswers) {
         this.shuffleanswers = shuffleanswers;
-    }
-
-    public void setHidden(int hidden) {
-        this.hidden = hidden;
     }
 
     public void setName(String name) {
@@ -666,26 +629,6 @@ public class Question {
 
     public void setIncorrectfeedback(String incorrectfeedback) {
         this.incorrectfeedback = incorrectfeedback;
-    }
-
-    public void setQt_format(String qt_format) {
-        this.qt_format = qt_format;
-    }
-
-    public void setGf_format(String gf_format) {
-        this.gf_format = gf_format;
-    }
-
-    public void setCf_format(String cf_format) {
-        this.cf_format = cf_format;
-    }
-
-    public void setPcf_format(String pcf_format) {
-        this.pcf_format = pcf_format;
-    }
-
-    public void setIf_format(String if_format) {
-        this.if_format = if_format;
     }
 
     public void setAnswernumbering(String answernumbering) {

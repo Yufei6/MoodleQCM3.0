@@ -7,9 +7,6 @@ public class TreeItemWithQcmAndBank<S> extends TreeItem {
     private Qcm qcm=null;
     private Bank bank=null;
 
-    public TreeItemWithQcmAndBank(Qcm qcm_0) {
-        this.qcm = qcm_0;
-    }
 
     public TreeItemWithQcmAndBank() {
     }
@@ -33,10 +30,6 @@ public class TreeItemWithQcmAndBank<S> extends TreeItem {
         super(value,graphic);
     }
 
-    public TreeItemWithQcmAndBank(Object value, Node graphic, Qcm qcm_0) {
-        super(value, graphic);
-        this.qcm = qcm_0;
-    }
 
     public Qcm getQcm() {
         return this.qcm;

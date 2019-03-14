@@ -19,7 +19,7 @@ public class SuperBank {
     private File dirBank;
     private ArrayList<String[]> questionList;
     private DocumentBuilder builder;
-    private int maxId=0;
+    private static int maxId=0;
     private ArrayList<Question> questions;
 
     public ArrayList<Question> getQuestions() {
@@ -37,13 +37,6 @@ public class SuperBank {
 
     }
 
-    private void loadPartQuestion() throws WrongQuestionTypeException {
-        ListIterator listIterator = questionList.listIterator();
-        for (int i = 0; i < questionList.size(); i++) {
-            questions.add(new Question(questionList.get(0)[1]));
-        }
-
-    }
 
     public File getDirBank() {
         return dirBank;
@@ -113,7 +106,7 @@ public class SuperBank {
     }
 
     public boolean isXmlFile(File file) {
-        return file.isFile() && file.getName().contains(".xml");
+        return file.isFile() && (file.getName().contains("xml"));
     }
 
     private ArrayList<String[]> getQuestionList() {
@@ -162,42 +155,36 @@ public class SuperBank {
         }
         return null;
     }
-    public Question findQuestion(String s) throws WrongQuestionTypeException {
-        return new Question(find(s));
-    }
 
 
-    public TreeItem<String> generateTree() throws IOException, SAXException, WrongQuestionTypeException {
-        TreeItemWithRepertoire root = new TreeItemWithRepertoire("bank", dirBank.getName());
-        root.setExpanded(true);
-        for(File file : dirBank.listFiles()){
-            if (file.isDirectory()){
-                root.getChildren().addAll(generateItem(file));
-            }
-            if (isXmlFile(file) && extractQuestion(file)!=null){
-                String[] strings = extractQuestion(file);
-                TreeItem<String> treeItem = new TreeItem<>(file.getName());
-                root.getChildren().addAll(treeItem);
+    public Question findQuestion(String id) throws WrongQuestionTypeException {
+        for(Question q : questions){
+            if(q.getID()+""==id){
+                return q;
             }
         }
-        return root;
+        return null;
     }
+
+
+
     public TreeItemWithRepertoire<String> generateTreeWithQuestion() throws IOException, SAXException, WrongQuestionTypeException {
         TreeItemWithRepertoire root = new TreeItemWithRepertoire("[SuperBank]", dirBank.getPath());
         root.setExpanded(true);
         for(File file : dirBank.listFiles()){
             if (file.isDirectory()){
                 root.getChildren().addAll(generateItem(file));
-            } else{
-
-                Question question = new Question(file.getPath());
-                if (question.getName() != null) {
-                    TreeItemWithQuestion<String> treeItem = new TreeItemWithQuestion<>(question.getName(), question);
-                    root.getChildren().addAll(treeItem);
+            } else {
+                if(isXmlFile(file)) {
+                    Question question = new Question(file.getPath());
+                    if (question.getName() != null) {
+                        questions.add(question);
+                        TreeItemWithQuestion<String> treeItem = new TreeItemWithQuestion<>(question.getName(), question);
+                        root.getChildren().addAll(treeItem);
+                    }
                 }
             }
         }
-        System.out.println("taille arbre"+root.getChildren().size());
         return root;
     }
 
@@ -208,9 +195,9 @@ public class SuperBank {
             if (file1.isDirectory()){
                 treeItem.getChildren().addAll(generateItem(file1));
             } else {
-
                 Question question = new Question(file1.getPath());
-                if (question != null) {
+                if (question != null && isXmlFile(file1)) {
+                    questions.add(question);
                     TreeItemWithQuestion<String> treeItem1 = new TreeItemWithQuestion<>(question.getName(), question);
                     treeItem.getChildren().addAll(treeItem1);
                 }
@@ -219,7 +206,6 @@ public class SuperBank {
         return treeItem;
     }
     public File addNewDirectory(final String directory, String nameFile){
-        System.out.println("dirBank"+dirBank.getName());
         if (directory.equals(dirBank.getName())){
             File file = new File("bank/"+nameFile);
             return file;
