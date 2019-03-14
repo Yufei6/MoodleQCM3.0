@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
@@ -140,6 +141,9 @@ public class Controller implements Initializable {
     @FXML
     private ChoiceBox<String> answer_fraction_box;
 
+    @FXML
+    private ScrollPane scroll_pane;
+
     ////////////////////////////////////////////////////
     @FXML void afficherError(String msg){
         Alert _alert = new Alert(Alert.AlertType.CONFIRMATION,msg, new ButtonType("OK", ButtonBar.ButtonData.YES));
@@ -153,7 +157,14 @@ public class Controller implements Initializable {
     }
 
     public void htmlEditorFix(HTMLEditor editor) {
-
+        scroll_pane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.SPACE) {
+                    event.consume();
+                }
+            }
+        });
     }
 
 
@@ -935,6 +946,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //htmlEditorFix(question_text_field);
         initSuperbank();
 
         MenuItem menuItemBank0 = new MenuItem("Ajouter banque");

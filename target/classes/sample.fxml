@@ -103,7 +103,7 @@
                         <content>
                           <AnchorPane fx:id="question_pane_global" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ScrollPane layoutX="-19.0" layoutY="22.0" prefHeight="345.0" prefWidth="243.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ScrollPane fx:id="scroll_pane" layoutX="-19.0" layoutY="22.0" prefHeight="345.0" prefWidth="243.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
                                         <AnchorPane fx:id="question_pane" minHeight="0.0" minWidth="0.0" prefHeight="2100.0" prefWidth="243.0">
                                              <children>
