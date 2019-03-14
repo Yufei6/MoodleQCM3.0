@@ -257,7 +257,7 @@ public class Question {
         return is_valid;
     }
 
-    public List<String> save(String xml_path) {
+    public List<String> save(String xml_path, SuperBank sp) {
 
         List<String> errors = checkValidity();
         if (errors.size() > 0) {
@@ -268,6 +268,11 @@ public class Question {
 
             is_valid = true;
         }
+
+       /* if (sp.hasName(name)) {
+            errors.add("Une question avec un nom similaire existe deja dans la Super-Banque");
+            return errors;
+        }*/
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 

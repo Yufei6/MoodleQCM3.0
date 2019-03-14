@@ -572,7 +572,7 @@ public class Controller implements Initializable {
         }
         questionFieldsGet(current_question);
         answerFieldsGet(current_question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()));
-        List<String> errors = current_question.save(superBank.find(String.valueOf(current_question.getID())));
+        List<String> errors = current_question.save(superBank.find(String.valueOf(current_question.getID())), superBank);
         if (errors.size() > 0) {
             showInvalidQuestionError(errors);
             return;

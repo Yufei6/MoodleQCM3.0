@@ -37,6 +37,15 @@ public class SuperBank {
 
     }
 
+    public boolean hasName(String name) {
+        for (Question q : questions) {
+            if (q.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public File getDirBank() {
         return dirBank;
@@ -126,7 +135,7 @@ public class SuperBank {
         String[] new_question_entry = {""+new_id, q_path};
         questionList.add(new_question_entry);
         question.setId(new_id);
-        question.save(q_path);
+        question.save(q_path, this);
         return new_id;
     }
 
