@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <question_data>
   <id_header>
-    <id>1</id>
+    <id>5</id>
     <name>
       <text>question1</text>
     </name>
@@ -11,7 +11,7 @@
       <text>question1</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">Am I question3?</font></p></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">1</font></p></body></html>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
@@ -32,15 +32,15 @@
     <answernumbering>123</answernumbering>
     <shuffleanswers>false</shuffleanswers>
     <answer format="html" fraction="100.0">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">OUI</font></p></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">q</font></p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">Pas bien</font></p></body></html>]]></text>
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
       </feedback>
     </answer>
     <answer format="html" fraction="100.0">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">NON</font></p></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">w</font></p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">Bien</font></p></body></html>]]></text>
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
       </feedback>
     </answer>
   </question>
