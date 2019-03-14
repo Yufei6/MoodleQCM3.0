@@ -70,15 +70,39 @@ public abstract class QuestionStorage{
         }
     }
 
+    private String latexEscape(String to_escape) {
+        char[] to_escape_array = to_escape.toCharArray();
+        String escaped = "";
+        char[] specials = {'&', '%', '$', '#', '_', '{', '}'};
+        for (Character c : to_escape_array) {
+            if (c == '~') {
+                escaped += "\\textasciitilde";
+                continue;
+            }
+            if (c == '^') {
+                escaped += "\\textasciicircum";
+                continue;
+            }
+            if (c == '\\') {
+                escaped += "\\textbackslash";
+                continue;
+            }
+            if (Arrays.asList(specials).contains(c)) {
+                escaped += '\\';
+            }
+            escaped += c;
+        }
+        return escaped;
+    }
 
     public String getLatex() {
         String latex = "\\documentclass{article}\\usepackage[utf8]{inputenc}";
         latex += "\\title{" + name + "}\\date{}\\begin{document}\\maketitle\\centerline{Nom:\\hspace{15em}Prenom:}\\vskip5em";
         for (Question q : list_question) {
             q.load(super_bank.find(""+q.getID()));
-            latex += "\\section{" + q.getName().trim() + "}";
+            latex += "\\section{" + latexEscape(q.getQuestiontext().replaceAll("\\<[^>]*>","").trim()) + "}";
             for (Answer a : q.getAnswers()) {
-                latex += "- " + a.getText().replaceAll("\\<[^>]*>","").trim() + "\\newline";
+                latex += "- " + latexEscape(a.getText().replaceAll("\\<[^>]*>","").trim()) + "\\newline";
             }
         }
         latex += "\\end{document}";
