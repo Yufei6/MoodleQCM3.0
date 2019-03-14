@@ -1049,59 +1049,7 @@ public class Controller implements Initializable {
                 }
             }
         });
-        MenuItem menuItemBank5 = new MenuItem("Ajouter une question");
-        menuItemBank5.setAccelerator(KeyCombination.keyCombination("Ctrl+M"));
-        menuItemBank5.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                TreeItem it = bank.getSelectionModel().getSelectedItems().get(0);
-                if((it instanceof TreeItemWithQcmAndBank) && !(it instanceof TreeItemWithQuestion)) {
-                    Stage window = new Stage();
-                    window.setTitle("Ajouter une question");
-                    window.initModality(Modality.APPLICATION_MODAL);
-                    window.setMinWidth(300);
-                    window.setMinHeight(150);
-                    Button button = new Button("Annuler");
-                    button.setOnAction(e1 -> window.close());
-                    Button button2 = new Button("OK");
-                    TextField notification = new TextField();
-                    notification.setPromptText("Numero de la question");
-                    notification.clear();
-                    button2.setOnAction((ActionEvent e2) -> {
-                        String name_0 = bank.getSelectionModel().getSelectedItems().get(0).getValue();
-                        for(Bank b : bankList) {
-                            if (name_0 == b.getName()){
-                                try {
-                                    if(b.hasThisNameQuestion(notification.getText())){
-                                        return;
-                                    }
-                                    Question new_q = new Question(superBank.find(notification.getText()));
-                                    b.addQuestion(new_q);
-                                }catch(WrongQuestionTypeException e3){
-                                    e3.printStackTrace();
-                                }
-                                b.save();
-                            }
-                        }
-                        initBanksAndQcms(superBank);
-                        window.close();
-                    });
-                    Label label = new Label("Entrez le numero de la question pour ajouter");
-                    VBox layout = new VBox(10);
-                    HBox hbox = new HBox();
-                    hbox.setSpacing(10);
-                    hbox.setAlignment(Pos.CENTER);
-                    hbox.getChildren().addAll(button2,button);
-                    layout.getChildren().addAll(label, notification, hbox);
-                    layout.setAlignment(Pos.CENTER);
-                    Scene scene = new Scene(layout);
-                    window.setScene(scene);
-                    window.showAndWait();
-                }
-                else{
-                    afficherError("Il faut choisir une banque pour y ajouter question!");
-                }
-            }
-        });
+
         MenuItem menuItemBank6 = new MenuItem("Supprimer une question");
         menuItemBank6.setAccelerator(KeyCombination.keyCombination("Ctrl+P"));
         menuItemBank6.setOnAction(new EventHandler<ActionEvent>() {
@@ -1162,7 +1110,7 @@ public class Controller implements Initializable {
                     contextMenuBank.getItems().setAll(menuItemBank6);
                 }
                 else if(it instanceof TreeItemWithQcmAndBank){
-                    contextMenuBank.getItems().setAll(menuItemBank2,menuItemBank3,menuItemBank4,menuItemBank5,menuItemBank7);
+                    contextMenuBank.getItems().setAll(menuItemBank2,menuItemBank3,menuItemBank4,menuItemBank7);
                 }
                 else{
                     contextMenuBank.getItems().setAll(menuItemBank0,menuItemBank1);
@@ -1262,64 +1210,7 @@ public class Controller implements Initializable {
                 }
             }
         });
-        MenuItem menuItemQcm5 = new MenuItem("Ajouter une question");
-        menuItemQcm5.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
-        menuItemQcm5.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                TreeItem it =qcm.getSelectionModel().getSelectedItems().get(0);
-                if(it instanceof TreeItemWithQcmAndBank && !(it instanceof TreeItemWithQuestion)) {
-                    Stage window = new Stage();
-                    window.setTitle("Ajouter une question");
-                    window.initModality(Modality.APPLICATION_MODAL);
-                    window.setMinWidth(300);
-                    window.setMinHeight(150);
-                    Button button = new Button("Annuler");
-                    button.setOnAction(e1 -> window.close());
-                    Button button2 = new Button("OK");
-                    TextField notification = new TextField();
-                    notification.setPromptText("Entrez numero de la question pour ajouter");
-                    notification.clear();
-                    button2.setOnAction((ActionEvent e2) -> {
-                        if(notification.getText().length()==0){
-                            afficherError("Il ne faut pas mettre valeur vide");
-                        }
-                        else {
-                            String name_0 = qcm.getSelectionModel().getSelectedItems().get(0).getValue();
-                            for (Qcm q : qcmList) {
-                                if (name_0 == q.getName()) {
-                                    try {
-                                        if(q.hasThisNameQuestion(notification.getText())){
-                                            return;
-                                        }
-                                        Question new_q = new Question(superBank.find(notification.getText()));
-                                        q.addQuestion(new_q);
-                                    } catch (WrongQuestionTypeException e3) {
-                                        e3.printStackTrace();
-                                    }
-                                    q.save();
-                                }
-                            }
-                            initBanksAndQcms(superBank);
-                            window.close();
-                        }
-                    });
-                    Label label = new Label("Entrez le numero");
-                    VBox layout = new VBox(10);
-                    HBox hbox = new HBox();
-                    hbox.setSpacing(10);
-                    hbox.setAlignment(Pos.CENTER);
-                    hbox.getChildren().addAll(button2,button);
-                    layout.getChildren().addAll(label, notification, hbox);
-                    layout.setAlignment(Pos.CENTER);
-                    Scene scene = new Scene(layout);
-                    window.setScene(scene);
-                    window.showAndWait();
-                }
-                else{
-                    afficherError("Il faut choisir une qcm pour y ajouter une question!");
-                }
-            }
-        });
+
         MenuItem menuItemQcm6 = new MenuItem("Supprimer une question");
         menuItemQcm6.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
         menuItemQcm6.setOnAction(new EventHandler<ActionEvent>() {
@@ -1381,7 +1272,7 @@ public class Controller implements Initializable {
                     contextMenuQcm.getItems().setAll(menuItemQcm6);
                 }
                 else if(it instanceof TreeItemWithQcmAndBank){
-                    contextMenuQcm.getItems().setAll(menuItemQcm2,menuItemQcm3,menuItemQcm4,menuItemQcm5,menuItemQcm7);
+                    contextMenuQcm.getItems().setAll(menuItemQcm2,menuItemQcm3,menuItemQcm4,menuItemQcm7);
                 }
                 else{
                     contextMenuQcm.getItems().setAll(menuItemQcm0,menuItemQcm1);
