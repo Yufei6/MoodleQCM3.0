@@ -179,6 +179,13 @@ public class Controller implements Initializable {
         if (f != null) {
             fileAsString = f.toString();
         }
+        for(Bank bank : bankList){
+            if((bank.getName().trim()).equals(f.getName().substring(0,f.getName().lastIndexOf(".")).trim())){
+                afficherError("Il existe déjà cette banque dans logiciel");
+                return;
+            }
+        }
+
         Bank new_bank = Bank.Import(fileAsString,superBank);
         bankList.add(new_bank);
         displayBanks();
@@ -217,6 +224,12 @@ public class Controller implements Initializable {
         );
         File f = fileChooser.showOpenDialog(stage);
 
+        for(Qcm qcm : qcmList){
+            if((qcm.getName().trim()).equals(f.getName().substring(0,f.getName().lastIndexOf(".")).trim())){
+                afficherError("Il existe déjà ce qcm dans logiciel");
+                return;
+            }
+        }
 
         String fileAsString = null;
         if (f != null) {
@@ -305,6 +318,12 @@ public class Controller implements Initializable {
         notification.clear();
         button2.setOnAction((ActionEvent e) -> {
             if(notification.getText().length()>0) {
+                for(Bank bank : bankList){
+                    if((bank.getName().trim()).equals(notification.getText().trim())){
+                        afficherError("Il existe déjà cette banque dans logiciel");
+                        return;
+                    }
+                }
                 createBank(notification.getText());
                 window.close();
             }
@@ -336,6 +355,12 @@ public class Controller implements Initializable {
         notification.clear();
         button2.setOnAction((ActionEvent e) -> {
             if(notification.getText().length()>0) {
+                for(Qcm qcm : qcmList){
+                    if((qcm.getName().trim()).equals(notification.getText().trim())){
+                        afficherError("Il existe déjà ce qcm dans logiciel");
+                        return;
+                    }
+                }
                 createQcm(notification.getText());
                 window.close();
             }
@@ -767,6 +792,10 @@ public class Controller implements Initializable {
                                 String old_path = (String) ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
                                 String new_path = old_path.substring(0, old_path.lastIndexOf("/")) + "/" + notification.getText();
                                 File nf = new File(new_path);
+                                if(nf.exists()){
+                                    afficherError("Il y a déjà ce dossier");
+                                    return;
+                                }
                                 try {
                                     f.renameTo(nf);
                                 } catch (Exception err) {
@@ -1000,6 +1029,12 @@ public class Controller implements Initializable {
                         String name_0 = bank.getSelectionModel().getSelectedItems().get(0).getValue();
                         for(Bank b : bankList) {
                             if (name_0 == b.getName()){
+                                for(Bank bank : bankList){
+                                    if((bank.getName().trim()).equals(notification.getText().trim())){
+                                        afficherError("Il existe déjà cette banque dans logiciel");
+                                        return;
+                                    }
+                                }
                                 deleteFile(b.getPath());
                                 b.changeName(notification.getText());
                                 b.changePath(sys_bank_path+notification.getText()+".xml");
@@ -1048,6 +1083,9 @@ public class Controller implements Initializable {
                         for(Bank b : bankList) {
                             if (name_0 == b.getName()){
                                 try {
+                                    if(b.hasThisNameQuestion(notification.getText())){
+                                        return;
+                                    }
                                     Question new_q = new Question(superBank.find(notification.getText()));
                                     b.addQuestion(new_q);
                                 }catch(WrongQuestionTypeException e3){
@@ -1203,6 +1241,12 @@ public class Controller implements Initializable {
                             String name_0 = qcm.getSelectionModel().getSelectedItems().get(0).getValue();
                             for (Qcm q : qcmList) {
                                 if (name_0 == q.getName()) {
+                                    for(Qcm qcm : qcmList){
+                                        if((qcm.getName().trim()).equals(notification.getText().trim())){
+                                            afficherError("Il existe déjà ce qcm dans logiciel");
+                                            return;
+                                        }
+                                    }
                                     deleteFile(q.getPath());
                                     q.changeName(notification.getText());
                                     q.changePath(sys_qcm_path + notification.getText() + ".xml");
@@ -1256,6 +1300,9 @@ public class Controller implements Initializable {
                             for (Qcm q : qcmList) {
                                 if (name_0 == q.getName()) {
                                     try {
+                                        if(q.hasThisNameQuestion(notification.getText())){
+                                            return;
+                                        }
                                         Question new_q = new Question(superBank.find(notification.getText()));
                                         q.addQuestion(new_q);
                                     } catch (WrongQuestionTypeException e3) {

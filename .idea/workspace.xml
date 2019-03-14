@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="02184d12-4379-418e-ab92-2c80834f5514" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/sample/Answer.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/sample/App.class" beforeDir="false" />
@@ -17,6 +18,10 @@
       <change beforePath="$PROJECT_DIR$/target/classes/sample/QuestionStorage.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/sample/SuperBank.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/sample/WrongQuestionTypeException.class" beforeDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java" afterDir="false" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -34,6 +39,7 @@
   <component name="CoverageViewManager">
     <option name="myElementSize" value="294" />
   </component>
+<<<<<<< HEAD
   <component name="FUSProjectUsageTrigger">
     <session id="1089139856">
       <usages-collector id="statistics.lifecycle.project">
@@ -135,13 +141,20 @@
       </usages-collector>
     </session>
   </component>
+=======
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="4318">
               <caret line="195" column="10" selection-start-line="195" selection-start-column="10" selection-end-line="195" selection-end-column="10" />
+=======
+            <state relative-caret-position="396">
+              <caret line="309" column="21" selection-start-line="309" selection-start-column="21" selection-end-line="309" selection-end-column="21" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -152,13 +165,18 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Main.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="248">
+=======
+            <state relative-caret-position="195">
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
               <caret line="21" selection-start-line="21" selection-end-line="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/javafx-src.zip!/com/sun/glass/ui/win/WinApplication.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="92">
@@ -175,11 +193,21 @@
               <caret line="105" column="62" lean-forward="true" selection-start-line="105" selection-start-column="62" selection-end-line="105" selection-end-column="62" />
             </state>
           </provider>
+=======
+        <entry file="file://$PROJECT_DIR$/src/main/resources/sample.fxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1930">
+              <caret line="129" column="245" lean-forward="true" selection-start-line="129" selection-start-column="245" selection-end-line="129" selection-end-column="245" />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Question.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="33">
               <caret line="537" column="13" selection-start-line="537" selection-start-column="13" selection-end-line="537" selection-end-column="13" />
               <folding>
@@ -193,6 +221,16 @@
                 <element signature="e#25574#25575#0" expanded="true" />
                 <element signature="e#26362#26363#0" expanded="true" />
                 <element signature="e#26392#26393#0" expanded="true" />
+=======
+            <state relative-caret-position="7980">
+              <caret line="540" column="13" selection-start-line="540" selection-start-column="13" selection-end-line="540" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#22035#22036#0" expanded="true" />
+                <element signature="e#22064#22065#0" expanded="true" />
+                <element signature="e#22548#22549#0" expanded="true" />
+                <element signature="e#22595#22596#0" expanded="true" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
               </folding>
             </state>
           </provider>
@@ -201,6 +239,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="74">
               <caret line="167" column="5" lean-forward="true" selection-start-line="167" selection-start-column="5" selection-end-line="167" selection-end-column="5" />
               <folding>
@@ -231,6 +270,27 @@
                 <element signature="e#65641#65642#0" expanded="true" />
                 <element signature="e#69251#69252#0" expanded="true" />
                 <element signature="e#69323#69324#0" expanded="true" />
+=======
+            <state relative-caret-position="251">
+              <caret line="785" column="43" selection-start-line="785" selection-start-column="43" selection-end-line="785" selection-end-column="43" />
+              <folding>
+                <element signature="e#13829#13830#0" expanded="true" />
+                <element signature="e#13904#13905#0" expanded="true" />
+                <element signature="e#14524#14525#0" expanded="true" />
+                <element signature="e#14599#14600#0" expanded="true" />
+                <element signature="e#37420#37421#0" expanded="true" />
+                <element signature="e#37464#37465#0" expanded="true" />
+                <element signature="e#37745#37746#0" expanded="true" />
+                <element signature="e#37790#37791#0" expanded="true" />
+                <element signature="e#38071#38072#0" expanded="true" />
+                <element signature="e#38116#38117#0" expanded="true" />
+                <element signature="e#48134#48135#0" expanded="true" />
+                <element signature="e#48177#48178#0" expanded="true" />
+                <element signature="e#48452#48453#0" expanded="true" />
+                <element signature="e#48496#48497#0" expanded="true" />
+                <element signature="e#48771#48772#0" expanded="true" />
+                <element signature="e#48815#48816#0" expanded="true" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
               </folding>
             </state>
           </provider>
@@ -239,8 +299,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="126">
               <caret line="17" column="99" selection-start-line="17" selection-start-column="99" selection-end-line="17" selection-end-column="99" />
+=======
+            <state relative-caret-position="105">
+              <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
             </state>
           </provider>
         </entry>
@@ -248,8 +313,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Qcm.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="547">
               <caret line="37" column="98" selection-start-line="37" selection-start-column="98" selection-end-line="37" selection-end-column="98" />
+=======
+            <state relative-caret-position="101">
+              <caret line="41" column="53" selection-start-line="41" selection-start-column="53" selection-end-line="41" selection-end-column="53" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
             </state>
           </provider>
         </entry>
@@ -257,7 +327,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Answer.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="-94">
+=======
+            <state relative-caret-position="180">
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
               <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -309,10 +383,17 @@
       <find>xml</find>
       <find>chec</find>
       <find>check</find>
+<<<<<<< HEAD
       <find>init</find>
       <find>initi</find>
       <find>scroll_</find>
       <find>scroll</find>
+=======
+      <find>importBank</find>
+      <find>Modifier le nom de</find>
+      <find>Modifier</find>
+      <find>Ajouter</find>
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -329,19 +410,28 @@
         <option value="$PROJECT_DIR$/src/main/java/sample/SuperBank.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/Bank.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/Qcm.java" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/Question.java" />
         <option value="$PROJECT_DIR$/src/main/resources/sample.fxml" />
+=======
+        <option value="$PROJECT_DIR$/src/main/java/sample/Question.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/sample.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
         <option value="$PROJECT_DIR$/src/main/java/sample/Controller.java" />
       </list>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+=======
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
@@ -349,11 +439,17 @@
       </MavenImportingSettings>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="20" />
     <option name="y" value="-11" />
     <option name="width" value="1918" />
     <option name="height" value="988" />
+=======
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -477,8 +573,15 @@
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+<<<<<<< HEAD
       <option name="MAIN_CLASS_NAME" value="sample.Main" />
       <module name="MoodleQCM3" />
+=======
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="sample.Main" />
+      <module name="MoodleQCM3.0" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="sample.*" />
@@ -499,6 +602,10 @@
       </extension>
       <option name="PACKAGE_NAME" value="sample" />
       <option name="MAIN_CLASS_NAME" value="sample.AppTest" />
+<<<<<<< HEAD
+=======
+      <option name="TEST_OBJECT" value="class" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -514,6 +621,10 @@
       <option name="PACKAGE_NAME" value="sample" />
       <option name="MAIN_CLASS_NAME" value="sample.BankTest" />
       <option name="METHOD_NAME" value="" />
+<<<<<<< HEAD
+=======
+      <option name="TEST_OBJECT" value="class" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
       <option name="PARAMETERS" value="" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -532,15 +643,25 @@
       <option name="PACKAGE_NAME" value="sample" />
       <option name="MAIN_CLASS_NAME" value="sample.SuperBankTest" />
       <option name="METHOD_NAME" value="" />
+<<<<<<< HEAD
+=======
+      <option name="TEST_OBJECT" value="class" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
       <option name="PARAMETERS" value="" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
+<<<<<<< HEAD
       <item itemvalue="JUnit.BankTest" />
       <item itemvalue="JUnit.SuperBankTest" />
       <item itemvalue="Application.Main" />
+=======
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.BankTest" />
+      <item itemvalue="JUnit.SuperBankTest" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
       <item itemvalue="JUnit.AppTest" />
     </list>
     <recent_temporary>
@@ -589,7 +710,12 @@
       <workItem from="1552399585473" duration="16400000" />
       <workItem from="1552460882153" duration="14832000" />
       <workItem from="1552479117302" duration="16251000" />
+<<<<<<< HEAD
       <workItem from="1552543567523" duration="12562000" />
+=======
+      <workItem from="1552543567523" duration="9444000" />
+      <workItem from="1552575859972" duration="2585000" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
     </task>
     <servers />
   </component>
@@ -608,6 +734,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="204303000" />
   </component>
   <component name="ToolWindowManager">
@@ -615,15 +742,31 @@
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21831736" />
+=======
+    <option name="totallyTimeSpent" value="203770000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27110156" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1460084" />
+=======
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.43012047" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -633,6 +776,10 @@
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.25657895" />
+<<<<<<< HEAD
+=======
+      <window_info anchor="right" id="Maven" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -648,9 +795,12 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+<<<<<<< HEAD
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+=======
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
@@ -725,6 +875,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/BankStorage.java" />
+<<<<<<< HEAD
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/io/File.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="121">
@@ -735,6 +886,12 @@
     <entry file="file://$PROJECT_DIR$/src/main/resources/popup.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor" />
+=======
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/io/File.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/resources/popup.fxml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/SuperBank.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -743,6 +900,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/javafx-src.zip!/com/sun/javafx/tk/quantum/GlassViewEventHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8533">
@@ -750,6 +908,9 @@
         </state>
       </provider>
     </entry>
+=======
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/javafx-src.zip!/com/sun/javafx/tk/quantum/GlassViewEventHandler.java" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/Bank.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="644">
@@ -757,6 +918,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/App.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
@@ -768,12 +930,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
           <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/App.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/QuestionDisplay.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Question.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7980">
+          <caret line="540" column="13" selection-start-line="540" selection-start-column="13" selection-end-line="540" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#22035#22036#0" expanded="true" />
+            <element signature="e#22064#22065#0" expanded="true" />
+            <element signature="e#22548#22549#0" expanded="true" />
+            <element signature="e#22595#22596#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/Answer.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="-94">
+=======
+        <state relative-caret-position="180">
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
           <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -787,6 +975,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/Question.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="33">
@@ -838,22 +1027,51 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4318">
           <caret line="195" column="10" selection-start-line="195" selection-start-column="10" selection-end-line="195" selection-end-column="10" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/sample.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1930">
+          <caret line="129" column="245" lean-forward="true" selection-start-line="129" selection-start-column="245" selection-end-line="129" selection-end-column="245" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="309" column="21" selection-start-line="309" selection-start-column="21" selection-end-line="309" selection-end-column="21" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/resources/sample.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="201">
           <caret line="105" column="62" lean-forward="true" selection-start-line="105" selection-start-column="62" selection-end-line="105" selection-end-column="62" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Qcm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="41" column="53" selection-start-line="41" selection-start-column="53" selection-end-line="41" selection-end-column="53" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="74">
           <caret line="167" column="5" lean-forward="true" selection-start-line="167" selection-start-column="5" selection-end-line="167" selection-end-column="5" />
           <folding>
@@ -884,6 +1102,27 @@
             <element signature="e#65641#65642#0" expanded="true" />
             <element signature="e#69251#69252#0" expanded="true" />
             <element signature="e#69323#69324#0" expanded="true" />
+=======
+        <state relative-caret-position="251">
+          <caret line="785" column="43" selection-start-line="785" selection-start-column="43" selection-end-line="785" selection-end-column="43" />
+          <folding>
+            <element signature="e#13829#13830#0" expanded="true" />
+            <element signature="e#13904#13905#0" expanded="true" />
+            <element signature="e#14524#14525#0" expanded="true" />
+            <element signature="e#14599#14600#0" expanded="true" />
+            <element signature="e#37420#37421#0" expanded="true" />
+            <element signature="e#37464#37465#0" expanded="true" />
+            <element signature="e#37745#37746#0" expanded="true" />
+            <element signature="e#37790#37791#0" expanded="true" />
+            <element signature="e#38071#38072#0" expanded="true" />
+            <element signature="e#38116#38117#0" expanded="true" />
+            <element signature="e#48134#48135#0" expanded="true" />
+            <element signature="e#48177#48178#0" expanded="true" />
+            <element signature="e#48452#48453#0" expanded="true" />
+            <element signature="e#48496#48497#0" expanded="true" />
+            <element signature="e#48771#48772#0" expanded="true" />
+            <element signature="e#48815#48816#0" expanded="true" />
+>>>>>>> ab0c242a877cdb9e550865ece9487e11543020c8
           </folding>
         </state>
       </provider>

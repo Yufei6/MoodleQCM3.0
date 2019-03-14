@@ -300,4 +300,13 @@ public abstract class QuestionStorage{
     public int getQuestionQuantite(){
         return list_question.size();
     }
+
+    public boolean hasThisNameQuestion(String name_0){
+        for(Question q:list_question){
+            if(q.getName().equals(name_0)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
