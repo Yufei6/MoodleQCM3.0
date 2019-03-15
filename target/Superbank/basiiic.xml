@@ -3,21 +3,15 @@
   <id_header>
     <id>1</id>
     <name>
-      <text>aze</text>
+      <text>ab</text>
     </name>
   </id_header>
   <question type="multichoice">
     <name>
-      <text>aze</text>
+      <text>ab</text>
     </name>
-    <questiontext format="html">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">aaaaaaaaaatttttaaaaaaboum</font></p>
-    
-    
-    
-    
-    
-    
+    <questiontext format="">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">So basic
     
     
     </body></html>]]></text>
@@ -28,36 +22,15 @@
     <correctfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
     
-    
-    
-    
-    
-    
-    
-    
     </body></html>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
     
-    
-    
-    
-    
-    
-    
-    
     </body></html>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
-    
-    
-    
-    
-    
-    
-    
     
     </body></html>]]></text>
     </incorrectfeedback>
@@ -68,33 +41,21 @@
     <answernumbering>123</answernumbering>
     <shuffleanswers>false</shuffleanswers>
     <answer format="html" fraction="100.0">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">dzdz</font></p></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">'t't</font></p></body></html>]]></text>
       <feedback format="html">
         <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
-      
-      
-      
-      
-      
-      
-      
       
       </body></html>]]></text>
       </feedback>
     </answer>
     <answer format="html" fraction="100.0">
-      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">dzddsd</font></p></body></html>]]></text>
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">fefe</font></p></body></html>]]></text>
       <feedback format="html">
-        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
+        <text><![CDATA[
+        
+        <html dir="ltr"><head></head><body contenteditable="true"></body></html>
       
-      
-      
-      
-      
-      
-      
-      
-      </body></html>]]></text>
+      ]]></text>
       </feedback>
     </answer>
   </question>

@@ -32,6 +32,7 @@ public class Question {
     private double defaultgrade;
     private double penalty;
     private boolean is_valid;
+    private boolean was_renamed;
 
     private List<Answer> answers;
 
@@ -56,6 +57,7 @@ public class Question {
         answernumbering = "123";
         defaultgrade = 1.0;
         penalty = 0.0;
+        was_renamed = false;
 
         answer_numbering_map_init();
         answers = new ArrayList<>();
@@ -267,6 +269,17 @@ public class Question {
         else {
 
             is_valid = true;
+        }
+
+        if (was_renamed) {
+            File root_rep = new File("./target/Superbank/");
+            File[] allFiles = root_rep.listFiles();
+            for (File f : allFiles) {
+                if (f.isFile() && f.getName().equals(name + ".xml")) {
+                        errors.add("Une question avec le même nom existe déjà dans la super-bank.");
+                        return errors;
+                }
+            }
         }
 
        /* if (sp.hasName(name)) {
@@ -613,6 +626,9 @@ public class Question {
     }
 
     public void setName(String name) {
+        if (!name.equals(this.name)) {
+            was_renamed = true;
+        }
         this.name = name;
     }
 
