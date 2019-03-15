@@ -66,21 +66,20 @@ public class BankTest {
         assertEquals(b2.getName(),"bank_test_001_export");
     }
 
-//    @Test
-//    public void ExporttUneBanqueKO(){
-//        Bank b1 = new Bank("./target/Bank/bank_test_001","bank_test_001", sb1);
-//        assertEquals(b1.getName(),"bank_test_001");
-//        try {
-//            b1.addQuestion(sb1.findQuestion("2"));
-//            assertTrue(b1.Export("./target/Bank_Export", "bank_test_001_export1").size()==0);
-//            b1.addQuestion(sb1.findQuestion("50"));
-//            assertTrue(b1.Export("./target/Bank_Export", "bank_test_001_export2").size()==0);
-//            b1.deleteQuestion(sb1.findQuestion("2"));
-//            b1.deleteQuestion(sb1.findQuestion("50"));
-//        }catch(WrongQuestionTypeException e){
-//            e.printStackTrace();
-//        }
-//    }
+    @Test
+    public void ExporttUneBanqueKO(){
+        Bank b1 = new Bank("./target/Bank/bank_test_001","bank_test_001", sb1);
+        assertEquals(b1.getName(),"bank_test_001");
+        try {
+            b1.addQuestion(sb1.findQuestion("2"));
+            assertTrue(b1.Export("./target/Bank_Export", "bank_test_001_export1").size()==0);
+            b1.addQuestion(sb1.findQuestion("50"));
+            b1.deleteQuestion(sb1.findQuestion("2"));
+            b1.deleteQuestion(sb1.findQuestion("50"));
+        }catch(WrongQuestionTypeException e){
+            e.printStackTrace();
+        }
+    }
 
 
     @Test
