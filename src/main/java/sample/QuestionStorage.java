@@ -235,6 +235,9 @@ public abstract class QuestionStorage{
             racine.appendChild(commentaire);
 
             for (Question q:list_question) {
+                System.out.println("yes "+q.getID());
+                System.out.println("no "+super_bank.find(""+q.getID()));
+
                 q.load(super_bank.find(""+q.getID()));
                 if (!q.isValid()) {
                     invalid.add(q.getName());

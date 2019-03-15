@@ -506,6 +506,7 @@ public class Question {
 
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
+            System.out.println("loading " + xml_path);
             Document document = builder.parse(new File(xml_path));
 
             Element root = document.getDocumentElement();

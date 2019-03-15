@@ -458,16 +458,6 @@ public class Controller implements Initializable {
     }
 
 
-    public static void copyFileByStream(File source, File dest) throws IOException {
-        try (InputStream is = new FileInputStream(source);
-             OutputStream os = new FileOutputStream(dest);){
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0) {
-                os.write(buffer, 0, length);
-            }
-        }
-    }
 
     public static void deleteFile(String sPath) {
         File file = new File(sPath);
@@ -597,7 +587,6 @@ public class Controller implements Initializable {
     private void showInvalidQuestionError(List<String> errors) {
         String error_message = "La question présente les erreurs suivantes (ne peut actuellement pas être exportée) : ";
         for (String err : errors) {
-            Text txt = new Text("ha");
             error_message += "\n - " + err;
         }
         afficherError(error_message);
@@ -660,16 +649,6 @@ public class Controller implements Initializable {
         }
     }
 
-    boolean has_already_name(String name_0, TreeItem it){
-        for(Object it_0 : it.getChildren()){
-            if(it_0 instanceof TreeItem){
-                if(((TreeItem) it_0).getValue()==name_0){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
 
 
@@ -914,65 +893,13 @@ public class Controller implements Initializable {
             }
         });
 
-        MenuItem menuItemSB5 = new MenuItem("Modifier le nom de Question");
-        menuItemSB5.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(tree.getSelectionModel().getSelectedItems().get(0) instanceof TreeItemWithQuestion) {
-                    Stage window = new Stage();
-                    window.setTitle("Modification le nom d'une question");
-                    window.initModality(Modality.APPLICATION_MODAL);
-                    window.setMinWidth(300);
-                    window.setMinHeight(150);
-                    Button button = new Button("Annuler");
-                    button.setOnAction(e1 -> window.close());
-                    Button button2 = new Button("OK");
-                    TextField notification = new TextField();
-                    notification.setPromptText("Nouveau nom de question");
-                    notification.clear();
-                    button2.setOnAction((ActionEvent e2) -> {
-                        String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
-                        File f = new File(path_0);
-                        if(notification.getText().length()==0){
-                            afficherError("Il ne faut pas donner un nom vide");
-                        }
-                        else{
-                            String old_path = (String)((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getValue();
-                            String new_path = old_path.substring(0, old_path.lastIndexOf("/")) + "/" + notification.getText() + ".xml";
-                            File nf = new File(new_path);
-                            try {
-                                f.renameTo(nf);
-                            } catch (Exception err) {
-                                err.printStackTrace();
-                            }
-                        }
 
-                        initSuperbank();
-                        window.close();
-                    });
-                    Label label = new Label("Entrez le nom du nouveau dossier");
-                    VBox layout = new VBox(10);
-                    HBox hbox = new HBox();
-                    hbox.getChildren().addAll( button2, button);
-                    hbox.setSpacing(10);
-                    hbox.setAlignment(Pos.CENTER);
-                    layout.getChildren().addAll(label, notification,hbox);
-                    layout.setAlignment(Pos.CENTER);
-                    Scene scene = new Scene(layout);
-                    window.setScene(scene);
-                    window.showAndWait();
-                }
-                else{
-                    afficherError("Il faut choisir un dossier pour le supprimer");
-                }
-            }
-        });
 
         tree.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
             public void handle(MouseEvent event){
                 TreeItem it = tree.getSelectionModel().getSelectedItems().get(0);
                 if (it instanceof TreeItemWithQuestion){
-                    contextMenu.getItems().setAll(menuItemSB4,menuItemSB5);
+                    contextMenu.getItems().setAll(menuItemSB4);
                 }
                 else if(it instanceof TreeItemWithRepertoire){
                     contextMenu.getItems().setAll(menuItemSB0,menuItemSB1,menuItemSB2,menuItemSB3);
@@ -1626,7 +1553,12 @@ public class Controller implements Initializable {
                 Bank b=((TreeItemWithQcmAndBank) it).getBank();
                 try {
                     //b.addQuestion(new Question(superbank.find(db.getString())));
-                    b.addQuestion(superbank.findQuestion(db.getString()));
+                    Question question_0 = superbank.findQuestion(db.getString());
+                    if(b.hasThisNameQuestion(question_0.getName())){
+                        afficherError("Il y a déjà cette question dans cette banque");
+                        return ;
+                    }
+                    b.addQuestion(question_0);
                 }catch(WrongQuestionTypeException e){
                     e.printStackTrace();
                 }
@@ -1636,8 +1568,13 @@ public class Controller implements Initializable {
             else{
                 Qcm q=((TreeItemWithQcmAndBank) it).getQcm();
                 try {
-                  //  q.addQuestion(new Question(superbank.find(db.getString())));  // <=================================================
-                    q.addQuestion(superbank.findQuestion(db.getString()));
+                  //  q.addQuestion(new Question(superbank.find(db.getString())));  //
+                    Question question_0 = superbank.findQuestion(db.getString());
+                    if(q.hasThisNameQuestion(question_0.getName())){
+                        afficherError("Il y a déjà cette question dans ce qcm");
+                        return;
+                    }
+                    q.addQuestion(question_0);
                 }catch(WrongQuestionTypeException e){
                     e.printStackTrace();
                 }
