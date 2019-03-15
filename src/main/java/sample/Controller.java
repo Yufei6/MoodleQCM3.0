@@ -583,7 +583,7 @@ public class Controller implements Initializable {
         if(creating_new_question){
             System.out.println("here 3");
             initSuperbank();
-            creating_new_question=false;
+            //creating_new_question=false;
         }
     }
 
