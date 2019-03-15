@@ -128,6 +128,7 @@ public class SuperBank {
         File[] allFiles = root_rep.listFiles();
         for (File f : allFiles) {
             if (f.isFile() && f.getName().equals(name+".xml")) {
+                System.out.println("Path found.");
                 return -1;
             }
         }
@@ -141,6 +142,7 @@ public class SuperBank {
 
     public int addQuestion(Question question) {
         if (hasName(question.getName())) {
+            System.out.println("already exists.");
             return -1;
         }
         int new_id = generateId();
@@ -184,6 +186,7 @@ public class SuperBank {
         System.out.println("Given id : " + id);
         for(Question q : questions){
             if(String.valueOf(q.getID()).equals(id)){
+                System.out.println("was found!");
                 return q;
             }
         }

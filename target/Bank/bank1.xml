@@ -2,8 +2,6 @@
 <Bank>
   <!--Question Bank-->
   <name>bank1</name>
-  <question_id_list>
-    <question_id>2</question_id>
-  </question_id_list>
+  <question_id_list/>
   <date>15/21/2019</date>
 </Bank>

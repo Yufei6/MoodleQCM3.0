@@ -571,14 +571,17 @@ public class Controller implements Initializable {
         if (current_question == null) {
             return;
         }
+        System.out.println("here");
         questionFieldsGet(current_question);
         answerFieldsGet(current_question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()));
         List<String> errors = current_question.save(superBank.find(String.valueOf(current_question.getID())), superBank);
         if (errors.size() > 0) {
+            System.out.println("here 2");
             showInvalidQuestionError(errors);
             return;
         }
         if(creating_new_question){
+            System.out.println("here 3");
             initSuperbank();
             creating_new_question=false;
         }
@@ -836,12 +839,13 @@ public class Controller implements Initializable {
                         if(notification.getText().length()>0) {
                             creating_new_question=true;
                             String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
-                            int new_id = superBank.addQuestion(path_0,notification.getText());
+                            int new_id = superBank.addQuestion(path_0,notification.getText());   // <==========================================================
+                            Question new_question = new Question(notification.getText(),new_id);
+                            superBank.addQuestion(new_question);
                             if (new_id == -1) {
                                 window.close();
                                 return;
                             }
-                            Question new_question = new Question(notification.getText(),new_id);
                             selectQuestion(new_question);
                             window.close();
                         }
