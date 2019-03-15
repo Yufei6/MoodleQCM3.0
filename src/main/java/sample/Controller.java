@@ -558,7 +558,9 @@ public class Controller implements Initializable {
         }
         question.setSingle(!(multiple_answers_choice.isSelected()));
         question.setShuffleanswers(shuffle_answers_choice.isSelected());
-        answerFieldsGet(question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()));
+        if (answers_box.getSelectionModel().getSelectedIndex() > -1) {
+            answerFieldsGet(question.getAnswerByIndex(answers_box.getSelectionModel().getSelectedIndex()));
+        }
     }
 
     private void answerFieldsGet(Answer answer) {
@@ -856,6 +858,10 @@ public class Controller implements Initializable {
                             creating_new_question=true;
                             String path_0 = ((TreeItemWithRepertoire) tree.getSelectionModel().getSelectedItems().get(0)).getPath();
                             int new_id = superBank.addQuestion(path_0,notification.getText());
+                            if (new_id == -1) {
+                                window.close();
+                                return;
+                            }
                             Question new_question = new Question(notification.getText(),new_id);
                             selectQuestion(new_question);
                             window.close();
@@ -1092,6 +1098,9 @@ public class Controller implements Initializable {
                             Bank b=((TreeItemWithQcmAndBank) parent).getBank();
                             b.deleteQuestion(q);
                             b.save();
+                            if (current_question == q) {
+                                current_question = null;
+                            }
                         }
                         displayBanks();
                         window.close();
@@ -1251,8 +1260,12 @@ public class Controller implements Initializable {
                         TreeItem parent = it.getParent();
                         if(parent instanceof TreeItemWithQcmAndBank){
                             Qcm qcm=((TreeItemWithQcmAndBank) parent).getQcm();
+                        //    Qcm qcm=((TreeItemWithQcmAndBank) parent).getQcm();
                             qcm.deleteQuestion(q);
                             qcm.save();
+                            if (current_question == q) {
+                                current_question = null;
+                            }
                         }
                         displayQcms();
                         window.close();
@@ -1338,12 +1351,14 @@ public class Controller implements Initializable {
     }
 
     private void selectQuestion(Question question) {
+        System.out.println("Question selected");
         if (question == null) {
             System.out.println("[!] Null Question selected");
             return;
         }
         if (current_question != null) {
             questionFieldsGet(current_question);
+            System.out.println("Question selected - 2");
             current_question.save(superBank.find(""+current_question.getID()), superBank);
         }
         current_question = question;

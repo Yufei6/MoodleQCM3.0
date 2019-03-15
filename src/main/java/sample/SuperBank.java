@@ -123,21 +123,16 @@ public class SuperBank {
     }
 
     public int addQuestion(String path, String name) {
-        int new_id = generateId();
+
         File root_rep = new File("./target/Superbank/");
         File[] allFiles = root_rep.listFiles();
-        boolean is_unique = false;
-        while (!is_unique) {
-            is_unique = true;
-            for (File f : allFiles) {
-                if (f.isFile() && f.getName().equals(name+".xml")) {
-                    is_unique = false;
-                }
-            }
-            if (!is_unique) {
-                name += "_";
+        for (File f : allFiles) {
+            if (f.isFile() && f.getName().equals(name+".xml")) {
+                return -1;
             }
         }
+
+        int new_id = generateId();
         System.out.println("Name on drive : " + name);
         String[] new_question_entry = {""+new_id, path+"/"+name+".xml"};
         questionList.add(new_question_entry);
@@ -145,10 +140,14 @@ public class SuperBank {
     }
 
     public int addQuestion(Question question) {
+        if (hasName(question.getName())) {
+            return -1;
+        }
         int new_id = generateId();
         String q_path  = "./target/Superbank/" + question.getName() + ".xml";
         String[] new_question_entry = {""+new_id, q_path};
         questionList.add(new_question_entry);
+        questions.add(question);
         question.setId(new_id);
         question.save(q_path, this);
         return new_id;
