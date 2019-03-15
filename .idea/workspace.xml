@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="02184d12-4379-418e-ab92-2c80834f5514" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/QuestionStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -48,7 +48,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/resources/sample.fxml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1930">
-              <caret line="129" column="245" lean-forward="true" selection-start-line="129" selection-start-column="245" selection-end-line="129" selection-end-column="245" />
+              <caret line="129" column="245" selection-start-line="129" selection-start-column="245" selection-end-line="129" selection-end-column="245" />
             </state>
           </provider>
           <provider editor-type-id="JavaFX-Scene-Builder" />
@@ -73,8 +73,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="785" column="43" selection-start-line="785" selection-start-column="43" selection-end-line="785" selection-end-column="43" />
+            <state relative-caret-position="384">
+              <caret line="1274" column="92" selection-start-line="1274" selection-start-column="92" selection-end-line="1274" selection-end-column="92" />
               <folding>
                 <element signature="e#13829#13830#0" expanded="true" />
                 <element signature="e#13904#13905#0" expanded="true" />
@@ -92,6 +92,8 @@
                 <element signature="e#48496#48497#0" expanded="true" />
                 <element signature="e#48771#48772#0" expanded="true" />
                 <element signature="e#48815#48816#0" expanded="true" />
+                <element signature="e#66779#66780#0" expanded="true" />
+                <element signature="e#66855#66856#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -144,13 +146,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>addQuest</find>
-      <find>load</find>
-      <find>Exportqc</find>
-      <find>expo</find>
-      <find>Export</find>
-      <find>treeitem</find>
-      <find>save</find>
       <find>tree</find>
       <find>import</find>
       <find>TreeIt</find>
@@ -173,7 +168,14 @@
       <find>importBank</find>
       <find>Modifier le nom de</find>
       <find>Modifier</find>
+      <find>ajouter une question</find>
+      <find>ajouter</find>
       <find>Ajouter</find>
+      <find>change</find>
+      <find>delete</find>
+      <find>menuItem</find>
+      <find>menuItemBank</find>
+      <find>menuItemQcm</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -448,7 +450,7 @@
       <workItem from="1552460882153" duration="14832000" />
       <workItem from="1552479117302" duration="16251000" />
       <workItem from="1552543567523" duration="9444000" />
-      <workItem from="1552575859972" duration="2585000" />
+      <workItem from="1552575859972" duration="5650000" />
     </task>
     <servers />
   </component>
@@ -467,13 +469,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203770000" />
+    <option name="totallyTimeSpent" value="206835000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27110156" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27110156" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -483,7 +485,7 @@
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.43012047" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23975904" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -652,7 +654,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/resources/sample.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1930">
-          <caret line="129" column="245" lean-forward="true" selection-start-line="129" selection-start-column="245" selection-end-line="129" selection-end-column="245" />
+          <caret line="129" column="245" selection-start-line="129" selection-start-column="245" selection-end-line="129" selection-end-column="245" />
         </state>
       </provider>
       <provider editor-type-id="JavaFX-Scene-Builder" />
@@ -676,8 +678,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="785" column="43" selection-start-line="785" selection-start-column="43" selection-end-line="785" selection-end-column="43" />
+        <state relative-caret-position="384">
+          <caret line="1274" column="92" selection-start-line="1274" selection-start-column="92" selection-end-line="1274" selection-end-column="92" />
           <folding>
             <element signature="e#13829#13830#0" expanded="true" />
             <element signature="e#13904#13905#0" expanded="true" />
@@ -695,6 +697,8 @@
             <element signature="e#48496#48497#0" expanded="true" />
             <element signature="e#48771#48772#0" expanded="true" />
             <element signature="e#48815#48816#0" expanded="true" />
+            <element signature="e#66779#66780#0" expanded="true" />
+            <element signature="e#66855#66856#0" expanded="true" />
           </folding>
         </state>
       </provider>
