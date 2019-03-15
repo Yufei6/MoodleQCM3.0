@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<question_data>
+  <id_header>
+    <id>5</id>
+    <name>
+      <text>AZ</text>
+    </name>
+  </id_header>
+  <question type="multichoice">
+    <name>
+      <text>AZ</text>
+    </name>
+    <questiontext format="html">
+<<<<<<< HEAD:targetAZ.xml
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">eff</font></p></body></html>]]></text>
+=======
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">1</font></p></body></html>]]></text>
+>>>>>>> 1189af2891ba404a7661347ed8c11e2eb5c11821:target/SuperBank/repertoire1/question1.xml
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+    </generalfeedback>
+    <correctfeedback format="html">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+    </correctfeedback>
+    <partiallycorrectfeedback format="html">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+    </partiallycorrectfeedback>
+    <incorrectfeedback format="html">
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+    </incorrectfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.0</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <answernumbering>123</answernumbering>
+    <shuffleanswers>false</shuffleanswers>
+    <answer format="html" fraction="100.0">
+<<<<<<< HEAD:targetAZ.xml
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">fef</font></p></body></html>]]></text>
+=======
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">q</font></p></body></html>]]></text>
+>>>>>>> 1189af2891ba404a7661347ed8c11e2eb5c11821:target/SuperBank/repertoire1/question1.xml
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="100.0">
+<<<<<<< HEAD:targetAZ.xml
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">fef</font></p></body></html>]]></text>
+=======
+      <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande">w</font></p></body></html>]]></text>
+>>>>>>> 1189af2891ba404a7661347ed8c11e2eb5c11821:target/SuperBank/repertoire1/question1.xml
+      <feedback format="html">
+        <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"></body></html>]]></text>
+      </feedback>
+    </answer>
+  </question>
+</question_data>

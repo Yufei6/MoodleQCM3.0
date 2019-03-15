@@ -37,6 +37,15 @@ public class SuperBank {
 
     }
 
+    public boolean hasName(String name) {
+        for (Question q : questions) {
+            if (q.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public File getDirBank() {
         return dirBank;
@@ -113,9 +122,24 @@ public class SuperBank {
         return questionList;
     }
 
-    public int addQuestion(String path) {
+    public int addQuestion(String path, String name) {
         int new_id = generateId();
-        String[] new_question_entry = {""+new_id, path};
+        File root_rep = new File("./target/Superbank/");
+        File[] allFiles = root_rep.listFiles();
+        boolean is_unique = false;
+        while (!is_unique) {
+            is_unique = true;
+            for (File f : allFiles) {
+                if (f.isFile() && f.getName().equals(name+".xml")) {
+                    is_unique = false;
+                }
+            }
+            if (!is_unique) {
+                name += "_";
+            }
+        }
+        System.out.println("Name on drive : " + name);
+        String[] new_question_entry = {""+new_id, path+"/"+name+".xml"};
         questionList.add(new_question_entry);
         return new_id;
     }
@@ -126,7 +150,7 @@ public class SuperBank {
         String[] new_question_entry = {""+new_id, q_path};
         questionList.add(new_question_entry);
         question.setId(new_id);
-        question.save(q_path);
+        question.save(q_path, this);
         return new_id;
     }
 
@@ -158,8 +182,9 @@ public class SuperBank {
 
 
     public Question findQuestion(String id) throws WrongQuestionTypeException {
+        System.out.println("Given id : " + id);
         for(Question q : questions){
-            if(q.getID()+""==id){
+            if(String.valueOf(q.getID()).equals(id)){
                 return q;
             }
         }
