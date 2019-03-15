@@ -64,7 +64,11 @@ public class Qcm extends QuestionStorage {
                     System.out.println("Question name already exists");
                     continue;
                 }
-                new_qcm.addQuestion(new_question);
+                try {
+                    new_qcm.addQuestion(super_bank0.findQuestion("" + ret));
+                }catch (WrongQuestionTypeException e) {
+
+                }
             }
         } catch (ParserConfigurationException e) {
             // TODO Auto-generated catch block

@@ -184,16 +184,23 @@ public class SuperBank {
 
     public Question findQuestion(String id) throws WrongQuestionTypeException {
         System.out.println("Given id : " + id);
-        for(Question q : questions){
-            if(String.valueOf(q.getID()).equals(id)){
+        int q_nb = questions.size();
+        for(int i = 0; i < q_nb; i++) {
+            if(String.valueOf(questions.get(i).getID()).equals(id)){
                 System.out.println("was found!");
-                return q;
+                return questions.get(i);
             }
         }
         return null;
     }
 
-
+    public void updatePath(int id, String path) {
+        for (String[] entry : questionList) {
+            if (entry[0].equals(""+id)) {
+                entry[1] = path;
+            }
+        }
+    }
 
     public TreeItemWithRepertoire<String> generateTreeWithQuestion() throws IOException, SAXException, WrongQuestionTypeException {
         TreeItemWithRepertoire root = new TreeItemWithRepertoire("[SuperBank]", dirBank.getPath());

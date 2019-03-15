@@ -18,6 +18,9 @@
     
     
     
+    
+    
+    
     </body></html>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -25,6 +28,9 @@
     </generalfeedback>
     <correctfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
+    
+    
+    
     
     
     
@@ -41,10 +47,16 @@
     
     
     
+    
+    
+    
     </body></html>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
+    
+    
+    
     
     
     
@@ -69,6 +81,9 @@
       
       
       
+      
+      
+      
       </body></html>]]></text>
       </feedback>
     </answer>
@@ -83,6 +98,12 @@
         
         
         
+        
+        
+        
+      
+      
+      
       
       
       

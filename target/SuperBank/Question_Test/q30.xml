@@ -14,6 +14,7 @@
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Segoe UI">dfede</font></p>
     
     
+    
     </body></html>]]></text>
     </questiontext>
     <generalfeedback format="html">
@@ -23,16 +24,19 @@
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
     
     
+    
     </body></html>]]></text>
     </correctfeedback>
     <partiallycorrectfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
     
     
+    
     </body></html>]]></text>
     </partiallycorrectfeedback>
     <incorrectfeedback format="html">
       <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
+    
     
     
     </body></html>]]></text>
@@ -49,6 +53,7 @@
         <text><![CDATA[<html dir="ltr"><head></head><body contenteditable="true">
       
       
+      
       </body></html>]]></text>
       </feedback>
     </answer>
@@ -58,7 +63,9 @@
         <text><![CDATA[
         
         
+        
         <html dir="ltr"><head></head><body contenteditable="true"></body></html>
+      
       
       
       ]]></text>

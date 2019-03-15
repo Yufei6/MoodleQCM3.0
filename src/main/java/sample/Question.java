@@ -33,6 +33,7 @@ public class Question {
     private double penalty;
     private boolean is_valid;
     private boolean was_renamed;
+    private String old_name;
 
     private List<Answer> answers;
 
@@ -280,6 +281,11 @@ public class Question {
                         return errors;
                 }
             }
+            String new_path = sp.find(""+id).replace(old_name + ".xml", name + ".xml");
+            (new File(xml_path)).renameTo(new File(new_path));
+            xml_path = new_path;
+            was_renamed = false;
+            sp.updatePath(id, xml_path);
         }
 
        /* if (sp.hasName(name)) {
@@ -628,7 +634,10 @@ public class Question {
 
     public void setName(String name) {
         if (!name.equals(this.name)) {
-            was_renamed = true;
+            if (!was_renamed) {
+                was_renamed = true;
+                old_name = this.name;
+            }
         }
         this.name = name;
     }
